@@ -13,29 +13,6 @@ export default defineConfig({
   plugins: [
     tailwindcss({
       config: {
-        darkMode: "class",
-        theme: {
-          extend: {
-            screens: {
-              'w-990': '990px',
-            },
-            colors: {
-              contentLight: '#f5f5f5',
-              contentDark: '#121313',
-              customLight: '#FFFFFF',
-              customDark: '#171818',
-              bgLight: '#E6E6FA',
-              bgDark: '#6652921a',
-              borderDark: '#21172a',
-              purpleLight: '#665292FF',
-              purple: '#693679',
-              purpleDark: '#72658F1A',
-              grayDark: '#898989',
-              borderGrayDark: '#26262e',
-              borderGrayLight: '#cbcbd3'
-            },
-          },
-        },
         plugins: [tailwindScrollbar],
       },
     }),

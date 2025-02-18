@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --breakpoint-w-990: 990px;
+
+    --color-contentLight: #f5f5f5;
+    --color-contentDark: #121313;
+    --color-customLight: #FFFFFF;
+    --color-customDark: #171818;
+    --color-bgLight: #E6E6FA;
+    --color-bgDark: #6652921a;
+    --color-borderDark: #21172a;
+    --color-purpleLight: #665292FF;
+    --color-purple: #693679;
+    --color-purpleDark: #72658F1A;
+    --color-grayDark: #898989;
+    --color-borderGrayDark: #26262e;
+    --color-borderGrayLight: #cbcbd3;
+}
+
 body {
     font-family: "Nunito Sans", sans-serif;
     background-color: #f5f5f5;
