@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+body {
+    font-family: "Nunito Sans", sans-serif;
+    background-color: #f5f5f5;
+}
+
+.dark body {
+    background-color: #121313;
+}
+  
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0);
+}
+    
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+  
+.custom-border {
+    border-right: 0.5px;
+}
+  
+.scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #E6E6FA transparent;
+}
+  
+.scrollbar::-webkit-scrollbar, html::-webkit-scrollbar, body::-webkit-scrollbar {
+    width: 8px; 
+} 
+  
+.dark .scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #6652921a transparent;
+}
+  
+html {
+    scrollbar-width: thin;
+    scrollbar-color: #665292FF transparent;
+}
