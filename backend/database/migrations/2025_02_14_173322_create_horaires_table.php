@@ -14,8 +14,7 @@ return new class extends Migration
     {
         Schema::create('horaires', function (Blueprint $table) {
             $table->id('horaire_id');
-            $table->foreignId('commande_id')->constrained('commandes', 'commande_id')->onDelete('cascade');
-            $table->enum('jour', JourEnum::values());
+            $table->enum('jour', JourEnum::values())->unique();
             $table->boolean('ouvert');
             $table->timestamps();
         });

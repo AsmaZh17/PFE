@@ -10,7 +10,7 @@ class JourFerie extends Model
 
     use HasFactory;
 
-    protected $primaryKey = 'JourFerie_id';
+    protected $primaryKey = 'jour_ferie_id';
 
     protected $fillable = [
         'nom',
@@ -19,6 +19,6 @@ class JourFerie extends Model
 
     public function retraitDrive()
     {
-        return $this->belongsTo(RetraitDrive::class, 'JourFerie_id');
+        return $this->belongsTo(RetraitDrive::class, 'jour_ferie_id');
     }
 }

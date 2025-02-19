@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\RetraitDrive;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class RetraitDriveController extends Controller
+class RetraitDriveController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except:['index','show'])
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return RetraitDrive::all();
     }
 
     /**
@@ -26,9 +35,10 @@ class RetraitDriveController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RetraitDrive $retraitDrive)
+    public function show($id)
     {
-        //
+        $retraitDrive = RetraitDrive::findOrFail($id);
+        return response()->json($retraitDrive);
     }
 
     /**
@@ -42,8 +52,10 @@ class RetraitDriveController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RetraitDrive $retraitDrive)
+    public function destroy($id)
     {
-        //
+        $retraitDrive = RetraitDrive::findOrFail($id);
+        $retraitDrive->delete();
+        return response()->json(['message' => 'Commande retrait drive avec id ' . $retraitDrive->commande_id . ' effacer avec succés'], 200);
     }
 }

@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\SousCategorie;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class SousCategorieController extends Controller
+class SousCategorieController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except:['index','show'])
+        ];
+    }
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return SousCategorie::all();
     }
 
     /**
@@ -26,9 +35,10 @@ class SousCategorieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SousCategorie $sousCategorie)
+    public function show($id)
     {
-        //
+        $sousCategorie = SousCategorie::findOrFail($id);
+        return response()->json($sousCategorie);
     }
 
     /**
@@ -42,8 +52,10 @@ class SousCategorieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SousCategorie $sousCategorie)
+    public function destroy($id)
     {
-        //
+        $sousCategorie = SousCategorie::findOrFail($id);
+        $sousCategorie->delete();
+        return response()->json(['message' => 'Sous categorie avec id ' . $sousCategorie->sous_categorie_id . ' effacer avec succés'], 200);
     }
 }

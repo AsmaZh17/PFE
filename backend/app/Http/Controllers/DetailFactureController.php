@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailFacture;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class DetailFactureController extends Controller
+class DetailFactureController extends Controller implements HasMiddleware
 {
     public static function middleware()
     {
@@ -30,9 +32,9 @@ class DetailFactureController extends Controller
         $validatedData = $request->validate([
             'quantite' => 'required|integer|min:1',
             'prix_unitaire' => 'required|numeric|min:0',
-            'totalLingeHT' => 'required|numeric|min:0',
-            'totalLingeTTC' => 'required|numeric|min:0',
-            'tvaLinge' => 'required|numeric|min:0',
+            'totalLigneHT' => 'required|numeric|min:0',
+            'totalLigneTTC' => 'required|numeric|min:0',
+            'tvaLigne' => 'required|numeric|min:0',
         ]);
         
         $detailFacture = DetailFacture::create($validatedData);
@@ -59,9 +61,9 @@ class DetailFactureController extends Controller
         $validatedData = $request->validate([
             'quantite' => 'required|integer|min:1',
             'prix_unitaire' => 'required|numeric|min:0',
-            'totalLingeHT' => 'required|numeric|min:0',
-            'totalLingeTTC' => 'required|numeric|min:0',
-            'tvaLinge' => 'required|numeric|min:0',
+            'totalLigneHT' => 'required|numeric|min:0',
+            'totalLigneTTC' => 'required|numeric|min:0',
+            'tvaLigne' => 'required|numeric|min:0',
         ]);
         
         $detailFacture->update($validatedData);

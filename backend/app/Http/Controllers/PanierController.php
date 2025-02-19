@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Panier;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PanierController extends Controller
+class PanierController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except:['index','show'])
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Panier::all();
     }
 
     /**
@@ -26,9 +35,10 @@ class PanierController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Panier $panier)
+    public function show($id)
     {
-        //
+        $panier = Panier::findOrFail($id);
+        return response()->json($panier);
     }
 
     /**
@@ -42,8 +52,10 @@ class PanierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Panier $panier)
+    public function destroy($id)
     {
-        //
+        $panier = Panier::findOrFail($id);
+        $panier->delete();
+        return response()->json(['message' => 'Panier avec id ' . $panier->panier_id . ' effacer avec succés'], 200);
     }
 }

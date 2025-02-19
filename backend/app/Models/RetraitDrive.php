@@ -22,7 +22,7 @@ class RetraitDrive extends Commande
     
     public function JourFerier()
     {
-        return $this->hasMany(JourFerie::class, 'JourFerie_id');
+        return $this->hasMany(JourFerie::class, 'jour_ferie_id');
     }
 
     public function Horaire()
