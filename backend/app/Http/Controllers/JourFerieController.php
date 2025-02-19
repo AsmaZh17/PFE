@@ -4,46 +4,74 @@ namespace App\Http\Controllers;
 
 use App\Models\JourFerie;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class JourFerieController extends Controller
+class JourFerieController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except:['index','show'])
+        ];
+    }
+
     /**
-     * Display a listing of the resource.
+     * Affiche la liste des jours fériés.
      */
     public function index()
     {
-        //
+        return JourFerie::all();
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Enregistre un nouveau jour férié.
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'date' => 'required|date',
+        ]);
+        
+        $jourFerie = JourFerie::create($validatedData);
+
+        return response()->json($jourFerie, 200);
     }
 
     /**
-     * Display the specified resource.
+     * Affiche un jour férié spécifique.
      */
-    public function show(JourFerie $jourFerie)
+    public function show($id)
     {
-        //
+        $jourFerie = JourFerie::findOrFail($id);
+        return response()->json($jourFerie);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Met à jour un jour férié existant.
      */
-    public function update(Request $request, JourFerie $jourFerie)
+    public function update(Request $request, $id)
     {
-        //
+        $jourFerie = JourFerie::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'date' => 'required|date',
+        ]);
+        
+        $jourFerie->update($validatedData);
+
+        return response()->json($jourFerie, 200);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Supprime un jour férié.
      */
-    public function destroy(JourFerie $jourFerie)
+    public function destroy($id)
     {
-        //
+        $jourFerie = JourFerie::findOrFail($id);
+        $jourFerie->delete();
+        return response()->json(['message' => 'Jour férié avec id ' . $jourFerie->id . ' supprimé avec succès'], 200);
     }
 }

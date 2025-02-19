@@ -7,43 +7,54 @@ use Illuminate\Http\Request;
 
 class HoraireController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except:['index','show'])
+        ];
+    }
+
     public function index()
     {
-        //
+        return Horaire::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'jour' => 'required|string|max:255',
+            'ouvert' => 'required|boolean',
+        ]);
+        
+        $horaire = Horaire::create($validatedData);
+
+        return response()->json($horaire, 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Horaire $horaire)
+    public function show($id)
     {
-        //
+        $horaire = Horaire::findOrFail($id);
+        return response()->json($horaire);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Horaire $horaire)
+    public function update(Request $request, $id)
     {
-        //
+        $horaire = Horaire::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'jour' => 'required|string|max:255',
+            'ouvert' => 'required|boolean',
+        ]);
+        
+        $horaire->update($validatedData);
+
+        return response()->json($horaire, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Horaire $horaire)
+    public function destroy($id)
     {
-        //
+        $horaire = Horaire::findOrFail($id);
+        $horaire->delete();
+        return response()->json(['message' => 'Horaire supprimé avec succès'], 200);
     }
 }
