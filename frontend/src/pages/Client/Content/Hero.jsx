@@ -36,14 +36,14 @@ const Hero = () => {
         <div className="absolute z-20 w-full h-full flex transition-transform duration-1000 ease-in-out" style={{ transform: `translateX(-${currentImage * 100}%)` }} >
           {images.map((image, index) => (
             <div key={index} className="w-full h-full flex-shrink-0 relative">
-              <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${image.src})` }}></div>
-              <div className="absolute top-0 left-0 w-full h-[620px] bg-black bg-opacity-50 dark:bg-opacity-80 z-10"></div>
-              <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center text-white z-20">
+              <div className="w-full h-full bg-cover bg-center"style={{ backgroundImage: `url(${image.src})`, filter: "blur(5px)" }}></div>
+              <div className="absolute top-0 left-0 w-full h-[620px] bg-opacity-50 dark:bg-opacity-80 z-10 "></div>
+              <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center text-violet-950 z-20">
                 <div className="max-w-[400px] lg:max-w-[620px] mx-auto">
                   <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight">
                     {image.title}
                   </h1>
-                  <p className="mt-4 text-sm text-gray-300 dark:text-grayDark">
+                  <p className="mt-4 text-sm text-violet-950">
                     {image.text}
                   </p>
                   <button className="bg-purpleLight text-white text-[14px] py-2 px-6 mt-4 rounded-md hover:bg-opacity-90 transition duration-150" type="submit">

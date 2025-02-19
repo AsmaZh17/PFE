@@ -5,6 +5,9 @@ import { UserProvider } from "@/utils/ProtectedRoutes";
 import { ThemeProvider } from "@/utils/ThemeContext";
 import App from './App.jsx';
 import './App.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
