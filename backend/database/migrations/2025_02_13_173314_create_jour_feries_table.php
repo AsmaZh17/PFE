@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('livraisons', function (Blueprint $table) {
-            $table->id('livraison_id');
-            $table->foreignId('commande_id')->constrained('commandes')->onDelete('cascade');
-            $table->foreignId('livreur_id')->constrained('livreurs')->onDelete('cascade');
+        Schema::create('jour_feries', function (Blueprint $table) {
+            $table->id('jour_ferie_id');
+            $table->foreignId('commande_id')->constrained('commandes', 'commande_id')->onDelete('cascade');
+            $table->string('nom');
             $table->date('date');
-            $table->string('etatLivraison');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('livraisons');
+        Schema::dropIfExists('jour_feries');
     }
 };

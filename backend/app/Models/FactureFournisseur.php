@@ -3,26 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class FactureFournisseur extends Model
+class FactureFournisseur extends Facture
 {
 
     use HasFactory;
 
+    protected $table = 'facture_fournisseurs'; 
+
     protected $fillable = [
-        'fournisseur_id',
-        'facture_id',
         'datePaiement',
     ];
 
     public function fournisseur()
     {
-        return $this->hasOne(Fournisseur::class);
-    }
-
-    public function facture()
-    {
-        return $this->belongsTo(Facture::class);
+        return $this->belongsTo(Fournisseur::class, 'fournisseur_id');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enumerations;
+namespace App\Enums;
 
 enum EtatCommandeEnum: string
 {
@@ -9,4 +9,9 @@ enum EtatCommandeEnum: string
     case Expediee = 'Expédiée';
     case Livree = 'Livrée';
     case Annulee = 'Annulée';
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
 }

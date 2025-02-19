@@ -10,16 +10,21 @@ use Illuminate\Support\Facades\Hash;
 class RegisterController extends Controller
 {
     public function register(Request $request){
+        
         $user = User::create(
             $request->validate([
-                'name' => 'required|max:255',
+                'nom' => 'required|max:255',
+                'prenom' => 'required|max:255',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|confirmed',
+                'telephone' => 'string',
+                'genre' => 'string',
+                'date_naissance' => 'string'
             ])
         );
         
-        //$token = $user->createToken($user->first_name.' '.$user->last_name);
-        $token = $user->createToken($user->name);
+        $token = $user->createToken($user->nom.' '.$user->prenom);
+        //$token = $user->createToken($user->name);
 
         return [
             'user' => $user,

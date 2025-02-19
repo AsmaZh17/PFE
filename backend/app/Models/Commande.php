@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\EtatCommandeEnum;
+use App\Enums\ModeLivraisonEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +24,11 @@ class Commande extends Model
         'modeLivraison',
     ];
 
+    protected $casts = [
+        'modeLivraison' => ModeLivraisonEnum::class,
+        'etatCommande' => EtatCommandeEnum::class,
+    ];
+
     public function panier()
     {
         return $this->belongsTo(Panier::class, 'panier_id');
@@ -32,18 +39,8 @@ class Commande extends Model
         return $this->belongsTo(CodePromotion::class, 'code_promotion_id');
     }
 
-    public function livraison()
-    {
-        return $this->hasOne(Livraison::class, 'commande_id');
-    }
-
-    public function retraitDrive()
-    {
-        return $this->hasOne(RetraitDrive::class, 'commande_id');
-    }
-
     public function factureCommande()
     {
-        return $this->hasOne(Facture::class, 'commande_id');
+        return $this->hasOne(FactureCommande::class, 'commande_id');
     }
 }

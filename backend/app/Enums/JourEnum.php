@@ -11,4 +11,9 @@ enum JourEnum: string
     case Vendredi = 'Vendredi';
     case Samedi = 'Samedi';
     case Dimanche = 'Dimanche';
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
 }

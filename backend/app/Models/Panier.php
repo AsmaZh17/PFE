@@ -14,12 +14,12 @@ class Panier extends Model
     protected $primaryKey = 'panier_id';
 
     protected $fillable = [
-        'client_id',
+        'id',
     ];
 
     public function client()
     {
-        return $this->belongsTo(Client::class, 'client_id');
+        return $this->belongsTo(Client::class, 'id');
     }
 
     public function commandes()

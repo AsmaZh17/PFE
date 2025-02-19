@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\JourEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,9 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('paniers', function (Blueprint $table) {
-            $table->id('panier_id');
-            $table->foreignId('Client_id')->constrained('clients')->onDelete('cascade');
+        Schema::create('horaires', function (Blueprint $table) {
+            $table->id('horaire_id');
+            $table->foreignId('commande_id')->constrained('commandes', 'commande_id')->onDelete('cascade');
+            $table->enum('jour', JourEnum::values());
+            $table->boolean('ouvert');
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('paniers');
+        Schema::dropIfExists('horaires');
     }
 };

@@ -21,6 +21,16 @@ class Categorie extends Model
 
     public function sousCategories()
     {
-        return $this->hasMany(SousCategorie::class, 'categorie_id');
+        return $this->hasMany(SousCategorie::class, 'categorie_id', 'categorie_id');
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($categorie) {
+            $categorie->sousCategories()->delete();
+        });
     }
 }

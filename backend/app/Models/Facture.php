@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,13 +18,27 @@ class Facture extends Model
         'totalTTC',
     ];
 
-    public function factureCommandes()
+    public function calculTTC()
     {
-        return $this->hasMany(FactureCommande::class);
+        return $this->totalHT + ($this->totalHT * $this->tva / 100);
     }
 
-    public function factureFournisseurs()
+    public function detailsFacture()
     {
-        return $this->hasMany(FactureFournisseur::class);
+        return $this->hasMany(DetailFacture::class, 'facture_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($commande) {
+            if ($commande->id) {
+                $user = User::find($commande->id);
+                if (!$user || $user->role !== RoleEnum::FOURNISSEUR ->value) {
+                    throw new \Exception("Seuls les utilisateurs ayant le rôle FOURNISSEUR peuvent être assignés.");
+                }
+            }
+        });
     }
 }

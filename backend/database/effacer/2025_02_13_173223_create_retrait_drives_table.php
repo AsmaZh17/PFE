@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jour_feries', function (Blueprint $table) {
-            $table->id('jour_ferie_id');
-            $table->ForeignId('retrait_drive_id')->constrained('Retrait_drives')->onDelete('cascade');
-            $table->string('nom');
-            $table->date('date');
+        Schema::create('retrait_drives', function (Blueprint $table) {
+            $table->id('retrait_drive_id');
+            $table->foreignId('commande_id')->constrained('commandes', 'commande_id')->onDelete('cascade');
+            $table->string('horaireRetrait');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jour_feries');
+        Schema::dropIfExists('retrait_drives');
     }
 };

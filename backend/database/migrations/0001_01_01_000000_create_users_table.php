@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\RoleEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,16 +13,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id('user_id');
+            $table->id();
             $table->string('nom');
             $table->string('prenom');
-            $table->string('email' , 100)->unique();
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('mot_de_passe');
+            $table->string('password');
             $table->string('telephone');
             $table->string('genre');
             $table->string('date_naissance');
-            $table->string('type'); // client, fournisseur, livreur, admin
+            $table->enum('role', RoleEnum::values())->default(RoleEnum::CLIENT->value);
+            $table->string('adresse')->nullable();
+            $table->string('region')->nullable();
+            $table->string('ville')->nullable();
+            $table->string('compositionFoyer')->nullable();
+            $table->string('typeLogement')->nullable();
+            $table->string('statusLogement')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

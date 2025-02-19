@@ -3,18 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class RetraitDrive extends Model
+class RetraitDrive extends Commande
 {
 
     use HasFactory;
 
     protected $table = 'retrait_drives';
-    protected $primaryKey = 'retrait_drive_id';
 
     protected $fillable = [
-        'commande_id',
         'horaireRetrait',
     ];
 
@@ -25,11 +22,11 @@ class RetraitDrive extends Model
     
     public function JourFerier()
     {
-        return $this->hasMany(JourFerie::class, 'horaireRetrait');
+        return $this->hasMany(JourFerie::class, 'JourFerie_id');
     }
 
     public function Horaire()
     {
-        return $this->hasMany(Horaire::class, 'horaireRetrait');
+        return $this->hasMany(Horaire::class, 'horaire_id');
     }
 }

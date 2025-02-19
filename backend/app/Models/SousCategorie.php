@@ -19,6 +19,10 @@ class SousCategorie extends Model
         'image',
     ];
 
+    protected $casts = [
+        'categorie_id' => 'integer',
+    ];
+
     public function categorie()
     {
         return $this->belongsTo(Categorie::class, 'categorie_id');

@@ -3,26 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class FactureCommande extends Model
+class FactureCommande extends Facture
 {
     
     use HasFactory;
 
+    protected $table = 'facture_commandes'; 
+
     protected $fillable = [
-        'commande_id',
-        'facture_id',
         'remise',
     ];
 
     public function commande()
     {
-        return $this->belongsTo(Commande::class);
+        return $this->belongsTo(Commande::class, 'commande_id'); 
     }
 
-    public function facture()
+    public function totalApresRemise()
     {
-        return $this->belongsTo(Facture::class);
+        return $this->totalTTC - $this->remise;
     }
 }

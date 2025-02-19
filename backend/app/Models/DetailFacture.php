@@ -23,6 +23,6 @@ class DetailFacture extends Model
 
     public function facture()
     {
-        return $this->hasOne(Facture::class);
+        return $this->belongsTo(Facture::class, 'facture_id');
     }
 }

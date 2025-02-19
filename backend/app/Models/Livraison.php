@@ -2,22 +2,23 @@
 
 namespace App\Models;
 
+use App\Enums\EtatLivraisonEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Livraison extends Model
+class Livraison extends Commande
 {
 
     use HasFactory;
 
     protected $table = 'livraisons';
-    protected $primaryKey = 'livraison_id';
 
     protected $fillable = [
-        'commande_id',
-        'livreur_id',
         'date',
         'etatLivraison',
+    ];
+
+    protected $casts = [
+        'etatLivraison' => EtatLivraisonEnum::class,
     ];
 
     public function commande()
@@ -27,6 +28,6 @@ class Livraison extends Model
 
     public function livreur()
     {
-        return $this->hasOne(Livreur::class, 'livreur_id');
+        return $this->belongsTo(User::class, 'id');
     }
 }

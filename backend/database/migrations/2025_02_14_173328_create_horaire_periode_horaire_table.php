@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('retrait_drives', function (Blueprint $table) {
-            $table->id('retrait_drive_id');
-            $table->foreignId('commande_id')->constrained('Commandes')->onDelete('cascade');
-            $table->string('horaireRetrait');
+        Schema::create('horaire_periode_horaire', function (Blueprint $table) {
+            $table->foreignId('horaire_id')->constrained('horaires', 'horaire_id')->onDelete('cascade');
+            $table->foreignId('periode_horaire_id')->constrained('periode_horaires', 'periode_horaire_id')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('retrait_drives');
+        Schema::dropIfExists('horaire_periode_horaire');
     }
 };

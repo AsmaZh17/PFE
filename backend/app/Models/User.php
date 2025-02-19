@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\Role;
+use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,39 +20,49 @@ class User extends Authenticatable
         'nom',
         'prenom',
         'email',
-        'mot_de_passe',
+        'password',
         'telephone',
         'genre',
         'date_naissance',
-        'type'
+        'role'
     ];
 
     protected $hidden = [
-        'mot_de_passe',
+        'password',
         'remember_token',
     ];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'role' => RoleEnum::class,
     ];
-
-    public function admin()
-    {
-        return $this->hasOne(Admin::class);
-    }
-
-    public function fournisseur()
-    {
-        return $this->hasOne(Fournisseur::class);
-    }
 
     public function client()
     {
         return $this->hasOne(Client::class);
     }
 
-    public function livreur()
+    public function factureFournisseurs()
     {
-        return $this->hasOne(Livreur::class);
+        return $this->hasMany(FactureFournisseur::class, 'user_id');
+    }
+
+    public function livraisons()
+    {
+        return $this->hasMany(Livraison::class, 'livreur_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($commande) {
+            if ($commande->id) {
+                $user = User::find($commande->id);
+                if (!$user || $user->role !== RoleEnum::LIVREUR ->value) {
+                    throw new \Exception("Seuls les utilisateurs ayant le rôle LIVREUR peuvent être assignés.");
+                }
+            }
+        });
     }
 }

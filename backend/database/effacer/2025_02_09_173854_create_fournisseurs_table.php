@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('periode_horaires', function (Blueprint $table) {
-            $table->id('periode_horaire_id');
-            $table->foreignId('horaire_id')->constrained('horaires')->onDelete('cascade');
-            $table->date('date_debut');
-            $table->date('date_fin');
+        Schema::create('fournisseurs', function (Blueprint $table) {
+            $table->id('fournisseur_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('periode_horaires');
+        Schema::dropIfExists('fournisseurs');
     }
 };

@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('horaires', function (Blueprint $table) {
-            $table->id('horaire_id');
-            $table->foreignId('retrait_drive_id')->constrained('Retrait_drives')->onDelete('cascade');
-            $table->string('jour');
-            $table->boolean('ouvert');
+        Schema::create('sous_categories', function (Blueprint $table) {
+            $table->id('sous_categorie_id');
+            $table->foreignId('categorie_id')->constrained('categories', 'categorie_id')->onDelete('cascade');
+            $table->string('titre');
+            $table->string('image');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('horaires');
+        Schema::dropIfExists('sous_categories');
     }
 };

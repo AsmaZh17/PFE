@@ -10,14 +10,15 @@ class PeriodeHoraire extends Model
 
     use HasFactory;
 
+    protected $primaryKey = 'periode_horaire_id';
+
     protected $fillable = [
-        'periode_horaire_id',
         'date_debut',
         'date_fin',
     ];
-
-    public function horaire()
+    
+    public function horaires()
     {
-        return $this->hasOne(Horaire::class);
+        return $this->belongsToMany(Horaire::class, 'horaire_periode_horaire', 'periode_horaire_id', 'horaire_id');
     }
 }

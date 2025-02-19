@@ -13,7 +13,7 @@ class Client extends Model
     protected $primaryKey = 'client_id';
 
     protected $fillable = [
-        'user_id',
+        'id',
         'adresse',
         'region',
         'ville',
@@ -25,5 +25,19 @@ class Client extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function panier()
+    {
+        return $this->hasOne(Panier::class, 'id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($client) {
+            $client->panier()->delete();
+        });
     }
 }

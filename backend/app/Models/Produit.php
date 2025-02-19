@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StatusProduitEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +25,10 @@ class Produit extends Model
         'image',
     ];
 
+    protected $casts = [
+        'status' => StatusProduitEnum::class,
+    ];
+
     public function sousCategorie()
     {
         return $this->belongsTo(SousCategorie::class, 'sous_categorie_id');
@@ -37,5 +42,10 @@ class Produit extends Model
     public function promotion()
     {
         return $this->belongsTo(Promotion::class, 'promotion_id');
+    }
+
+    public function panier()
+    {
+        return $this->belongsTo(Panier::class);
     }
 }
