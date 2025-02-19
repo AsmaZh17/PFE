@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('jour_feries', function (Blueprint $table) {
-            $table->id();
+            $table->id('jour_ferie_id');
+            $table->ForeignId('retrait_drive_id')->constrained('Retrait_drives')->onDelete('cascade');
+            $table->string('nom');
+            $table->date('date');
             $table->timestamps();
         });
     }

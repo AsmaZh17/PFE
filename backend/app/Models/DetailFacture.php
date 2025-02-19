@@ -7,6 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetailFacture extends Model
 {
-    /** @use HasFactory<\Database\Factories\DetailFactureFactory> */
+
     use HasFactory;
+
+    protected $table = 'detail_factures';
+    protected $primaryKey = 'detail_facture_id';
+
+    protected $fillable = [
+        'quantite',
+        'prix_unitaire',
+        'totalLigneHT',
+        'tvaLigne',
+        'totalLigneTTC',
+    ];
+
+    public function facture()
+    {
+        return $this->hasOne(Facture::class);
+    }
 }

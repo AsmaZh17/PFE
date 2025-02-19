@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('commandes', function (Blueprint $table) {
-            $table->id();
+            $table->id('commande_id');
+            $table->foreignId('panier_id')->constrained('Paniers')->onDelete('cascade');
+            $table->foreignId('code_promotion_id')->constrained('Codes_Promotions')->onDelete('cascade');
+            $table->decimal('total', 10, 2);
+            $table->string('etatCommande')->default('En attente');
+            $table->date('date');
+            $table->string('modeLivraison');
             $table->timestamps();
         });
     }

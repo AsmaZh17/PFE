@@ -12,7 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->id();
+            $table->id('client_id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('adresse');
+            $table->string('region');
+            $table->string('ville');
+            $table->string('compositionFoyer');
+            $table->string('typeLogement');
+            $table->string('statusLogement');
             $table->timestamps();
         });
     }

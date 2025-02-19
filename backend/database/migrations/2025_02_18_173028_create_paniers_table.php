@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('paniers', function (Blueprint $table) {
-            $table->id();
+            $table->id('panier_id');
+            $table->foreignId('Client_id')->constrained('clients')->onDelete('cascade');
             $table->timestamps();
         });
     }

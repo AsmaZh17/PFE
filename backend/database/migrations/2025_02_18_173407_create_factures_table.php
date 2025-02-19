@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('factures', function (Blueprint $table) {
-            $table->id();
+            $table->id('facture_id');
+            $table->date('date');
+            $table->decimal('tva', 5, 2);
+            $table->decimal('totalHT', 10, 2);
+            $table->decimal('totalTTC',10 , 2);
             $table->timestamps();
         });
     }

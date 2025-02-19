@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('facture_fournisseurs', function (Blueprint $table) {
-            $table->id();
+            $table->id('facture_fournisseur_id');
+            $table->foreignId('fournisseur_id')->constrained('fournisseurs')->onDelete('cascade');
+            $table->foreignId('facture_id')->constrained('factures')->onDelete('cascade');
+            $table->date('datePaiement');
             $table->timestamps();
         });
     }

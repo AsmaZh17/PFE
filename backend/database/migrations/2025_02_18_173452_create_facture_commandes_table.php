@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('facture_commandes', function (Blueprint $table) {
-            $table->id();
+            $table->id('facturecommande_id');
+            $table->foreignId('commande_id')->constrained('commandes')->onDelete('cascade');
+            $table->foreignId('facture_id')->constrained('factures')->onDelete('cascade');
+            $table->string('remise');
             $table->timestamps();
         });
     }

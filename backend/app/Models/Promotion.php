@@ -7,6 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Promotion extends Model
 {
-    /** @use HasFactory<\Database\Factories\PromotionFactory> */
+    
     use HasFactory;
+
+    protected $table = 'promotions';
+    protected $primaryKey = 'promotion_id';
+
+    protected $fillable = [
+        'nom',
+        'reduction',
+        'dateDebut',
+        'dateFin',
+    ];
+
+    public function produits()
+    {
+        return $this->hasMany(Produit::class, 'promotion_id');
+    }
 }

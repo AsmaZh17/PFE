@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('detail_factures', function (Blueprint $table) {
-            $table->id();
+            $table->id('detail_facture_id');
+            $table->integer('quantite');
+            $table->decimal('prix_unitaire', 10, 2);
+            $table->decimal('totalLigneHT', 10, 2);
+            $table->decimal('tvaLigne', 10, 2);
+            $table->decimal('totalLigneTTC', 10, 2);
             $table->timestamps();
         });
     }

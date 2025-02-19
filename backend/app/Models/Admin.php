@@ -5,8 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Admin extends User
+class Admin extends Model
 {
-    /** @use HasFactory<\Database\Factories\AdminFactory> */
     use HasFactory;
+
+    protected $table = 'admins';
+    protected $primaryKey = 'admin_id';
+
+    protected $fillable = ['user_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

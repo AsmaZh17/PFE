@@ -7,6 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class PeriodeHoraire extends Model
 {
-    /** @use HasFactory<\Database\Factories\PeriodeHoraireFactory> */
+
     use HasFactory;
+
+    protected $fillable = [
+        'periode_horaire_id',
+        'date_debut',
+        'date_fin',
+    ];
+
+    public function horaire()
+    {
+        return $this->hasOne(Horaire::class);
+    }
 }

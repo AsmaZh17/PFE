@@ -7,6 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class JourFerie extends Model
 {
-    /** @use HasFactory<\Database\Factories\JourFerieFactory> */
+
     use HasFactory;
+
+    protected $fillable = [
+        'JourFerie_id',
+        'nom',
+        'date',
+    ];
+
+    public function retraitDrive()
+    {
+        return $this->hasOne(RetraitDrive::class);
+    }
 }

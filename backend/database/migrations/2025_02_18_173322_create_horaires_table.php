@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('horaires', function (Blueprint $table) {
-            $table->id();
+            $table->id('horaire_id');
+            $table->foreignId('retrait_drive_id')->constrained('Retrait_drives')->onDelete('cascade');
+            $table->string('jour');
+            $table->boolean('ouvert');
             $table->timestamps();
         });
     }
