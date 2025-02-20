@@ -6,6 +6,7 @@ use App\Models\PeriodeHoraire;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Validation\Rule;
 
 class PeriodeHoraireController extends Controller implements HasMiddleware
 {
@@ -26,7 +27,9 @@ class PeriodeHoraireController extends Controller implements HasMiddleware
         $validatedData = $request->validate([
             'heure_debut' => 'required|date_format:H:i',
             'heure_fin' => 'required|date_format:H:i|after:heure_debut',
-        ]);
+            'horaires' => 'required|array',
+            'horaires.*.horaire_id' => 'required|exists:horaires,horaire_id',
+        ]);        
         
         $periode = PeriodeHoraire::create($validatedData);
 

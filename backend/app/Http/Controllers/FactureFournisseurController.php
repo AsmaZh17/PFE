@@ -6,6 +6,7 @@ use App\Models\FactureFournisseur;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Validation\Rule;
 
 class FactureFournisseurController extends Controller implements HasMiddleware
 {
@@ -30,6 +31,7 @@ class FactureFournisseurController extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'fournisseur_id' => ['nullable', Rule::exists('users', 'id')->where('role', 'fournisseur') ],
             'date' => 'required|date',
             'tva' => 'required|numeric|min:0|max:100',
             'totalHT' => 'required|numeric|min:0',
@@ -37,7 +39,6 @@ class FactureFournisseurController extends Controller implements HasMiddleware
         ]);
 
         $validatedData['dtype'] = 'facture_fournisseurs';
-        $validatedData['fournisseur_id'] = $request->user()->id;
 
         $factureFournisseur = FactureFournisseur::create($validatedData);
         
@@ -66,6 +67,7 @@ class FactureFournisseurController extends Controller implements HasMiddleware
             ->firstOrFail();
 
         $validatedData = $request->validate([
+            'fournisseur_id' => ['nullable', Rule::exists('users', 'id')->where('role', 'fournisseur') ],
             'date' => 'required|date',
             'tva' => 'required|numeric|min:0|max:100',
             'totalHT' => 'required|numeric|min:0',

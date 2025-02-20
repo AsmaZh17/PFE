@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\EtatCommandeEnum;
 use App\Enums\EtatLivraisonEnum;
 use App\Enums\ModeLivraisonEnum;
+use App\Models\Users\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,10 +22,10 @@ class CommandeLivraison extends Model
         'code_promotion_id',
         'total',
         'etatCommande',
-        'date',
         'modeLivraison',
-        'date',
+        'dateLivraison',
         'etatLivraison',
+        'livreur_id'
     ];
 
     protected $casts = [

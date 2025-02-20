@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Users;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Enums\Role;
 use App\Enums\RoleEnum;
+use App\Models\CommandeLivraison;
+use App\Models\FactureFournisseur;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -49,7 +50,7 @@ class User extends Authenticatable
 
     public function livraisons()
     {
-        return $this->hasMany(Livraison::class, 'id');
+        return $this->hasMany(CommandeLivraison::class, 'id');
     }
 
     protected static function boot()

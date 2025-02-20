@@ -6,7 +6,7 @@ import ShowPassword from "@/components/Forms/ShowPassword";
 import FormContainer from "./Form";
 import Label from "@/components/Forms/Label";
 import Button from "@/components/Forms/Button";
-import { UserContext } from "@/utils/ProtectedRoutes";
+import { UserContext } from "@/utils/UserContext";
 
 const Login = () => {
     const [inputType, setInputType] = useState("password");
@@ -34,11 +34,14 @@ const Login = () => {
 
         if (data.errors) { setErrors(data.errors); }
         else {
-            console.log(data);
-            
             localStorage.setItem('token',data.token);
             setToken(data.token);
-            navigate("/");
+            
+            if (data.user.role === "admin") {
+                navigate("/dashboard");
+            } else if (data.user.role === "client") {
+                navigate("/");
+            }
         }
     };
 

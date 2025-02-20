@@ -166,7 +166,8 @@ const FilteredTable = ({ label, datas, viewData, filtres, columns, formActions }
                                                             )}
                                                             {column.type === "img" && (
                                                                 <div className="flex items-center">
-                                                                    <img src={item[column.key] || img} className="object-cover w-12 h-12 -mx-1 border-2 border-contentLight rounded-full dark:border-contentDark" />
+                                                                    <img src={item[column.key] ? (`/${label}/${item[column.key]}`) : img} alt="Image" 
+                                                                        className="object-cover w-12 h-12 -mx-1 border-2 border-contentLight rounded-full dark:border-contentDark" />
                                                                 </div>
                                                             )}
                                                             {column.type === "images" && (

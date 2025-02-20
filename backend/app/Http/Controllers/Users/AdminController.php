@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\Enums\RoleEnum;
+use App\Models\Users\Admin;
+use App\Models\Users\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller implements HasMiddleware
 {
@@ -29,7 +32,28 @@ class AdminController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nom' => 'required|max:255',
+            'prenom' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed',
+            'telephone' => 'string',
+            'genre' => 'string',
+            'date_naissance' => 'string'
+        ]);
+
+        $validatedData['role'] = RoleEnum::ADMIN->value;
+
+        $validatedData['password'] = Hash::make($validatedData['password']);
+
+        $user = User::create($validatedData);
+        
+        $token = $user->createToken($user->nom.' '.$user->prenom);
+
+        return [
+            'user' => $user,
+            'token' => $token->plainTextToken
+        ];
     }
 
     /**

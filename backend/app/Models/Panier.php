@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Users\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,22 +15,19 @@ class Panier extends Model
     protected $primaryKey = 'panier_id';
 
     protected $fillable = [
-        'id',
+        'client_id',
     ];
 
     public function client()
     {
-        return $this->belongsTo(Client::class, 'id');
-    }
-
-    public function commandes()
-    {
-        return $this->hasOne(Commande::class, 'panier_id');
+        return $this->belongsTo(User::class, 'id');
     }
 
     public function produits()
     {
-        return $this->hasMany(Produit::class, 'panier_id');
+        return $this->belongsToMany(Produit::class, 'panier_produit', 'panier_id', 'produit_id')
+                ->withPivot('quantite') 
+                ->withTimestamps();
     }
-    
+
 }

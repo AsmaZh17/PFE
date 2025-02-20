@@ -20,12 +20,8 @@ class FactureCommande extends Model
         'totalTTC',
         'dtype',
         'remise',
+        'commande_id'
     ];
-
-    public function commande()
-    {
-        return $this->belongsTo(Commande::class, 'commande_id'); 
-    }
 
     public function totalApresRemise()
     {

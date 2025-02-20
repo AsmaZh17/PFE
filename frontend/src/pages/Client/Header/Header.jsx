@@ -3,7 +3,7 @@ import { Search, ShoppingCart, Settings, User, LogIn, User2, Menu } from 'lucide
 import Profile from "@/assets/dashboard/profile.png";
 import logo from "@/assets/logo/logo.svg";
 import DarkMode from "@/utils/DarkMode";
-import { UserContext } from "@/utils/ProtectedRoutes";
+import { UserContext } from "@/utils/UserContext";
 import { Link, useNavigate } from "react-router";
 
 const Header = () => {
@@ -95,7 +95,7 @@ const Header = () => {
                       </div>
                     </button>
                     <div className="lg:flex hidden flex-col items-start justify-center pl-2">
-                      <span className="text-md">{user.first_name + ' ' + user.last_name}</span>
+                      <span className="text-md">{user.nom + ' ' + user.prenom}</span>
                     </div>
                     <ul className="absolute hidden group-hover:flex flex-col bg-contentLight dark:bg-contentDark shadow-md p-2 rounded w-40 z-10 top-[60px] right-[-20px]">
                       <li className="flex items-center py-3 px-4 leading-4 hover:bg-gray-100 dark:hover:bg-[#3D3D3D] cursor-pointer border-b dark:border-[#3D3D3D]">

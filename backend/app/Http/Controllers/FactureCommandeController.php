@@ -31,6 +31,7 @@ class FactureCommandeController extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'commande_id' => 'required|exists:commandes,commande_id',
             'date' => 'required|date',
             'tva' => 'required|numeric|min:0|max:100',
             'totalHT' => 'required|numeric|min:0',
@@ -67,6 +68,7 @@ class FactureCommandeController extends Controller implements HasMiddleware
             ->firstOrFail();
         
         $validatedData = $request->validate([
+            'commande_id' => 'required|exists:commandes,commande_id',
             'date' => 'required|date',
             'tva' => 'required|numeric|min:0|max:100',
             'totalHT' => 'required|numeric|min:0',

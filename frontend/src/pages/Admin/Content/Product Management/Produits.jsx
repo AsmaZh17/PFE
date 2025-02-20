@@ -1,11 +1,11 @@
-/*import { useEffect, useState } from "react";
-import { deletePost, getPosts, getPost, updatePost, createPost } from "./Produit/postsController";
-import FilteredTable from "./Component/FilteredTable";*/
+import { useEffect, useState } from "react";
+import { getProduits, getProduit, createProduit, updateProduit, deleteProduit } from "@/service/ProduitService";
+import FilteredTable from "@/components/Tables/FilteredTable";
 import Header from "../Header";
 import { ShoppingBag } from "lucide-react";
 
 const Produits = () => {
-  /*const filtres = { field: "title", value: ['Tous', 'test', 'test 2'] };
+  const filtres = { field: "title", value: ['Tous', 'test', 'test 2'] };
 
   const columns = [
     { type: "checkbox" },
@@ -30,7 +30,7 @@ const Produits = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getPosts();
+      const data = await getProduits();
       setPosts(data);
     };
     fetchData();
@@ -38,7 +38,7 @@ const Produits = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deletePost(id);
+      await deleteProduit(id);
       alert(`Post with id ${id} supprimé avec succès`);
       setPosts((prevPosts) => prevPosts.filter(post => post.id !== id));
     } catch (error) {
@@ -49,7 +49,7 @@ const Produits = () => {
   
   const handleEdit = async () => {
     try {
-      await updatePost(formData.id, formData);
+      await updateProduit(formData.id, formData);
       setPosts((prevPosts) => prevPosts.filter(post => post.id !== formData.id));
 
       alert(`Post avec l'ID ${formData.id} modifié avec succès`);
@@ -61,7 +61,7 @@ const Produits = () => {
 
   const handleCreate = async () => {
     try {
-      await createPost(formData);
+      await createProduit(formData);
       setPosts((prevCategories) => prevCategories.filter(categorie => categorie.id !== formData.id));
       alert(`Post ajouter avec succès`);
     } catch (error) {
@@ -72,7 +72,7 @@ const Produits = () => {
 
   const handlePost = async (id) => {
     try {
-      const post = await getPost(id);
+      const post = await getProduit(id);
       setViewData(post);
       setFormData(post);
     } catch (error) {
@@ -97,11 +97,11 @@ const Produits = () => {
     handleCreate,
     handleEdit
   };
-  <FilteredTable formActions={formActions} label={"produits"} viewData={viewData} datas={formattedPosts} filtres={filtres} columns={columns}/>
-  */
+
   return (
     <>
       <Header title="Produits" icon={ShoppingBag} parent="Gestion des produits" current="Produits" />
+      <FilteredTable formActions={formActions} label={"produits"} viewData={viewData} datas={formattedPosts} filtres={filtres} columns={columns}/>
     </>
   );
 };

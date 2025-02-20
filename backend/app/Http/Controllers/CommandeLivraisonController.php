@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EtatCommandeEnum;
+use App\Enums\EtatLivraisonEnum;
+use App\Enums\ModeLivraisonEnum;
 use App\Models\CommandeLivraison;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Validation\Rule;
 
 class CommandeLivraisonController extends Controller implements HasMiddleware
 {
@@ -30,12 +34,24 @@ class CommandeLivraisonController extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-
+            'panier_id' => 'required|exists:paniers,panier_id',
+            'code_promotion_id' => 'nullable|exists:code_promotions,code_promotion_id',
+            'total' => 'required|numeric|min:0',
+            'etatCommande' => [Rule::in(EtatCommandeEnum::values())],
+            'dateLivraison' => 'nullable|date',
+            'etatLivraison' => [Rule::in(EtatLivraisonEnum::values())],
+            'livreur_id' => ['nullable', Rule::exists('users', 'id')->where('role', 'livreur') ],
         ]);
+        
+        if (empty($validatedData['etatCommande'])) {
+            $validatedData['etatCommande'] = EtatCommandeEnum::EnAttente->value;
+        }
 
-        $commandeLivraison = CommandeLivraison::create($validatedData);
+        $validatedData['modeLivraison'] = ModeLivraisonEnum::CommandeLivraison->value;
 
-        return response()->json($commandeLivraison, 200);
+        $commande = CommandeLivraison::create($validatedData);
+
+        return response()->json($commande, 201);
     }
 
     /**
@@ -60,7 +76,13 @@ class CommandeLivraisonController extends Controller implements HasMiddleware
             ->firstOrFail();
         
         $validatedData = $request->validate([
-        
+            'panier_id' => 'required|exists:paniers,panier_id',
+            'code_promotion_id' => 'nullable|exists:code_promotions,code_promotion_id',
+            'total' => 'required|numeric|min:0',
+            'etatCommande' => [Rule::in(EtatCommandeEnum::values())],
+            'dateLivraison' => 'nullable|date',
+            'etatLivraison' => [Rule::in(EtatLivraisonEnum::values())],
+            'livreur_id' => ['nullable', Rule::exists('users', 'id')->where('role', 'livreur') ],
         ]);
 
         $commandeLivraison->update($validatedData);

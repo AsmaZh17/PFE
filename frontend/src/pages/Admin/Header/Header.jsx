@@ -1,7 +1,7 @@
 import { ChevronsLeft, ChevronsRight, Search, ShoppingCart, Settings, ChevronDown, User, LogIn, Bell, Menu } from 'lucide-react';
 import Profile from "@/assets/dashboard/profile.png";
 import DarkMode from "@/utils/DarkMode";
-import { UserContext } from '@/utils/ProtectedRoutes';
+import { UserContext } from '@/utils/UserContext';
 import { useNavigate } from 'react-router';
 import { useContext } from 'react';
 
@@ -83,7 +83,7 @@ const Header = ({ isSidebarVisible, toggleSidebar, toggleDrawerOpen }) => {
                 </div>
               </button>
               <div className="lg:flex hidden flex-col items-start justify-center pl-2">
-                <span className="font-semibold text-sm leading-4">{user.first_name + ' ' + user.last_name}</span>
+                <span className="font-semibold text-sm leading-4">{user.nom + ' ' + user.prenom}</span>
                 <div className="flex items-center gap-1 text-xs leading-6">
                   <p className="cursor-pointer">Admin</p>
                   <ChevronDown className="text-center cursor-pointer" size={12} />

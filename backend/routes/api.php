@@ -35,20 +35,20 @@ Route::apiResource('promotions', PromotionController::class); //tester
 
 Route::apiResource('horaires', HoraireController::class); //tester
 Route::apiResource('sousCategories', SousCategorieController::class); //tester
-Route::apiResource('detailFactures', DetailFactureController::class); //tester (a modifier)
+Route::apiResource('detailFactures', DetailFactureController::class); //tester
 
-Route::apiResource('factureCommandes', FactureCommandeController::class); //tester (a modifier)
+Route::apiResource('factureCommandes', FactureCommandeController::class); //tester
 Route::apiResource('factureFournisseurs', FactureFournisseurController::class); //tester
 
-Route::apiResource('commandeLivraisons', CommandeLivraisonController::class);
-Route::apiResource('commandeRetraitDrives', CommandeRetraitDriveController::class);
+Route::apiResource('produits', ProduitController::class); //tester
+Route::apiResource('paniers', PanierController::class); //tester
+
+Route::apiResource('commandeLivraisons', CommandeLivraisonController::class); //tester
+Route::apiResource('commandeRetraitDrives', CommandeRetraitDriveController::class); //tester
 
 Route::apiResource('admins', AdminController::class);
 Route::apiResource('clients', ClientController::class);
 Route::apiResource('fournisseurs', FournisseurController::class);
 Route::apiResource('livreurs', LivreurController::class);
-
-Route::apiResource('paniers', PanierController::class);
-Route::apiResource('produits', ProduitController::class);
 
 require __DIR__.'/auth.php';

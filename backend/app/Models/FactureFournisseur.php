@@ -22,11 +22,6 @@ class FactureFournisseur extends Model
         'fournisseur_id'
     ];
 
-    public function fournisseur()
-    {
-        return $this->belongsTo(Fournisseur::class);
-    }
-
     public function calculTTC()
     {
         return $this->totalHT + ($this->totalHT * $this->tva / 100);
@@ -35,17 +30,5 @@ class FactureFournisseur extends Model
     public function detailsFacture()
     {
         return $this->hasMany(DetailFacture::class, 'facture_id');
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($factureFournisseur) {
-            $user = User::find($factureFournisseur->fournisseur_id);            
-            if ($user && $user->role !== RoleEnum::FOURNISSEUR) {
-                throw new \Exception("Seuls les utilisateurs ayant le rôle FOURNISSEUR peuvent être assignés.");
-            }
-        });
     }
 }

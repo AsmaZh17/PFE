@@ -9,7 +9,7 @@ const Categories = () => {
     { label: "Titre", key: "titre", type: "text" },
     { label: "Image", key: "image", type: "img" },
     { label: "Date de création", key: "created_at", type: "date" },
-    { label: "Rank", key: "rang", type: "progress" },
+    { label: "Rang", key: "rang", type: "progress" },
     { label: "Actions", key: "actions", type: "actions" }
   ];
 
@@ -21,7 +21,7 @@ const Categories = () => {
 
   const fields = [
     { label: "Titre", key: "titre", type: "text" },
-    { label: "Rank", key: "rang", type: "number" },
+    { label: "Rang", key: "rang", type: "number" },
     { label: "Image", key: "image", type: "image" }
   ];
 

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EtatCommandeEnum;
+use App\Enums\ModeLivraisonEnum;
 use App\Models\CommandeRetraitDrive;
 use App\Models\RetraitDrive;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Validation\Rule;
 
 class CommandeRetraitDriveController extends Controller implements HasMiddleware
 {
@@ -31,8 +34,14 @@ class CommandeRetraitDriveController extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            
+            'panier_id' => 'required|exists:paniers,panier_id',
+            'code_promotion_id' => 'nullable|exists:code_promotions,code_promotion_id',
+            'total' => 'required|numeric|min:0',
+            'etatCommande' => [Rule::in(EtatCommandeEnum::values())],
+            'horaireRetrait' => 'nullable|date_format:H:i',
         ]);
+
+        $validatedData['modeLivraison'] = ModeLivraisonEnum::CommandeRetraitDrive->value;
 
         $commandeRetraitDrive = CommandeRetraitDrive::create($validatedData);
 
@@ -61,7 +70,11 @@ class CommandeRetraitDriveController extends Controller implements HasMiddleware
             ->firstOrFail();
         
         $validatedData = $request->validate([
-            
+            'panier_id' => 'required|exists:paniers,panier_id',
+            'code_promotion_id' => 'nullable|exists:code_promotions,code_promotion_id',
+            'total' => 'required|numeric|min:0',
+            'etatCommande' => [Rule::in(EtatCommandeEnum::values())],
+            'horaireRetrait' => 'nullable|date_format:H:i',
         ]);
 
         $commandeRetraitDrive->update($validatedData);

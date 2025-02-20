@@ -11,7 +11,7 @@ const ImageUpload = ({ name, value, onChange }) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
-        onChange(file.name); // Stocke uniquement le nom du fichier
+        onChange(file.name);
       };
       reader.readAsDataURL(file);
     }
@@ -19,7 +19,7 @@ const ImageUpload = ({ name, value, onChange }) => {
 
   const handleRemoveImage = () => {
     setPreview(null);
-    onChange(null); // Réinitialise l'image dans le parent
+    onChange(null);
   };
 
   return (

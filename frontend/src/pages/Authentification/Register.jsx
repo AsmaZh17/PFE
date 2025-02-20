@@ -6,7 +6,7 @@ import ShowPassword from "@/components/Forms/ShowPassword";
 import FormContainer from "./Form";
 import Label from "@/components/Forms/Label";
 import Dropdown from "@/components/Forms/Dropdown";
-import { UserContext } from "@/utils/ProtectedRoutes";
+import { UserContext } from "@/utils/UserContext";
 
 const Register = () => {
   const [inputType, setInputType] = useState("password");
@@ -25,8 +25,8 @@ const Register = () => {
   const cities = ["New York", "Toronto", "Paris", "Berlin", "Tokyo"];
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
-  const [formData, setFormData] = useState({ last_name: "", first_name: "", phone: "", email: "", password: "",
-    password_confirmation: "", birthday: "", gender: "", job: "", housing_type: "", occupancy_status: "", country: "", city: "", postal_code: "" });
+  const [formData, setFormData] = useState({ nom: "", prenom: "", telephone: "", email: "", password: "",
+    password_confirmation: "", date_naissance: "", genre: "", job: "", housing_type: "", occupancy_status: "", country: "", city: "", postal_code: "" });
   const [errors, setErrors] = useState({});
   const {setToken} = useContext(UserContext);
   const nextStep = () => { if (step < 4 && isValid) { setStep(step + 1); } };
@@ -52,10 +52,10 @@ const Register = () => {
     let valid = false;
     if (step === 4) { setText("Create Account"); } else { setText("Next"); }
     switch (step) {
-        case 1: valid = formData.last_name.trim() !== "" && formData.first_name.trim() !== "" && formData.phone.trim() !== ""; break;
+        case 1: valid = formData.nom.trim() !== "" && formData.prenom.trim() !== "" && formData.telephone.trim() !== ""; break;
         case 2: { const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           valid = emailRegex.test(formData.email.trim()) && formData.password.trim() !== "" && formData.password_confirmation.trim() !== "" && formData.password === formData.password_confirmation; break; }
-        case 3: valid = formData.birthday.trim() !== "" && formData.gender.trim() !== "" && formData.job.trim() !== "" && formData.housing_type.trim() !== "" && formData.occupancy_status.trim() !== ""; break;
+        case 3: valid = formData.date_naissance.trim() !== "" && formData.genre.trim() !== "" && formData.job.trim() !== "" && formData.housing_type.trim() !== "" && formData.occupancy_status.trim() !== ""; break;
         case 4: valid = formData.country.trim() !== "" && formData.city.trim() !== "" && formData.postal_code.trim() !== ""; break;
         default: valid = false;
     }
@@ -113,20 +113,20 @@ const Register = () => {
         <p className="text-sm text-gray-600 mb-6 dark:text-grayDark">Enter your personal details to create account</p>
         {step === 1 && ( <>
           <div className="mb-4">
-              <Label label="Last Name"/>
-              <Input type="text" name="last_name" value={formData.last_name} onChange={handleChange} placeholder="Last Name" required />
-              {errors.last_name && <p className="error">{errors.last_name}</p>}
+              <Label label="Nom"/>
+              <Input type="text" name="nom" value={formData.nom} onChange={handleChange} placeholder="Nom" required />
+              {errors.nom && <p className="error">{errors.nom}</p>}
           </div>
           <div className="mb-4">
-              <Label label="First Name"/>
-              <Input type="text" name="first_name" value={formData.first_name} onChange={handleChange} placeholder="First Name" required />
-              {errors.first_name && <p className="error">{errors.first_name}</p>}
+              <Label label="Prenom"/>
+              <Input type="text" name="prenom" value={formData.prenom} onChange={handleChange} placeholder="Prénom" required />
+              {errors.prenom && <p className="error">{errors.prenom}</p>}
           </div>
           <div className="mb-4">
-              <Label label="Phone Number"/>
+              <Label label="Telephone"/>
               <div className="flex gap-2">
                 <Input type="text" value="+59" required readOnly width="w-1/4"/>
-                <Input type="number"name="phone" value={formData.phone} onChange={handleChange} placeholder="000-000-0000" width="w-3/4"/>
+                <Input type="number"name="telephone" value={formData.telephone} onChange={handleChange} placeholder="000-000-0000" width="w-3/4"/>
               </div>
           </div>
         </> )}
@@ -154,23 +154,23 @@ const Register = () => {
         </> )}
         {step === 3 && ( <>
           <div className="mb-4">
-              <Label label="Birthday"/>
-              <Input type="date" name="birthday" value={formData.birthday} onChange={handleChange} required />
+              <Label label="date_naissance"/>
+              <Input type="date" name="date_naissance" value={formData.date_naissance} onChange={handleChange} required />
           </div>
           <div className="mb-4">
-            <Label label="Gender" />
+            <Label label="Genre" />
             <div className="flex justify-center space-x-6">
               <label className="flex items-center cursor-pointer">
-                <input type="radio" value="Male" checked={formData.gender === "Male"} onChange={handleChange} name="gender" className="hidden" />
+                <input type="radio" value="Male" checked={formData.genre === "Male"} onChange={handleChange} name="genre" className="hidden" />
                 <div className="w-4 h-4 border-2 border-gray-300 dark:border-purpleLight rounded-full flex items-center justify-center">
-                  {formData.gender === "Male" && ( <div className="w-2 h-2 bg-gray-300 dark:bg-purpleLight rounded-full"></div> )}
+                  {formData.genre === "Male" && ( <div className="w-2 h-2 bg-gray-300 dark:bg-purpleLight rounded-full"></div> )}
                 </div>
                 <span className="ml-2 text-gray-700 dark:text-grayDark">Male</span>
               </label>
               <label className="flex items-center cursor-pointer">
-                <input type="radio" value="Female" checked={formData.gender === "Female"} onChange={handleChange} name="gender" className="hidden" />
+                <input type="radio" value="Female" checked={formData.genre === "Female"} onChange={handleChange} name="genre" className="hidden" />
                 <div className="w-4 h-4 border-2 border-gray-300 dark:border-purpleLight rounded-full flex items-center justify-center">
-                  {formData.gender === "Female" && ( <div className="w-2 h-2 bg-gray-300 dark:bg-purpleLight rounded-full"></div> )}
+                  {formData.genre === "Female" && ( <div className="w-2 h-2 bg-gray-300 dark:bg-purpleLight rounded-full"></div> )}
                 </div>
                 <span className="ml-2 text-gray-700 dark:text-grayDark">Female</span>
               </label>

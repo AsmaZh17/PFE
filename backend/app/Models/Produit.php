@@ -18,6 +18,7 @@ class Produit extends Model
         'marque_id',
         'sous_categorie_id',
         'promotion_id',
+        'fournisseur_id',
         'nom',
         'status',
         'description',
@@ -44,8 +45,11 @@ class Produit extends Model
         return $this->belongsTo(Promotion::class, 'promotion_id');
     }
 
-    public function panier()
+    public function paniers()
     {
-        return $this->belongsTo(Panier::class);
+        return $this->belongsToMany(Panier::class, 'panier_produit', 'produit_id', 'panier_id')
+                ->withPivot('quantite')
+                ->withTimestamps();
     }
+
 }

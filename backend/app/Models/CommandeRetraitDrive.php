@@ -19,7 +19,6 @@ class CommandeRetraitDrive extends Model
         'code_promotion_id',
         'total',
         'etatCommande',
-        'date',
         'modeLivraison',
         'horaireRetrait',
     ];

@@ -30,6 +30,7 @@ class DetailFactureController extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'facture_id' => 'required|exists:factures,facture_id',
             'quantite' => 'required|integer|min:1',
             'prix_unitaire' => 'required|numeric|min:0',
             'totalLigneHT' => 'required|numeric|min:0',
