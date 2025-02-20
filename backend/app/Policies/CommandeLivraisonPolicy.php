@@ -2,11 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Facture;
+use App\Models\CommandeLivraison;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
-class FacturePolicy
+class CommandeLivraisonPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +18,7 @@ class FacturePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Facture $facture): bool
+    public function view(User $user, CommandeLivraison $commandeLivraison): bool
     {
         return false;
     }
@@ -35,7 +34,7 @@ class FacturePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Facture $facture): bool
+    public function update(User $user, CommandeLivraison $commandeLivraison): bool
     {
         return false;
     }
@@ -43,7 +42,7 @@ class FacturePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Facture $facture): bool
+    public function delete(User $user, CommandeLivraison $commandeLivraison): bool
     {
         return false;
     }
@@ -51,7 +50,7 @@ class FacturePolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Facture $facture): bool
+    public function restore(User $user, CommandeLivraison $livraison): bool
     {
         return false;
     }
@@ -59,7 +58,7 @@ class FacturePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Facture $facture): bool
+    public function forceDelete(User $user, CommandeLivraison $commandeLivraison): bool
     {
         return false;
     }

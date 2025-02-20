@@ -4,8 +4,8 @@ namespace App\Enums;
 
 enum ModeLivraisonEnum : string
 {
-    case Livraison = 'Livraison';
-    case retraitDrive = 'retraitDrive';
+    case CommandeLivraison = 'CommandeLivraison';
+    case CommandeRetraitDrive = 'CommandeRetraitDrive';
 
     public static function values(): array
     {

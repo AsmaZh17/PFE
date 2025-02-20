@@ -29,7 +29,15 @@ class SousCategorieController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'categorie_id' => 'required|exists:categories,categorie_id',
+            'titre' => 'required|string|max:255',
+            'image' => 'required|string|max:255',
+        ]);
+        
+        $sousCategorie = SousCategorie::create($validatedData);
+
+        return response()->json($sousCategorie, 200);
     }
 
     /**
@@ -44,9 +52,19 @@ class SousCategorieController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SousCategorie $sousCategorie)
+    public function update(Request $request, $id)
     {
-        //
+        $sousCategorie = SousCategorie::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'categorie_id' => 'required|exists:categories,categorie_id',
+            'titre' => 'required|string|max:255',
+            'image' => 'required|string|max:255',
+        ]);
+        
+        $sousCategorie->update($validatedData);
+
+        return response()->json($sousCategorie, 200);
     }
 
     /**

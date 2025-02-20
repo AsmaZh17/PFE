@@ -29,7 +29,14 @@ class MarqueController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'image' => 'required|string|max:255'
+        ]);
+        
+        $marque = Marque::create($validatedData);
+
+        return response()->json($marque, 200);
     }
 
     /**
@@ -44,9 +51,18 @@ class MarqueController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Marque $marque)
+    public function update(Request $request, $id)
     {
-        //
+        $marque = Marque::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'image' => 'required|string|max:255'
+        ]);
+        
+        $marque->update($validatedData);
+
+        return response()->json($marque, 200);
     }
 
     /**

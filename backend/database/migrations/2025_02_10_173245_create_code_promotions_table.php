@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('code_promotions', function (Blueprint $table) {
             $table->id('code_promotion_id');
-            $table->string('code', 191)->unique();
+            $table->string('code', 120)->unique();
             $table->decimal('reduction', 5, 2);
             $table->date('dateExpiration'); 
             $table->integer('nbUtilisationMax');

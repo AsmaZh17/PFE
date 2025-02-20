@@ -11,7 +11,7 @@ class RegisterController extends Controller
 {
     public function register(Request $request){
         
-        $validate = $request->validate([
+        $validatedData = $request->validate([
             'nom' => 'required|max:255',
             'prenom' => 'required|max:255',
             'email' => 'required|email|unique:users',
@@ -21,12 +21,11 @@ class RegisterController extends Controller
             'date_naissance' => 'string'
         ]);
 
-        $validate['password'] = Hash::make($validate['password']);
+        $validatedData['password'] = Hash::make($validatedData['password']);
 
-        $user = User::create( $validate );
+        $user = User::create($validatedData);
         
         $token = $user->createToken($user->nom.' '.$user->prenom);
-        //$token = $user->createToken($user->name);
 
         return [
             'user' => $user,

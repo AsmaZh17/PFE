@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('dateCommande');
             $table->enum('modeLivraison', ModeLivraisonEnum::values());
             $table->string('horaireRetrait')->nullable();
-            $table->foreignId('id')->nullable()->constrained('users', 'id')->onDelete('cascade');
+            $table->foreignId('livreur_id')->nullable()->constrained('users', 'id')->onDelete('cascade');
             $table->date('dateLivraison')->nullable();
             $table->enum('etatLivraison', EtatLivraisonEnum::values())->nullable()->default(EtatLivraisonEnum::NonLivree->value);
             $table->timestamps();

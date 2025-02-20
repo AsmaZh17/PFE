@@ -29,7 +29,16 @@ class PromotionController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'reduction' => 'required|numeric|min:0|max:100',
+            'dateDebut' => 'required|date',
+            'dateFin' => 'required|date|after:dateDebut',
+        ]);
+        
+        $promotion = Promotion::create($validatedData);
+
+        return response()->json($promotion, 200);
     }
 
     /**
@@ -44,9 +53,20 @@ class PromotionController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Promotion $promotion)
+    public function update(Request $request, $id)
     {
-        //
+        $promotion = Promotion::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'reduction' => 'required|numeric|min:0|max:100',
+            'dateDebut' => 'required|date',
+            'dateFin' => 'required|date|after:dateDebut',
+        ]);
+        
+        $promotion->update($validatedData);
+
+        return response()->json($promotion, 200);
     }
 
     /**

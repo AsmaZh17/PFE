@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use App\Enums\EtatCommandeEnum;
+use App\Enums\EtatLivraisonEnum;
 use App\Enums\ModeLivraisonEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Commande extends Model
+class CommandeLivraison extends Model
 {
 
     use HasFactory;
@@ -22,12 +23,20 @@ class Commande extends Model
         'etatCommande',
         'date',
         'modeLivraison',
+        'date',
+        'etatLivraison',
     ];
 
     protected $casts = [
         'modeLivraison' => ModeLivraisonEnum::class,
         'etatCommande' => EtatCommandeEnum::class,
+        'etatLivraison' => EtatLivraisonEnum::class,
     ];
+
+    public function livreur()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
 
     public function panier()
     {

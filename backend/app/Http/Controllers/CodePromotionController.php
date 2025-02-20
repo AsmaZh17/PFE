@@ -29,7 +29,16 @@ class CodePromotionController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'code' => 'required|string|max:120|unique:code_promotions,code',
+            'reduction' => 'required|numeric|min:0|max:99.99',
+            'dateExpiration' => 'required|date',
+            'nbUtilisationMax' => 'required|integer|min:1'
+        ]);
+        
+        $codePromotion = CodePromotion::create($validatedData);
+
+        return response()->json($codePromotion, 200);
     }
 
     /**
@@ -44,9 +53,20 @@ class CodePromotionController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CodePromotion $codePromotion)
+    public function update(Request $request, $id)
     {
-        //
+        $codePromotion = CodePromotion::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'code' => 'required|string|max:120|unique:code_promotions,code',
+            'reduction' => 'required|numeric|min:0|max:99.99',
+            'dateExpiration' => 'required|date',
+            'nbUtilisationMax' => 'required|integer|min:1'
+        ]);
+
+        $codePromotion->update($validatedData);
+
+        return response()->json($codePromotion, 200);
     }
 
     /**

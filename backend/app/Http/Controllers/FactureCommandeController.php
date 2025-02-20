@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Facture;
 use App\Models\FactureCommande;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -21,7 +22,7 @@ class FactureCommandeController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        return FactureCommande::all();
+        return FactureCommande::where('dtype', 'facture_commandes')->get();
     }
 
     /**
@@ -29,7 +30,19 @@ class FactureCommandeController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'date' => 'required|date',
+            'tva' => 'required|numeric|min:0|max:100',
+            'totalHT' => 'required|numeric|min:0',
+            'totalTTC' => 'required|numeric|min:0',
+            'remise' => 'required|numeric|min:0'
+        ]);
+
+        $validatedData['dtype'] = 'facture_commandes';
+
+        $factureCommande = FactureCommande::create($validatedData);
+
+        return response()->json($factureCommande, 200);
     }
 
     /**
@@ -37,16 +50,33 @@ class FactureCommandeController extends Controller implements HasMiddleware
      */
     public function show($id)
     {
-        $factureCommande = FactureCommande::findOrFail($id);
+        $factureCommande = FactureCommande::where('facture_id', $id)
+            ->where('dtype', 'facture_commandes')
+            ->firstOrFail();
+    
         return response()->json($factureCommande);
-    }
+    }    
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FactureCommande $factureCommande)
+    public function update(Request $request, $id)
     {
-        //
+        $factureCommande = FactureCommande::where('facture_id', $id)
+            ->where('dtype', 'facture_commandes')
+            ->firstOrFail();
+        
+        $validatedData = $request->validate([
+            'date' => 'required|date',
+            'tva' => 'required|numeric|min:0|max:100',
+            'totalHT' => 'required|numeric|min:0',
+            'totalTTC' => 'required|numeric|min:0',
+            'remise' => 'required|numeric|min:0'
+        ]);
+
+        $factureCommande->update($validatedData);
+
+        return response()->json($factureCommande, 200);
     }
 
     /**
@@ -54,7 +84,9 @@ class FactureCommandeController extends Controller implements HasMiddleware
      */
     public function destroy($id)
     {
-        $factureCommande = FactureCommande::findOrFail($id);
+        $factureCommande = FactureCommande::where('facture_id', $id)
+            ->where('dtype', 'facture_commandes')
+            ->firstOrFail();
         $factureCommande->delete();
         return response()->json(['message' => 'FactureCommande avec id ' . $factureCommande->facture_id . ' effacer avec succés'], 200);
     }

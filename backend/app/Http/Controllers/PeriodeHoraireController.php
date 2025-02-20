@@ -24,8 +24,8 @@ class PeriodeHoraireController extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'date_debut' => 'required|date',
-            'date_fin' => 'required|date|after:date_debut',
+            'heure_debut' => 'required|date_format:H:i',
+            'heure_fin' => 'required|date_format:H:i|after:heure_debut',
         ]);
         
         $periode = PeriodeHoraire::create($validatedData);
@@ -44,8 +44,8 @@ class PeriodeHoraireController extends Controller implements HasMiddleware
         $periode = PeriodeHoraire::findOrFail($id);
 
         $validatedData = $request->validate([
-            'date_debut' => 'required|date',
-            'date_fin' => 'required|date|after:date_debut',
+            'heure_debut' => 'required|date_format:H:i',
+            'heure_fin' => 'required|date_format:H:i|after:heure_debut',
         ]);
         
         $periode->update($validatedData);

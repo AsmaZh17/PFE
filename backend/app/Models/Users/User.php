@@ -44,12 +44,12 @@ class User extends Authenticatable
 
     public function factureFournisseurs()
     {
-        return $this->hasMany(FactureFournisseur::class, 'user_id');
+        return $this->hasMany(FactureFournisseur::class, 'id');
     }
 
     public function livraisons()
     {
-        return $this->hasMany(Livraison::class, 'livreur_id');
+        return $this->hasMany(Livraison::class, 'id');
     }
 
     protected static function boot()

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('totalTTC', 10, 2);
             $table->enum('dtype', ['facture_commandes', 'facture_fournisseurs']);
             $table->foreignId('commande_id')->nullable()->constrained('commandes', 'commande_id')->onDelete('cascade');
-            $table->foreignId('id')->nullable()->constrained('users', 'id')->onDelete('cascade');
+            $table->foreignId('fournisseur_id')->nullable()->constrained('users', 'id')->onDelete('cascade');
             $table->decimal('remise', 8, 2)->nullable(); 
             $table->timestamps();
         });

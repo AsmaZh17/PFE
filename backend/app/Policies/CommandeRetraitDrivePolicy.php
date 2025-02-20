@@ -2,11 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Livraison;
+use App\Models\CommandeRetraitDrive;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
-class LivraisonPolicy
+class CommandeRetraitDrivePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +18,7 @@ class LivraisonPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Livraison $livraison): bool
+    public function view(User $user, CommandeRetraitDrive $commandeRetraitDrive): bool
     {
         return false;
     }
@@ -35,7 +34,7 @@ class LivraisonPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Livraison $livraison): bool
+    public function update(User $user, CommandeRetraitDrive $commandeRetraitDrive): bool
     {
         return false;
     }
@@ -43,7 +42,7 @@ class LivraisonPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Livraison $livraison): bool
+    public function delete(User $user, CommandeRetraitDrive $commandeRetraitDrive): bool
     {
         return false;
     }
@@ -51,7 +50,7 @@ class LivraisonPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Livraison $livraison): bool
+    public function restore(User $user, CommandeRetraitDrive $commandeRetraitDrive): bool
     {
         return false;
     }
@@ -59,7 +58,7 @@ class LivraisonPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Livraison $livraison): bool
+    public function forceDelete(User $user, CommandeRetraitDrive $commandeRetraitDrive): bool
     {
         return false;
     }

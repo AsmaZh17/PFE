@@ -13,8 +13,8 @@ class PeriodeHoraire extends Model
     protected $primaryKey = 'periode_horaire_id';
 
     protected $fillable = [
-        'date_debut',
-        'date_fin',
+        'heure_debut',
+        'heure_fin',
     ];
     
     public function horaires()
