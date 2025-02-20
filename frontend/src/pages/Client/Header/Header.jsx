@@ -50,11 +50,11 @@ const Header = () => {
                 <img src={logo} alt="Logo" className="h-8" />
               </Link>
 
-              
+
               <div className={`absolute top-full left-0 bg-white dark:bg-gray-800 shadow-lg rounded-md w-48 mt-2 z-50 ${showDropdown ? "block" : "hidden"}`}>
                 <ul className="flex flex-col lg:flex">
                   <li>
-                    <Link to="/boutique" className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700">Page Boutique</Link>
+                    <Link to="/shop" className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700">Page Boutique</Link>
                   </li>
                   <li>
                     <Link to="/contact" className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700">Contactez-nous</Link>

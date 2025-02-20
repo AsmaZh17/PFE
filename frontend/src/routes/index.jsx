@@ -11,7 +11,7 @@ import Dashboard from "@/pages/Admin/Content/Dashboard/Dashboard";
 import Produits from "@/pages/Admin/Content/Product Management/Produits";
 import Categories from "@/pages/Admin/Content/Product Management/Categories";
 import { ProtectedRoutes, ProtectedAuthRoutes } from "@/utils/ProtectedRoutes";
-import Boutique from "../pages/Boutique/Boutique";
+
 
 const routes = [
   {
@@ -29,7 +29,6 @@ const routes = [
     element: <UserInterface />,
     children: [
       { path: "", element: <Home /> },
-      { path: "boutique", element: <Boutique /> },
       { path: "shop", element: <Shop /> },
       { path: "", element: <ProtectedRoutes />, children: [
         { path: "cart", element: <Home /> },
