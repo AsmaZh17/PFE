@@ -11,6 +11,8 @@ class Facture extends Model
     
     use HasFactory;
 
+    protected $primaryKey = 'facture_id';
+
     protected $fillable = [
         'date',
         'tva',

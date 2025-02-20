@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Fournisseur;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class FournisseurController extends Controller
+class FournisseurController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except:['index','show'])
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Fournisseur::all();
     }
 
     /**
@@ -26,9 +35,10 @@ class FournisseurController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Fournisseur $fournisseur)
+    public function show($id)
     {
-        //
+        $fournisseur = Fournisseur::findOrFail($id);
+        return response()->json($fournisseur);
     }
 
     /**
@@ -42,8 +52,10 @@ class FournisseurController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Fournisseur $fournisseur)
+    public function destroy($id)
     {
-        //
+        $fournisseur = Fournisseur::findOrFail($id);
+        $fournisseur->delete();
+        return response()->json(['message' => 'Fournisseur avec id ' . $fournisseur->id . ' effacer avec succés'], 200);
     }
 }

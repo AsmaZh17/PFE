@@ -31,9 +31,9 @@ export const UserProvider = ({ children }) => {
 export const ProtectedRoutes = () => {
     const { user } = useContext(UserContext);
     
-    /*if (!user) {
+    if (!user) {
         return <div>Chargement...</div>;
-    }*/
+    }
     return user ? <Outlet /> : <Navigate to="/login" />;
 };
 

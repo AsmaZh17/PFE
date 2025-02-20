@@ -72,6 +72,6 @@ class JourFerieController extends Controller implements HasMiddleware
     {
         $jourFerie = JourFerie::findOrFail($id);
         $jourFerie->delete();
-        return response()->json(['message' => 'Jour férié avec id ' . $jourFerie->id . ' supprimé avec succès'], 200);
+        return response()->json(['message' => 'Jour férié avec id ' . $jourFerie->jour_ferie_id . ' supprimé avec succès'], 200);
     }
 }

@@ -8,6 +8,7 @@ import ResetPassword from "@/pages/Authentification/ResetPassword";
 import Home from "@/pages/Client/Content/Home";
 import Dashboard from "@/pages/Admin/Content/Dashboard/Dashboard";
 import Produits from "@/pages/Admin/Content/Product Management/Produits";
+import Categories from "@/pages/Admin/Content/Product Management/Categories";
 import { ProtectedRoutes, ProtectedAuthRoutes } from "@/utils/ProtectedRoutes";
 import Boutique from "../pages/Boutique/Boutique";
 
@@ -47,7 +48,7 @@ const routes = [
         children: [
           { path: "dashboard", element: <Dashboard /> },
           { path: "produits", element: <Produits /> },
-          { path: "categories", element: <Dashboard /> },
+          { path: "categories", element: <Categories /> },
           { path: "marques", element: <Dashboard /> },
           { path: "clients", element: <Dashboard /> },
           { path: "utilisateurs", element: <Dashboard /> },

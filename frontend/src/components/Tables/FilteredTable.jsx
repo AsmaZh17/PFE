@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { ArrowDownToLine, Plus, Search, ChevronDown, ArrowDownAZ, ArrowUpAZ, Trash2Icon } from "lucide-react";
-import FilterButtons from "./FilterButtons";
-import Pagination from "./Pagination";
-import EmptyState from "./EmptyState";
-import img from "../../../../../assets/default/image.png";
-import DeleteModal from "./Modals/DeleteModal";
-import ViewModal from "./Modals/ViewModal";
-import FormModal from "./Modals/FormModal";
+import FilterButtons from "@/components/Tables/FilterButtons";
+import Pagination from "@/components/Pagination/Pagination";
+import EmptyState from "@/components/Tables/EmptyState";
+import img from "@/assets/default/image.png";
+import DeleteModal from "@/components/Modals/DeleteModal";
+import ViewModal from "@/components/Modals/ViewModal";
+import FormModal from "@/components/Modals/FormModal";
 import Checkbox from "@/components/ui/Checkbox";
 
 const FilteredTable = ({ label, datas, viewData, filtres, columns, formActions }) => {

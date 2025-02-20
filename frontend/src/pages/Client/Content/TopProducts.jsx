@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import Img1 from "@/assets/shirt/shirt.png";
 import Img2 from "@/assets/shirt/shirt2.png";
 import Img3 from "@/assets/shirt/shirt3.png";
@@ -46,8 +46,8 @@ const TopProducts = ({ handleOrderPopup }) => {
         </div>
         {/* Body section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20 md:gap-5 place-items-center">
-          {ProductsData.map((data) => (
-            <div
+          {ProductsData.map((data, index) => (
+            <div key={index}
               data-aos="zoom-in"
               className="rounded-2xl bg-white dark:bg-purpleLight hover:bg-black/80 dark:hover:bg-primary hover:text-white relative shadow-xl duration-300 group max-w-[300px]"
             >

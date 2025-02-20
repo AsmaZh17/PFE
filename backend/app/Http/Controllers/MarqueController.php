@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Marque;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class MarqueController extends Controller
+class MarqueController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except:['index','show'])
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Marque::all();
     }
 
     /**
@@ -26,9 +35,10 @@ class MarqueController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Marque $marque)
+    public function show($id)
     {
-        //
+        $marque = Marque::findOrFail($id);
+        return response()->json($marque);
     }
 
     /**
@@ -42,8 +52,10 @@ class MarqueController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Marque $marque)
+    public function destroy($id)
     {
-        //
+        $marque = Marque::findOrFail($id);
+        $marque->delete();
+        return response()->json(['message' => 'Marque avec id ' . $marque->marque_id . ' effacer avec succés'], 200);
     }
 }

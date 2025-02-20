@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Livraison;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class LivraisonController extends Controller
+class LivraisonController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except:['index','show'])
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Livraison::all();
     }
 
     /**
@@ -26,9 +35,10 @@ class LivraisonController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Livraison $livraison)
+    public function show($id)
     {
-        //
+        $livraison = Livraison::findOrFail($id);
+        return response()->json($livraison);
     }
 
     /**
@@ -42,8 +52,10 @@ class LivraisonController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Livraison $livraison)
+    public function destroy($id)
     {
-        //
+        $livraison = Livraison::findOrFail($id);
+        $livraison->delete();
+        return response()->json(['message' => 'Livraison avec id ' . $livraison->commande_id . ' effacer avec succés'], 200);
     }
 }

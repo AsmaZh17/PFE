@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\JourEnum;
 use App\Models\Horaire;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Validation\Rule;
 
-class HoraireController extends Controller
+class HoraireController extends Controller implements HasMiddleware
 {
     public static function middleware()
     {
@@ -22,7 +26,12 @@ class HoraireController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'jour' => 'required|string|max:255',
+            'jour' => [
+                'required',
+                'string',
+                'unique:horaires,jour',
+                Rule::in(JourEnum::cases()),
+            ],
             'ouvert' => 'required|boolean',
         ]);
         
@@ -42,7 +51,12 @@ class HoraireController extends Controller
         $horaire = Horaire::findOrFail($id);
 
         $validatedData = $request->validate([
-            'jour' => 'required|string|max:255',
+            'jour' => [
+                'required',
+                'string',
+                'unique:horaires,jour',
+                Rule::in(JourEnum::cases()),
+            ],
             'ouvert' => 'required|boolean',
         ]);
         
