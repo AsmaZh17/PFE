@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import { Grid, List } from "lucide-react";
 import { useState } from "react";
-
 
 const FiltreHeader = ({ onChange, onToggleView, isGrid }) => {
   const [columns, setColumns] = useState(2);
