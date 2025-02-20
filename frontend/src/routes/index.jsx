@@ -6,6 +6,7 @@ import Register from "@/pages/Authentification/Register";
 import ForgetPassword from "@/pages/Authentification/ForgetPassword";
 import ResetPassword from "@/pages/Authentification/ResetPassword";
 import Home from "@/pages/Client/Content/Home";
+import Shop from "@/pages/Client/Content/Shop";
 import Dashboard from "@/pages/Admin/Content/Dashboard/Dashboard";
 import Produits from "@/pages/Admin/Content/Product Management/Produits";
 import Categories from "@/pages/Admin/Content/Product Management/Categories";
@@ -29,6 +30,7 @@ const routes = [
     children: [
       { path: "", element: <Home /> },
       { path: "boutique", element: <Boutique /> },
+      { path: "shop", element: <Shop /> },
       { path: "", element: <ProtectedRoutes />, children: [
         { path: "cart", element: <Home /> },
       ] }

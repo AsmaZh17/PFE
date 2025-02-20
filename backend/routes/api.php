@@ -4,20 +4,20 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CodePromotionController;
+use App\Http\Controllers\CommandeLivraisonController;
+use App\Http\Controllers\CommandeRetraitDriveController;
 use App\Http\Controllers\JourFerieController;
 use App\Http\Controllers\HoraireController;
 use App\Http\Controllers\DetailFactureController;
 use App\Http\Controllers\FactureCommandeController;
 use App\Http\Controllers\FactureFournisseurController;
 use App\Http\Controllers\FournisseurController;
-use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\LivreurController;
 use App\Http\Controllers\MarqueController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\PeriodeHoraireController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\PromotionController;
-use App\Http\Controllers\RetraitDriveController;
 use App\Http\Controllers\SousCategorieController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,8 +40,8 @@ Route::apiResource('detailFactures', DetailFactureController::class); //tester (
 Route::apiResource('factureCommandes', FactureCommandeController::class); //tester (a modifier)
 Route::apiResource('factureFournisseurs', FactureFournisseurController::class); //tester
 
-Route::apiResource('commandeLivraisons', LivraisonController::class);
-Route::apiResource('commandeRetraitDrives', RetraitDriveController::class);
+Route::apiResource('commandeLivraisons', CommandeLivraisonController::class);
+Route::apiResource('commandeRetraitDrives', CommandeRetraitDriveController::class);
 
 Route::apiResource('admins', AdminController::class);
 Route::apiResource('clients', ClientController::class);
