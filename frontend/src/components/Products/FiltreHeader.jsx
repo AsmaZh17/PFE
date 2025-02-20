@@ -1,8 +1,8 @@
-/* eslint-disable react/prop-types */
 import { Grid, List } from "lucide-react";
 import { useState } from "react";
 
-const FiltreHeader = ({ onChange }) => {
+
+const FiltreHeader = ({ onChange, onToggleView, isGrid }) => {
   const [columns, setColumns] = useState(2);
 
   const handleSelect = (cols) => {
@@ -13,11 +13,17 @@ const FiltreHeader = ({ onChange }) => {
   return (
     <div className="mt-4 flex items-center justify-between">
         <div className="flex gap-3">
-            <button className="p-2 rounded-md hover:bg-gray-200">
-            <Grid className="w-5 h-5 text-gray-600" />
+            <button 
+              className={`p-2 rounded-md hover:bg-gray-200 ${isGrid ? "bg-gray-300" : ""}`} 
+              onClick={() => onToggleView(true)}
+            >
+                <Grid className="w-5 h-5 text-gray-600" />
             </button>
-            <button className="p-2 rounded-md hover:bg-gray-200">
-            <List className="w-5 h-5 text-gray-600" />
+            <button 
+              className={`p-2 rounded-md hover:bg-gray-200 ${!isGrid ? "bg-gray-300" : ""}`} 
+              onClick={() => onToggleView(false)}
+            >
+                <List className="w-5 h-5 text-gray-600" />
             </button>
             <div className="flex gap-2">
                 {[2, 3, 4, 6].map((cols) => (
