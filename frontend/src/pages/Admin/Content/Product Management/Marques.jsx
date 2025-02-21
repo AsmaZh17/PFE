@@ -73,7 +73,7 @@ const Marques = () => {
   return (
     <>
       <Header title="Marques" icon={Layers2Icon} parent="Gestion des produits" current="Marques" />
-      <FilteredTable formActions={formActions} label={"Marques"} datas={formattedMarques}/>
+      <FilteredTable formActions={formActions} label={"Marques"} datas={formattedMarques} identifiant={"marque_id"}/>
     </>
   );
 };

@@ -10,7 +10,7 @@ import ViewModal from "@/components/Modals/ViewModal";
 import FormModal from "@/components/Modals/FormModal";
 import Checkbox from "@/components/ui/Checkbox";
 
-const FilteredTable = ({ label, datas, viewData, filtres, formActions }) => {
+const FilteredTable = ({ label, datas, viewData, filtres, formActions, identifiant }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedFilter, setSelectedFilter] = useState("Tous");
 
@@ -98,7 +98,7 @@ const FilteredTable = ({ label, datas, viewData, filtres, formActions }) => {
                                         <Plus size={17}/><span>Ajouter {label.slice(0, -1)}</span>
                                     </button>
                                     {isAddOpen && (
-                                        <FormModal isOpen={isAddOpen} onClose={() => setIsAddOpen(false)} label={label} header={true} action="Ajouter" formData={formActions.formData} setFormData={formActions.setFormData} fields={formActions.fields} onSubmit={async () => { await formActions.handleCreate(); setIsAddOpen(false); }}  />
+                                        <FormModal isOpen={isAddOpen} onClose={() => setIsAddOpen(false)} formLabel={label} header={true} action="Ajouter" formData={formActions.formData} setFormData={formActions.setFormData} fields={formActions.fields} onSubmit={async () => { await formActions.handleCreate(); setIsAddOpen(false); }}  />
                                     )}
                                 </>
                             </div>
@@ -134,7 +134,8 @@ const FilteredTable = ({ label, datas, viewData, filtres, formActions }) => {
                         </div>
 
                         {data.length > 0 && currentItems.length > 0 ? (
-                            <div className="mt-6 py-2 flex flex-col w-full max-w-sm sm:max-w-[310px] md:max-w-3xl w-990:max-w-[650px] lg:max-w-full max-h-[400px] overflow-y-auto">
+                            <div className="mt-6 py-2 flex flex-col w-full max-w-[100vh] lg:max-w-full max-h-[400px] overflow-y-auto">
+                            {/* <div className="mt-6 py-2 flex flex-col w-full max-w-sm sm:max-w-[310px] md:max-w-3xl w-990:max-w-[650px] lg:max-w-full max-h-[400px] overflow-y-auto"> */}
                                 <div className="overflow-x-auto scrollbar">
                                     <table className="min-w-full">
                                         <thead>
@@ -164,11 +165,15 @@ const FilteredTable = ({ label, datas, viewData, filtres, formActions }) => {
                                                                     {item[column.key].length > 70 ? item[column.key].substring(0, 70) + '...' : item[column.key]}
                                                                 </h4>
                                                             )}
-                                                            {column.type === "id" && (
-                                                                <h4 className="text-gray-700 dark:text-gray-200">
-                                                                    {item[column.key].length > 70 ? item[column.key].substring(0, 70) + '...' : item[column.key]}
-                                                                </h4>
-                                                            )}
+                                                            {column.type === "id" && column.options && (() => {
+                                                                const selectedOption = column.options.find(option => option.value === item[column.key]);
+                                                                return selectedOption ? (
+                                                                    <h4 className="text-gray-700 dark:text-gray-200">
+                                                                        {selectedOption.label} 
+                                                                    </h4>
+                                                                ) : null;
+                                                            })()}
+
                                                             {column.type === "img" && (
                                                                 <div className="flex items-center">
                                                                     <img src={item[column.key] ? (`/${label}/${item[column.key]}`) : img} alt="Image" 
@@ -203,7 +208,7 @@ const FilteredTable = ({ label, datas, viewData, filtres, formActions }) => {
                                                                 <div className="flex items-center gap-x-3">
                                                                     {item.actions.view && (
                                                                         <>
-                                                                            <button onClick={() => {setIsViewOpen(true); item.actions.view(item.id);}} type="button" className="text-gray-500 transition-colors duration-200 dark:hover:text-blue-500 dark:text-gray-300 hover:text-blue-500 focus:outline-none">
+                                                                            <button onClick={() => {setIsViewOpen(true); item.actions.view(item[identifiant]);}} type="button" className="text-gray-500 transition-colors duration-200 dark:hover:text-blue-500 dark:text-gray-300 hover:text-blue-500 focus:outline-none">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                                                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5c-4.688 0-8.625 3.135-10.5 7.5 1.875 4.365 5.813 7.5 10.5 7.5s8.625-3.135 10.5-7.5c-1.875-4.365-5.813-7.5-10.5-7.5z" />
                                                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
@@ -214,19 +219,19 @@ const FilteredTable = ({ label, datas, viewData, filtres, formActions }) => {
                                                                     )}
                                                                     {item.actions.edit && (
                                                                         <>
-                                                                            <button onClick={() => {setIsEditOpen(true); item.actions.edit(item.id);}} className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                                                            <button onClick={() => {setIsEditOpen(true); item.actions.edit(item[identifiant]);}} className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                                                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                                                                 </svg>
                                                                             </button>
                                                                             {isEditOpen && (
-                                                                                <FormModal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} label={label} action="Modifier" formData={formActions.formData} setFormData={formActions.setFormData} fields={formActions.fields} onSubmit={async () => { await formActions.handleEdit(); setIsEditOpen(false); }} />
+                                                                                <FormModal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} formLabel={label} action="Modifier" formData={formActions.formData} setFormData={formActions.setFormData} fields={formActions.fields} onSubmit={async () => { await formActions.handleEdit(); setIsEditOpen(false); }} />
                                                                             )}
                                                                         </>
                                                                     )}
                                                                     {item.actions.delete && (
                                                                         <>
-                                                                            <button onClick={() => {setIsDeleteOpen(true); setItemToDelete(item.id)}} type="button" className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                                                                            <button onClick={() => {setIsDeleteOpen(true); setItemToDelete(item[identifiant])}} type="button" className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                                                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                                                                 </svg>

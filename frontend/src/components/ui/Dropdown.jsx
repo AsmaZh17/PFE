@@ -6,7 +6,7 @@ const Dropdown = ({ label, name, options, selectedValue, onSelect, isOpen, toggl
   return (
     <div className="">
       <div className="relative">
-        <Input value={selectedOption ? `${selectedOption.value} - ${selectedOption.label}` : `Select a ${label}`} name={name} onClick={toggleOpen} required readOnly/>
+        <Input value={selectedOption ? `${selectedOption.value} - ${selectedOption.label}` :  `Select a ${label}`} name={name} onClick={toggleOpen} required readOnly/>
         {isOpen && (
           <div className="absolute mt-1 z-50 w-full bg-customLight dark:bg-contentDark border border-gray-300 dark:border-borderDark rounded-md shadow-lg">
             {options.map((option, index) => (

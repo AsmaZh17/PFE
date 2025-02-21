@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class LivreurController extends Controller implements HasMiddleware
 {
@@ -37,7 +38,6 @@ class LivreurController extends Controller implements HasMiddleware
             'nom' => 'required|max:255',
             'prenom' => 'required|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
             'telephone' => 'string',
             'genre' => 'string',
             'date_naissance' => 'string'
@@ -45,7 +45,7 @@ class LivreurController extends Controller implements HasMiddleware
 
         $validatedData['role'] = RoleEnum::LIVREUR->value;
 
-        $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['password'] = Hash::make($validatedData['nom'].$validatedData['prenom']);
 
         $user = User::create($validatedData);
         
@@ -80,14 +80,17 @@ class LivreurController extends Controller implements HasMiddleware
         $validatedData = $request->validate([
             'nom' => 'required|max:255',
             'prenom' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($livreur->id),
+            ],
             'telephone' => 'string',
             'genre' => 'string',
             'date_naissance' => 'string'
         ]);
 
-        $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['password'] = Hash::make($validatedData['nom'].$validatedData['prenom']);
         
         $livreur->update($validatedData);
 

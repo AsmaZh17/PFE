@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class FournisseurController extends Controller implements HasMiddleware
 {
@@ -79,7 +80,11 @@ class FournisseurController extends Controller implements HasMiddleware
         $validatedData = $request->validate([
             'nom' => 'required|max:255',
             'prenom' => 'required|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($fournisseur->id),
+            ],
             'telephone' => 'string',
             'genre' => 'string',
             'date_naissance' => 'string'

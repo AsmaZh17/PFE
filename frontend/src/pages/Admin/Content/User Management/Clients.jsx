@@ -1,72 +1,79 @@
 import { useEffect, useState } from "react";
 import Header from "../Header";
-import { getCategories, getCategorie, createCategorie, updateCategorie, deleteCategorie } from "@/service/CategorieService";
+import { getClients, getClient, createClient, updateClient, deleteClient } from "@/service/ClientService";
 import { Layers2Icon } from "lucide-react";
 import FilteredTable from "@/components/Tables/FilteredTable";
 
 const Clients = () => {
-  const [formData, setFormData] = useState({title: "", image: "", rang: "" });
-  const [categories, setCategories] = useState([]);
+  const [formData, setFormData] = useState({ nom: "", prenom: "", telephone: "", email: "", password: "", password_confirmation: "", date_naissance: "", genre: "" });
+  
+  const [clients, setClients] = useState([]);
 
   const columns = [
-    { label: "Titre", key: "titre", type: "text" },
-    { label: "Image", key: "image", type: "img" },
-    { label: "Date de création", key: "created_at", type: "date" },
-    { label: "Rang", key: "rang", type: "progress" },
+    { label: "Nom", key: "nom", type: "text" },
+    { label: "Prénom", key: "prenom", type: "text" },
+    { label: "Téléphone", key: "telephone", type: "text" },
+    { label: "Email", key: "email", type: "text" },
+    { label: "Date de naissance", key: "date_naissance", type: "date" },
+    { label: "Genre", key: "genre", type: "text" },
     { label: "Actions", key: "actions", type: "actions" }
-  ];
+  ];  
   const fields = [
-    { label: "Titre", key: "titre", type: "text" },
-    { label: "Rang", key: "rang", type: "number" },
-    { label: "Image", key: "image", type: "image" }
+    { label: "Nom", key: "nom", type: "text" },
+    { label: "Prénom", key: "prenom", type: "text" },
+    { label: "Téléphone", key: "telephone", type: "text" },
+    { label: "Email", key: "email", type: "email" },
+    { label: "Date de naissance", key: "date_naissance", type: "date" },
+    { label: "Genre", key: "genre", type: "genre" }
   ];
+  
 
-  useEffect(() => { (async () => setCategories(await getCategories()))()}, [categories]);
+  useEffect(() => { (async () => setClients(await getClients()))()}, [clients]);
 
-  const handleCategorie = async (id) => {
+  const handleClient = async (id) => {
     try {
       console.log(id);
-      const categorie = await getCategorie(id);
-      setFormData(categorie);
+      const client = await getClient(id);
+      setFormData(client);
     } catch (error) {
-      console.error("Erreur lors de la récupération du categorie:", error);
-      alert('Une erreur est survenue lors de la récupération du categorie');
+      console.error("Erreur lors de la récupération du client:", error);
+      alert('Une erreur est survenue lors de la récupération du client');
     }
   };
   const handleCreate = async () => {
     try {
-      await createCategorie(formData);
-      setCategories((prevCategories) => prevCategories.filter(categorie => categorie.id !== formData.id));
-      alert(`Categorie ajouter avec succès`);
+      await createClient(formData);
+      setClients((prevClients) => prevClients.filter(client => client.id !== formData.id));
+      alert(`Client ajouter avec succès`);
     } catch (error) {
       console.error("Erreur d'ajout:", error);
-      alert('Une erreur est survenue lors de l\'ajout du categorie');
+      alert('Une erreur est survenue lors de l\'ajout du client');
     }
   }; 
   const handleEdit = async () => {
     try {      
-      await updateCategorie(formData.id, formData);
-      setCategories((prevCategories) => prevCategories.filter(categorie => categorie.id !== formData.id));
-      alert(`Categorie avec l'ID ${formData.id} modifié avec succès`);
+      await updateClient(formData.id, formData);
+      setClients((prevClients) => prevClients.filter(client => client.id !== formData.id));
+      alert(`Client avec l'ID ${formData.id} modifié avec succès`);
     } catch (error) {
       console.error("Erreur de modification:", error);
-      alert("Une erreur est survenue lors de la modification du categorie");
+      alert("Une erreur est survenue lors de la modification du client");
     }
   };
   const handleDelete = async (id) => {
     try {
-      await deleteCategorie(id);
-      setCategories((prevPosts) => prevPosts.filter(post => post.id !== id));
-      alert(`Categorie with id ${id} supprimé avec succès`);
+      await deleteClient(id);
+      setClients((prevPosts) => prevPosts.filter(post => post.id !== id));
+      alert(`Client with id ${id} supprimé avec succès`);
     } catch (error) {
       console.error("Erreur de suppression:", error);
-      alert('Une erreur est survenue lors de la suppression du categorie');
+      alert('Une erreur est survenue lors de la suppression du client');
     }
   };
 
-  const formattedCategories = categories.map((item) => ({ ...item,
+  const formattedClients = clients.map((item) => ({ ...item,
     actions: {
-      edit: () => handleCategorie(item.categorie_id),
+      edit: () => handleClient(item.id),
       delete: (id) => handleDelete(id)
     }
   }));
@@ -75,8 +82,8 @@ const Clients = () => {
 
   return (
     <>
-      <Header title="Categories" icon={Layers2Icon} parent="Gestion des produits" current="Categories" />
-      <FilteredTable formActions={formActions} label={"categories"} datas={formattedCategories} />
+      <Header title="Clients" icon={Layers2Icon} parent="Gestion des produits" current="Clients" />
+      <FilteredTable formActions={formActions} label={"clients"} datas={formattedClients} identifiant={"id"}/>
     </>
   );
 };

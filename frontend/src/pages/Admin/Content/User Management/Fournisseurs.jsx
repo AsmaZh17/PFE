@@ -63,7 +63,7 @@ const Fournisseurs = () => {
   const handleDelete = async (id) => {
     try {
       await deleteFournisseur(id);
-      setFournisseurs((prevPosts) => prevPosts.filter(post => post.id !== id));
+      setFournisseurs((prevFournisseurs) => prevFournisseurs.filter(fournisseur => fournisseur.id !== formData.id));
       alert(`Fournisseur with id ${id} supprimé avec succès`);
     } catch (error) {
       console.error("Erreur de suppression:", error);
@@ -73,7 +73,7 @@ const Fournisseurs = () => {
 
   const formattedFournisseurs = fournisseurs.map((item) => ({ ...item,
     actions: {
-      edit: () => handleFournisseur(item.fournisseur_id),
+      edit: () => handleFournisseur(item.id),
       delete: (id) => handleDelete(id)
     }
   }));
@@ -83,7 +83,7 @@ const Fournisseurs = () => {
   return (
     <>
       <Header title="Fournisseurs" icon={Layers2Icon} parent="Gestion des produits" current="Fournisseurs" />
-      <FilteredTable formActions={formActions} label={"fournisseurs"} datas={formattedFournisseurs} />
+      <FilteredTable formActions={formActions} label={"fournisseurs"} datas={formattedFournisseurs} identifiant={"id"} />
     </>
   );
 };

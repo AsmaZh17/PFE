@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../Header";
 import { getSousCategories, getSousCategorie, createSousCategorie, updateSousCategorie, deleteSousCategorie } from "@/service/SousCategorieService";
+import { getCategories } from "@/service/CategorieService";
 import { Layers3Icon } from "lucide-react";
 import FilteredTable from "@/components/Tables/FilteredTable";
 
@@ -11,10 +12,10 @@ const SousCategories = () => {
     categorie_id: categories.map(cat => ({ value: cat.categorie_id, label: cat.titre }))
   };
 
-  const [formData, setFormData] = useState({sous_categorie_id: "", title: "", image: "", categorie_id: ""});
+  const [formData, setFormData] = useState({sous_categorie_id: "", titre: "", image: "", categorie_id: ""});
   const columns = [
     { label: "Titre", key: "titre", type: "text" },
-    { label: "Categorie", key: "categorie_id", type: "id", categories: dropdownOptions.categorie_id},
+    { label: "Categorie", key: "categorie_id", type: "id", options: dropdownOptions.categorie_id},
     { label: "Image", key: "image", type: "img" },
     { label: "Date de création", key: "created_at", type: "date" },
     { label: "Actions", key: "actions", type: "actions" }
@@ -29,9 +30,7 @@ const SousCategories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/categories"); // Remplacez par votre API
-        const data = await response.json();
-        setCategories(data);
+        setCategories(await getCategories());
       } catch (error) {
         console.error("Erreur lors de la récupération des catégories :", error);
       }
@@ -91,7 +90,7 @@ const SousCategories = () => {
   return (
     <>
       <Header title="SousCategories" icon={Layers3Icon} parent="Gestion des produits" current="SousCategories" />
-      <FilteredTable formActions={formActions} label={"SousCategories"} datas={formattedSousCategories} />
+      <FilteredTable formActions={formActions} label={"SousCategories"} datas={formattedSousCategories} identifiant={"sous_categorie_id"} />
     </>
   );
 };

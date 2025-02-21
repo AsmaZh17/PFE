@@ -11,7 +11,10 @@ const getLivreurs = async () => {
   const createLivreur = async (formData) => {
     const res = await fetch("/api/livreurs", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      },
       body: JSON.stringify(formData),
     });
     return res.ok ? res.json() : Promise.reject(res.json());
@@ -20,7 +23,10 @@ const getLivreurs = async () => {
   const updateLivreur = async (_id, formData) => {
     const res = await fetch(`/api/livreurs/${_id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      },
       body: JSON.stringify(formData),
     });
     return res.ok ? res.json() : Promise.reject(res.json());
@@ -29,6 +35,7 @@ const getLivreurs = async () => {
   const deleteLivreur = async (_id) => {
     const res = await fetch(`/api/livreurs/${_id}`, {
       method: "DELETE",
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     return res.ok ? res.json() : Promise.reject(res.json());
   };

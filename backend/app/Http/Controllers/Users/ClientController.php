@@ -25,7 +25,7 @@ class ClientController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        return Client::all();
+        return Client::where('role', 'client')->get();
     }
 
     /**
@@ -37,7 +37,6 @@ class ClientController extends Controller implements HasMiddleware
             'nom' => 'required|max:255',
             'prenom' => 'required|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
             'telephone' => 'string',
             'genre' => 'string',
             'date_naissance' => 'string'
@@ -45,7 +44,7 @@ class ClientController extends Controller implements HasMiddleware
 
         $validatedData['role'] = RoleEnum::CLIENT->value;
 
-        $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['password'] = Hash::make($validatedData['nom'].$validatedData['prenom']);
 
         $user = User::create($validatedData);
         

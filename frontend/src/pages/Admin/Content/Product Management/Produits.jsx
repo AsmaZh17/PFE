@@ -1,133 +1,68 @@
 import { useEffect, useState } from "react";
 import Header from "../Header";
 import { getProduits, getProduit, createProduit, updateProduit, deleteProduit } from "@/service/ProduitService";
+import { getSousCategories } from "@/service/SousCategorieService";
+import { getMarques } from "@/service/MarqueService";
+import { getFournisseurs } from "@/service/FournisseurService";
 import { Layers2Icon } from "lucide-react";
 import FilteredTable from "@/components/Tables/FilteredTable";
 
 const Produits = () => {
-  const [formData, setFormData] = useState({nom: "", description: "", status: "", image: "", prix: "", sous_categorie_id: "", marque_id: ""});
+  const filtres = { field: "status", value: ['Tous', 'Disponible', 'Rupture de stock'] };
+
+  const [formData, setFormData] = useState({nom: "", description: "", status: "", image: "", prix: "", sous_categorie_id: "", marque_id: "", fournisseur_id: ""});
   const [produits, setProduits] = useState([]);
 
   const [sousCategories, setSousCategories] = useState([]);
-  // const dropdownOptions1 = {    
-  //   sous_categorie_id: sousCategories.map(cat => ({ value: cat.sous_categorie_id, label: cat.titre }))
-  // };
-
+  const dropdownSousCategoriesOptions = {    
+    sous_categorie_id: sousCategories.map(sousCategorie => ({ value: sousCategorie.sous_categorie_id, label: sousCategorie.titre }))
+  };
   const [marques, setMarques] = useState([]);
-  // const dropdownOptions2 = {    
-  //   marque_id: marques.map(marque => ({ value: marque.marque_id, label: marque.nom }))
-  // };
+  const dropdownMarquesOptions = {    
+    marque_id: marques.map(marque => ({ value: marque.marque_id, label: marque.nom }))
+  };
   const [fournisseurs, setFournisseurs] = useState([]);
-
-  const [dropdownOptions1, setDropdownOptions1] = useState([]);
-  const [dropdownOptions2, setDropdownOptions2] = useState([]);
-  const [dropdownOptions3, setDropdownOptions3] = useState([]);
-
-
-
-
-  
+  const dropdownFournisseursOptions = {    
+    fournisseur_id: fournisseurs.map(fournisseur => ({ value: fournisseur.id, label: fournisseur.nom + ' ' + fournisseur.prenom }))
+  };
 
   const columns = [
     { label: "Titre", key: "nom", type: "text" },
-  { label: "Description", key: "description", type: "text" },
-  { label: "Status", key: "status", type: "enum" },
-  { label: "Image", key: "image", type: "img" },
-  { label: "Prix", key: "prix", type: "number" },
-  { label: "Sous Categorie", key: "sous_categorie_id", type: "id", options: dropdownOptions1 },
-  { label: "Marque", key: "marque_id", type: "id", options: dropdownOptions2 },
-  { label: "Fournisseur", key: "fournisseur_id", type: "id", options: dropdownOptions3 },
-  { label: "Date de création", key: "created_at", type: "date" },
-  { label: "Actions", key: "actions", type: "actions" }
+    { label: "Image", key: "image", type: "img" },
+    { label: "Sous Categorie", key: "sous_categorie_id", type: "id", options: dropdownSousCategoriesOptions.sous_categorie_id },
+    { label: "Marque", key: "marque_id", type: "id", options: dropdownMarquesOptions.marque_id },
+    { label: "Prix", key: "prix", type: "text" },
+    { label: "Status", key: "status", type: "text" },
+    { label: "Actions", key: "actions", type: "actions" }
+    /*
+    { label: "Fournisseur", key: "fournisseur_id", type: "id", options: dropdownFournisseursOptions.fournisseur_id },
+    { label: "Date de création", key: "created_at", type: "date" },
+     */
   ];
   const fields = [
     { label: "Titre", key: "nom", type: "text" },
-  { label: "Description", key: "description", type: "text" },
-  { label: "Prix", key: "prix", type: "number" },
-  { label: "Image", key: "image", type: "image" },
-  { label: "Sous Categorie", key: "sous_categorie_id", type: "dropdown", options: dropdownOptions1 },
-  { label: "Marque", key: "marque_id", type: "dropdown", options: dropdownOptions2 },
-  { label: "Fournisseur", key: "fournisseur_id", type: "id", options: dropdownOptions3 }
+    { label: "Prix", key: "prix", type: "number" },
+    { label: "Image", key: "image", type: "image" },
+    { label: "Sous Categorie", key: "sous_categorie_id", type: "dropdown", options: dropdownSousCategoriesOptions.sous_categorie_id },
+    { label: "Marque", key: "marque_id", type: "dropdown", options: dropdownMarquesOptions.marque_id },
+    { label: "Fournisseur", key: "fournisseur_id", type: "dropdown", options: dropdownFournisseursOptions.fournisseur_id },
+    { label: "Description", key: "description", type: "textarea" },
   ];
 
   useEffect(() => { (async () => setProduits(await getProduits()))(); }, []);
-
-  // useEffect(() => {
-  //   const fetchSousCategories = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:8000/api/sousCategories");
-  //     const data = await response.json();
-  //     setSousCategories(data);
-  //     setDropdownOptions1(data.map(cat => ({ value: cat.sous_categorie_id, label: cat.titre })));
-  //   } catch (error) {
-  //     console.error("Erreur lors de la récupération des sous-catégories :", error);
-  //   }
-  // };
-
-  //   fetchSousCategories();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchMarques = async () => {
-  //     try {
-  //       const response = await fetch("http://localhost:8000/api/marques");
-  //       const data = await response.json();
-  //       setMarques(data);
-  //       setDropdownOptions2(data.map(marque => ({ value: marque.marque_id, label: marque.nom })));
-  //     } catch (error) {
-  //       console.error("Erreur lors de la récupération des marques :", error);
-  //     }
-  //   };
-
-  //   fetchMarques();
-  // }, []);
-
-  //   useEffect(() => {
-  //     const fetchFournisseurs = async () => {
-  //       try {
-  //         const response = await fetch("http://localhost:8000/api/fournisseurs");
-  //         const data = await response.json();
-  //         setFournisseurs(data);
-  //         setDropdownOptions3(data.map(fournisseurs => ({ value: fournisseurs.fournisseur_id, label: fournisseurs.nom })));
-  //       } catch (error) {
-  //         console.error("Erreur lors de la récupération des marques :", error);
-  //       }
-  //     };
-  //     fetchFournisseurs();
-  //   }, []);
-
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCategories = async () => {
       try {
-        const [produitsData, sousCategoriesData, marquesData, fournisseursData] = await Promise.all([
-          getProduits(),
-          fetch("http://localhost:8000/api/sousCategories").then(res => res.json()),
-          fetch("http://localhost:8000/api/marques").then(res => res.json()),
-          fetch("http://localhost:8000/api/fournisseurs").then(res => res.json())
-        ]);
-  
-        
-        console.log("SousCategories", sousCategoriesData);
-        console.log("Marques", marquesData);
-        console.log("Fournisseurs", fournisseursData);
-        setProduits(produitsData);
-        setSousCategories(sousCategoriesData);
-        setDropdownOptions1(sousCategoriesData.map(cat => ({ value: cat.sous_categorie_id, label: cat.titre })));
-  
-        setMarques(marquesData);
-        setDropdownOptions2(marquesData.map(marque => ({ value: marque.marque_id, label: marque.nom })));
-  
-        setFournisseurs(fournisseursData);
-        setDropdownOptions3(fournisseursData.map(fournisseur => ({ value: fournisseur.fournisseur_id, label: fournisseur.nom })));
-  
+        setSousCategories(await getSousCategories());
+        setMarques(await getMarques());
+        setFournisseurs(await getFournisseurs());
       } catch (error) {
         console.error("Erreur lors de la récupération des données :", error);
       }
     };
-  
-    fetchData();
-  }, []);
-  
+
+    fetchCategories();
+  }, []);  
 
   const handleProduit = async (produit_id) => {
     try {
@@ -182,7 +117,7 @@ const Produits = () => {
   return (
     <>
       <Header title="Produits" icon={Layers2Icon} parent="Gestion des produits" current="Produits" />
-      <FilteredTable formActions={formActions} label={"produits"} datas={formattedProduits} />
+      <FilteredTable formActions={formActions} label={"produits"} datas={formattedProduits} filtres={filtres} identifiant={"produit_id"} />
     </>
   );
 };
