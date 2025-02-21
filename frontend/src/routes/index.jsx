@@ -10,7 +10,9 @@ import Shop from "@/pages/Client/Content/Shop";
 import Dashboard from "@/pages/Admin/Content/Dashboard/Dashboard";
 import Produits from "@/pages/Admin/Content/Product Management/Produits";
 import Categories from "@/pages/Admin/Content/Product Management/Categories";
+import SousCategories from "@/pages/Admin/Content/Product Management/SousCategories";
 import { ProtectedAdminRoutes, ProtectedClientRoutes, ProtectedAuthRoutes } from "@/utils/ProtectedRoutes";
+import Marques from "../pages/Admin/Content/Product Management/Marques";
 
 
 const routes = [
@@ -52,7 +54,8 @@ const routes = [
           { path: "dashboard", element: <Dashboard /> },
           { path: "produits", element: <Produits /> },
           { path: "categories", element: <Categories /> },
-          { path: "marques", element: <Dashboard /> },
+          { path: "sousCategories", element: <SousCategories /> },
+          { path: "marques", element: <Marques /> },
           { path: "clients", element: <Dashboard /> },
           { path: "utilisateurs", element: <Dashboard /> },
           { path: "roles", element: <Dashboard /> },

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import Header from "../Header";
-import { getCategories, getCategorie, createCategorie, updateCategorie, deleteCategorie } from "@/service/CategorieService";
+import { getCategories, createCategorie, deleteCategorie, getCategorie, updateCategorie } from "@/service/CategorieService";
 import { Layers2Icon } from "lucide-react";
 import FilteredTable from "@/components/Tables/FilteredTable";
 
-const Categories = () => {
-  const [formData, setFormData] = useState({title: "", image: "", rang: "" });
+const Marques = () => {
   const [categories, setCategories] = useState([]);
 
+  const [formData, setFormData] = useState({title: "", image: "", rang: "" });
   const columns = [
     { label: "Titre", key: "titre", type: "text" },
     { label: "Image", key: "image", type: "img" },
@@ -75,10 +75,10 @@ const Categories = () => {
 
   return (
     <>
-      <Header title="Categories" icon={Layers2Icon} parent="Gestion des produits" current="Categories" />
-      <FilteredTable formActions={formActions} label={"categories"} datas={formattedCategories} />
+      <Header title="Marques" icon={Layers2Icon} parent="Gestion des produits" current="Marques" />
+      <FilteredTable formActions={formActions} label={"Marques"} datas={formattedCategories}/>
     </>
   );
 };
 
-export default Categories;
+export default Marques;

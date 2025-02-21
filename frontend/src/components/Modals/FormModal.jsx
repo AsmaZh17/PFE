@@ -1,15 +1,17 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react"; 
 import { CgClose } from "react-icons/cg";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
 import Label from "@/components/ui/Label";
 import ImageUpload from "@/components/ui/ImageUpload";
+import Dropdown from "@/components/ui/Dropdown";
 
-const FormModal = ({ isOpen, onClose, label, header, action, formData, setFormData, fields, onSubmit }) => {
-  if (!isOpen) return null;
+const FormModal = ({ onClose, label, header, action, formData, setFormData, fields, onSubmit }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={`fixed z-50 w-full h-full inset-0 flex items-center justify-center bg-contentLight dark:bg-customDark ${header? "bg-opacity-80 dark:bg-opacity-80" : "bg-opacity-10 dark:bg-opacity-10"}`}>
+    <div className={`fixed z-50 w-full h-full inset-0 flex items-center justify-center bg-contentLight dark:bg-customDark ${header ? "!bg-opacity-80 !dark:bg-opacity-80" : "!bg-opacity-10 !dark:bg-opacity-10"}`}>
       <div className="relative p-4 w-full max-w-lg max-h-full">
         <div className="relative bg-customLight dark:bg-customDark rounded-md shadow-[0px_0px_6px_0px] shadow-gray-200 dark:shadow-borderGrayDark">
           <div className="flex items-center justify-between p-4 md:p-5 border-b dark:border-borderDark border-contentLight">
@@ -19,7 +21,7 @@ const FormModal = ({ isOpen, onClose, label, header, action, formData, setFormDa
             </button>
           </div>
           <div className="p-4 md:p-5 space-y-4 max-h-[80vh] scrollbar overflow-y-auto">
-            {fields.map(({ label, key, type }) => (
+            {fields.map(({ label, key, type, options }) => (
               <div key={key} className="mb-4 flex flex-col">
                 <Label label={label} />
                 {(type === "text" || type === "number") && 
@@ -30,6 +32,17 @@ const FormModal = ({ isOpen, onClose, label, header, action, formData, setFormDa
                 }
                 {type === "image" &&
                   <ImageUpload name={key} value={formData[key] || ""} onChange={(fileName) => setFormData({ ...formData, [key]: fileName })} />
+                }
+                {type === "dropdown" && options &&
+                  <Dropdown
+                    label={label}
+                    name={key}
+                    options={options}
+                    selectedValue={formData[key] || ""}
+                    onSelect={(selected) => { console.log(selected.value); setFormData({ ...formData, [key]: selected.value }); setIsOpen(!isOpen);}}
+                    isOpen={isOpen}
+                    toggleOpen={() => setIsOpen(!isOpen)}
+                  />
                 }
               </div>
             ))}

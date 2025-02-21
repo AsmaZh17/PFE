@@ -1,17 +1,17 @@
 const getSousCategories = async () => {
-    const res = await fetch("/api/sous-categories");
+    const res = await fetch("/api/sousCategories");
     return res.ok ? res.json() : Promise.reject(res.json());
   };
   
   const getSousCategorie = async (_id) => {
-    const res = await fetch(`/api/sous-categories/${_id}`, {
+    const res = await fetch(`/api/sousCategories/${_id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     return res.ok ? res.json() : Promise.reject(res.json());
   };
   
   const createSousCategorie = async (formData) => {
-    const res = await fetch("/api/sous-categories", {
+    const res = await fetch("/api/sousCategories", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +23,7 @@ const getSousCategories = async () => {
   };
   
   const updateSousCategorie = async (_id, formData) => {
-    const res = await fetch(`/api/sous-categories/${_id}`, {
+    const res = await fetch(`/api/sousCategories/${_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ const getSousCategories = async () => {
   };
   
   const deleteSousCategorie = async (_id) => {
-    const res = await fetch(`/api/sous-categories/${_id}`, {
+    const res = await fetch(`/api/sousCategories/${_id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });

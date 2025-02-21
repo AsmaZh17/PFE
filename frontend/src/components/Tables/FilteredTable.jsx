@@ -10,7 +10,7 @@ import ViewModal from "@/components/Modals/ViewModal";
 import FormModal from "@/components/Modals/FormModal";
 import Checkbox from "@/components/ui/Checkbox";
 
-const FilteredTable = ({ label, datas, viewData, filtres, columns, formActions }) => {
+const FilteredTable = ({ label, datas, viewData, filtres, formActions }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedFilter, setSelectedFilter] = useState("Tous");
 
@@ -20,7 +20,7 @@ const FilteredTable = ({ label, datas, viewData, filtres, columns, formActions }
     const [isSelectedItemOpen, setIsSelectedItemOpen] = useState(false);
 
     const [sortOrder, setSortOrder] = useState("asc");
-    const [sortedColumnKey, setSortedColumnKey] = useState(columns[0]?.key || "");
+    const [sortedColumnKey, setSortedColumnKey] = useState(formActions.columns[0]?.key || "");
 
     const handleSort = (data) => {
         return data.sort((a, b) => {
@@ -40,7 +40,7 @@ const FilteredTable = ({ label, datas, viewData, filtres, columns, formActions }
 
     const currentItems = data
     .filter(item => {
-        const matchesSearchTerm = searchTerm.length === 0 || columns.some(column =>
+        const matchesSearchTerm = searchTerm.length === 0 || formActions.columns.some(column =>
             
             item[column.key]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
         );
@@ -139,7 +139,7 @@ const FilteredTable = ({ label, datas, viewData, filtres, columns, formActions }
                                     <table className="min-w-full">
                                         <thead>
                                             <tr className="border-b border-contentLight dark:border-borderDark">
-                                                {columns.map((column, index) => (
+                                                {formActions.columns.map((column, index) => (
                                                     <th key={index} className={`py-3.5 text-sm font-normal text-left text-gray-500 dark:text-gray-400 ${column.type === "checkbox" ? "pr-2 pl-4 w-10" : "px-4"}`}>
                                                         {column.type === "checkbox" ? (
                                                             <Checkbox checked={isAllSelected} onChange={handleSelectAll} />
@@ -154,12 +154,17 @@ const FilteredTable = ({ label, datas, viewData, filtres, columns, formActions }
                                         <tbody>
                                             {currentItems.map((item, index) => (
                                                 <tr key={index} className="border-b border-contentLight dark:border-borderDark">
-                                                    {columns.map((column, colIndex) => (
+                                                    {formActions.columns.map((column, colIndex) => (
                                                         <td key={colIndex} className={`py-4 text-sm whitespace-nowrap ${column.type === "checkbox" ? "pr-2 pl-4 w-10" : "px-4"}`}>
                                                             {column.type === "checkbox" && (
                                                                 <Checkbox checked={selectedItems.includes(item.id)} onChange={() => handleSelectOne(item.id)} />
                                                             )}                                        
                                                             {column.type === "text" && (
+                                                                <h4 className="text-gray-700 dark:text-gray-200">
+                                                                    {item[column.key].length > 70 ? item[column.key].substring(0, 70) + '...' : item[column.key]}
+                                                                </h4>
+                                                            )}
+                                                            {column.type === "id" && (
                                                                 <h4 className="text-gray-700 dark:text-gray-200">
                                                                     {item[column.key].length > 70 ? item[column.key].substring(0, 70) + '...' : item[column.key]}
                                                                 </h4>

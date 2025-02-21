@@ -3,7 +3,7 @@ import { Grid, List } from "lucide-react";
 import { useState } from "react";
 
 const FiltreHeader = ({ onChange, onToggleView, isGrid }) => {
-  const [columns, setColumns] = useState(2);
+  const [columns, setColumns] = useState(3);
 
   const handleSelect = (cols) => {
     setColumns(cols);
