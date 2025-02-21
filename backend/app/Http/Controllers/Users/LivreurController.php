@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
 
 use App\Enums\RoleEnum;
+use App\Http\Controllers\Controller;
 use App\Models\Users\Livreur;
 use App\Models\Users\User;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class LivreurController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        return Livreur::all();
+        return User::where('role', 'livreur')->get();
     }
 
     /**
@@ -61,7 +62,9 @@ class LivreurController extends Controller implements HasMiddleware
      */
     public function show($id)
     {
-        $livreur = Livreur::findOrFail($id);
+        $livreur = User::where('id', $id)
+            ->where('role', 'livreur')
+            ->firstOrFail();
         return response()->json($livreur);
     }
 
@@ -70,7 +73,7 @@ class LivreurController extends Controller implements HasMiddleware
      */
     public function update(Request $request, $id)
     {
-        $livreur = Livreur::where('id', $id)
+        $livreur = User::where('id', $id)
             ->where('role', 'livreur')
             ->firstOrFail();
         
@@ -96,7 +99,10 @@ class LivreurController extends Controller implements HasMiddleware
      */
     public function destroy($id)
     {
-        $livreur = Livreur::findOrFail($id);
+        $livreur = User::where('id', $id)
+            ->where('role', 'livreur')
+            ->firstOrFail();
+
         $livreur->delete();
         return response()->json(['message' => 'Livreur avec id ' . $livreur->id . ' effacer avec succés'], 200);
     }

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
 
 use App\Enums\RoleEnum;
+use App\Http\Controllers\Controller;
 use App\Models\Users\Client;
 use App\Models\Users\User;
 use Illuminate\Http\Request;

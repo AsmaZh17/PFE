@@ -24,8 +24,26 @@ const FormModal = ({ onClose, label, header, action, formData, setFormData, fiel
             {fields.map(({ label, key, type, options }) => (
               <div key={key} className="mb-4 flex flex-col">
                 <Label label={label} />
-                {(type === "text" || type === "number") && 
-                  <Input type={type} name={key} placeholder={`Enter ${label}`} value={formData[key] || ""} onChange={(e) => setFormData({ ...formData, [key]: e.target.value })} />
+                {(type === "text" || type === "number" || type === "email" || type === "date") && 
+                  <Input type={type} name={key} placeholder={`Enter ${label}`} value={formData[key] || ""} onChange={(e) => setFormData({ ...formData, [key]: e.target.value })} required />
+                }
+                {type === "genre" &&
+                  <div className="flex justify-center space-x-6">
+                    <label className="flex items-center cursor-pointer">
+                      <input type="radio" value="Male" checked={formData.genre === "Male"} onChange={(e) => setFormData({ ...formData, [key]: e.target.value })} name="genre" className="hidden" />
+                      <div className="w-4 h-4 border-2 border-gray-300 dark:border-purpleLight rounded-full flex items-center justify-center">
+                        {formData.genre === "Male" && ( <div className="w-2 h-2 bg-gray-300 dark:bg-purpleLight rounded-full"></div> )}
+                      </div>
+                      <span className="ml-2 text-gray-700 dark:text-grayDark">Male</span>
+                    </label>
+                    <label className="flex items-center cursor-pointer">
+                      <input type="radio" value="Female" checked={formData.genre === "Female"} onChange={(e) => setFormData({ ...formData, [key]: e.target.value })} name="genre" className="hidden" />
+                      <div className="w-4 h-4 border-2 border-gray-300 dark:border-purpleLight rounded-full flex items-center justify-center">
+                        {formData.genre === "Female" && ( <div className="w-2 h-2 bg-gray-300 dark:bg-purpleLight rounded-full"></div> )}
+                      </div>
+                      <span className="ml-2 text-gray-700 dark:text-grayDark">Female</span>
+                    </label>
+                  </div>
                 }
                 {type === "textarea" &&
                   <Textarea type={type} name={key} placeholder={`Enter ${label}`} value={formData[key] || ""} onChange={(e) => setFormData({ ...formData, [key]: e.target.value })} />

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
 
 use App\Enums\RoleEnum;
+use App\Http\Controllers\Controller;
 use App\Models\Users\Fournisseur;
 use App\Models\Users\User;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class FournisseurController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        return Fournisseur::all();
+        return User::where('role', 'fournisseur')->get();
     }
 
     /**
@@ -36,7 +37,6 @@ class FournisseurController extends Controller implements HasMiddleware
             'nom' => 'required|max:255',
             'prenom' => 'required|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
             'telephone' => 'string',
             'genre' => 'string',
             'date_naissance' => 'string'
@@ -44,7 +44,7 @@ class FournisseurController extends Controller implements HasMiddleware
 
         $validatedData['role'] = RoleEnum::FOURNISSEUR->value;
 
-        $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['password'] = Hash::make($validatedData['nom'].$validatedData['prenom']);
 
         $user = User::create($validatedData);
         
@@ -61,16 +61,35 @@ class FournisseurController extends Controller implements HasMiddleware
      */
     public function show($id)
     {
-        $fournisseur = Fournisseur::findOrFail($id);
+        $fournisseur = User::where('id', $id)
+            ->where('role', 'fournisseur')
+            ->firstOrFail();
         return response()->json($fournisseur);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Fournisseur $fournisseur)
+    public function update(Request $request, $id)
     {
-        //
+        $fournisseur = User::where('id', $id)
+            ->where('role', 'fournisseur')
+            ->firstOrFail();
+
+        $validatedData = $request->validate([
+            'nom' => 'required|max:255',
+            'prenom' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'telephone' => 'string',
+            'genre' => 'string',
+            'date_naissance' => 'string'
+        ]);
+
+        $validatedData['password'] = Hash::make($validatedData['nom'].$validatedData['prenom']);
+        
+        $fournisseur->update($validatedData);
+
+        return response()->json($fournisseur, 200);
     }
 
     /**
@@ -78,7 +97,10 @@ class FournisseurController extends Controller implements HasMiddleware
      */
     public function destroy($id)
     {
-        $fournisseur = Fournisseur::findOrFail($id);
+        $fournisseur = User::where('id', $id)
+            ->where('role', 'fournisseur')
+            ->firstOrFail();
+
         $fournisseur->delete();
         return response()->json(['message' => 'Fournisseur avec id ' . $fournisseur->id . ' effacer avec succés'], 200);
     }

@@ -13,6 +13,9 @@ import Categories from "@/pages/Admin/Content/Product Management/Categories";
 import SousCategories from "@/pages/Admin/Content/Product Management/SousCategories";
 import { ProtectedAdminRoutes, ProtectedClientRoutes, ProtectedAuthRoutes } from "@/utils/ProtectedRoutes";
 import Marques from "../pages/Admin/Content/Product Management/Marques";
+import Clients from "../pages/Admin/Content/User Management/Clients";
+import Fournisseurs from "../pages/Admin/Content/User Management/Fournisseurs";
+import Livreurs from "../pages/Admin/Content/User Management/Livreurs";
 
 
 const routes = [
@@ -56,10 +59,9 @@ const routes = [
           { path: "categories", element: <Categories /> },
           { path: "sousCategories", element: <SousCategories /> },
           { path: "marques", element: <Marques /> },
-          { path: "clients", element: <Dashboard /> },
-          { path: "utilisateurs", element: <Dashboard /> },
-          { path: "roles", element: <Dashboard /> },
-          { path: "fournisseurs", element: <Dashboard /> },
+          { path: "clients", element: <Clients /> },
+          { path: "fournisseurs", element: <Fournisseurs /> },
+          { path: "livreurs", element: <Livreurs /> },
           { path: "commandes", element: <Dashboard /> },
           { path: "livraison/categories", element: <Dashboard /> },
           { path: "livraison/modes", element: <Dashboard /> },

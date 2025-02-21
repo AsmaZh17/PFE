@@ -8,7 +8,7 @@ import FiltreHeader from "@/components/Products/FiltreHeader";
 import image01 from "@/assets/ecommerce/01.jpg";
 
 const Shop = () => {
-  const [gridCols, setGridCols] = useState(3);
+  const [gridCols, setGridCols] = useState(2);
   const [isGrid, setIsGrid] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
 

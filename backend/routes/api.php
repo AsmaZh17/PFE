@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Users\AdminController;
 use App\Http\Controllers\CategorieController;
-use App\Http\Controllers\ClientController;
+use App\Http\Controllers\Users\ClientController;
 use App\Http\Controllers\CodePromotionController;
 use App\Http\Controllers\CommandeLivraisonController;
 use App\Http\Controllers\CommandeRetraitDriveController;
@@ -11,8 +11,8 @@ use App\Http\Controllers\HoraireController;
 use App\Http\Controllers\DetailFactureController;
 use App\Http\Controllers\FactureCommandeController;
 use App\Http\Controllers\FactureFournisseurController;
-use App\Http\Controllers\FournisseurController;
-use App\Http\Controllers\LivreurController;
+use App\Http\Controllers\Users\FournisseurController;
+use App\Http\Controllers\Users\LivreurController;
 use App\Http\Controllers\MarqueController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\PeriodeHoraireController;

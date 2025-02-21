@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
 
 use App\Enums\RoleEnum;
+use App\Http\Controllers\Controller;
 use App\Models\Users\Admin;
 use App\Models\Users\User;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class AdminController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        return Admin::all();
+        return User::where('role', 'admin')->get();
     }
 
     /**
@@ -61,16 +62,36 @@ class AdminController extends Controller implements HasMiddleware
      */
     public function show($id)
     {
-        $admin = Admin::findOrFail($id);
+        $admin = User::where('id', $id)
+            ->where('role', 'admin')
+            ->firstOrFail();
         return response()->json($admin);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Admin $admin)
+    public function update(Request $request, $id)
     {
-        //
+        $admin = User::where('id', $id)
+            ->where('role', 'admin')
+            ->firstOrFail();
+        
+        $validatedData = $request->validate([
+            'nom' => 'required|max:255',
+            'prenom' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed',
+            'telephone' => 'string',
+            'genre' => 'string',
+            'date_naissance' => 'string'
+        ]);
+
+        $validatedData['password'] = Hash::make($validatedData['password']);
+        
+        $admin->update($validatedData);
+
+        return response()->json($admin, 200);
     }
 
     /**
@@ -78,7 +99,9 @@ class AdminController extends Controller implements HasMiddleware
      */
     public function destroy($id)
     {
-        $admin = Admin::findOrFail($id);
+        $admin = User::where('id', $id)
+            ->where('role', 'admin')
+            ->firstOrFail();
         $admin->delete();
         return response()->json(['message' => 'Admin avec id ' . $admin->id . ' effacer avec succés'], 200);
     }

@@ -11,7 +11,7 @@ const SousCategories = () => {
     categorie_id: categories.map(cat => ({ value: cat.categorie_id, label: cat.titre }))
   };
 
-  const [formData, setFormData] = useState({title: "", image: "", categorie_id: ""});
+  const [formData, setFormData] = useState({sous_categorie_id: "", title: "", image: "", categorie_id: ""});
   const columns = [
     { label: "Titre", key: "titre", type: "text" },
     { label: "Categorie", key: "categorie_id", type: "id", categories: dropdownOptions.categorie_id},
