@@ -11,7 +11,10 @@ const getProduits = async () => {
   const createProduit = async (formData) => {
     const res = await fetch("/api/produits", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
       body: JSON.stringify(formData),
     });
     return res.ok ? res.json() : Promise.reject(res.json());
@@ -33,4 +36,4 @@ const getProduits = async () => {
     return res.ok ? res.json() : Promise.reject(res.json());
   };
 
-  export { getProduits, getProduit, createProduit, updateProduit, deleteProduit };
+  export { getProduits, getProduit, createProduit, updateProduit, deleteProduit }; 
