@@ -8,7 +8,7 @@ const getSousCategories = async () => {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     return res.ok ? res.json() : Promise.reject(res.json());
-  };
+  }; 
   
   const createSousCategorie = async (formData) => {
     const res = await fetch("/api/sousCategories", {

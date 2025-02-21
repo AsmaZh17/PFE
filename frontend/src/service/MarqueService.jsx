@@ -11,10 +11,12 @@ const getMarques = async () => {
   const createMarque = async (formData) => {
     const res = await fetch("/api/marques", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
       body: JSON.stringify(formData),
     });
-    return res.ok ? res.json() : Promise.reject(res.json());
   };
   
   const updateMarque = async (_id, formData) => {
