@@ -5,21 +5,20 @@ import Card from "@/components/Products/Card";
 import "aos/dist/aos.css";
 import Filtre from "@/components/Products/Filtre";
 import FiltreHeader from "@/components/Products/FiltreHeader";
-import image01 from "@/assets/ecommerce/01.jpg";
+
 
 const Shop = () => {
   const [gridCols, setGridCols] = useState(2);
   const [isGrid, setIsGrid] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+  const [products, setProducts] = useState([]);
 
-  const product = {
-    image: image01,
-    title: "Women's Top",
-    description: "Regular Flare Fit Women's white Top",
-    price: 50.0,
-    oldPrice: 35.0,
-    rating: 3,
-  };
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/produits") 
+      .then(response => response.json())
+      .then(data => setProducts(data))
+      .catch(error => console.error("Erreur lors du chargement des produits :", error));
+  }, []);
 
   const gridClasses = {
     2: "grid-cols-2",
@@ -49,15 +48,15 @@ const Shop = () => {
       <FiltreHeader onChange={setGridCols} onToggleView={setIsGrid} isGrid={isGrid} />
       <Filtre />
       <div className={`mt-10 ${isGrid ? `grid ${gridClasses[gridCols] || "grid-cols-2"} gap-6` : "flex flex-col gap-4"}`}>
-        {[...Array(9)].map((_, index) => (
+        {products.map((product) => (
           isGrid ? (
-            <Card key={index} product={product} />
+            <Card key={product.id} product={product} />
           ) : (
-            <div key={index} className="flex items-center gap-6 p-4 border-b bg-white dark:bg-gray-800"> 
+            <div key={product.id} className="flex items-center gap-6 p-4 border-b bg-white dark:bg-gray-800"> 
               <div className="relative w-32 h-32 bg-gray-100 dark:bg-gray-700 flex items-center justify-center rounded-lg overflow-hidden group">
                 <img
-                  src={product.image}
-                  alt={product.title}
+                  src={`/produits/${product.image}`}
+                  alt={product.nom}
                   className="w-full h-full object-cover brightness-110 transition-all duration-300 group-hover:scale-110"
                 />
                 <div className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -66,9 +65,9 @@ const Shop = () => {
                 </div>
               </div>
               <div className="flex flex-col text-gray-800 dark:text-white">
-                <h3 className="font-semibold text-lg">{product.title}</h3>
+                <h3 className="font-semibold text-lg">{product.nom}</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">{product.description}</p>
-                <div className="mt-2 text-xl font-bold">${product.price}</div>
+                <div className="mt-2 text-xl font-bold">${product.prix}</div>
               </div>
             </div>
           )
