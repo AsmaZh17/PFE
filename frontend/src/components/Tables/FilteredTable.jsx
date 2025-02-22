@@ -134,9 +134,8 @@ const FilteredTable = ({ label, datas, viewData, filtres, formActions, identifia
                         </div>
 
                         {data.length > 0 && currentItems.length > 0 ? (
-                            <div className="mt-6 py-2 flex flex-col w-full max-w-[100vh] lg:max-w-full max-h-[400px] overflow-y-auto">
-                            {/* <div className="mt-6 py-2 flex flex-col w-full max-w-sm sm:max-w-[310px] md:max-w-3xl w-990:max-w-[650px] lg:max-w-full max-h-[400px] overflow-y-auto"> */}
-                                <div className="overflow-x-auto scrollbar">
+                            <div className="mt-6 py-2 flex flex-col w-full max-w-sm sm:max-w-[310px] md:max-w-3xl w-990:max-w-[650px] lg:max-w-full max-h-[400px] overflow-y-auto">
+                            {/* <div className="mt-6 py-2 flex flex-col w-full max-w-[100vh] lg:max-w-full max-h-[400px] overflow-y-auto"> */}    <div className="overflow-x-auto scrollbar">
                                     <table className="min-w-full">
                                         <thead>
                                             <tr className="border-b border-contentLight dark:border-borderDark">
