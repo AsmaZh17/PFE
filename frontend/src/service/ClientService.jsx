@@ -11,10 +11,13 @@ const getClient = async (_id) => {
 const createClient = async (formData) => {
   const res = await fetch("/api/clients", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formData),
-  });
-  return res.ok ? res.json() : Promise.reject(res.json());
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(formData),
+    });
+    return res.ok ? res.json() : Promise.reject(res.json());
 };
 
 const updateClient = async (_id, formData) => {

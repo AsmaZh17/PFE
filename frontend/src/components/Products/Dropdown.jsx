@@ -3,9 +3,10 @@
 import {  ChevronDown} from "lucide-react";
 
 const Dropdown = ({ isOpen, toggleOpen, categories, brands, colors }) => {
+  
   return (
     <div className="relative">
-      <div className="flex items-center justify-between cursor-pointer border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-lg px-4 py-2 shadow-sm hover:shadow-md transition duration-200" onClick={toggleOpen}>
+      <div className="w-64 flex items-center justify-between cursor-pointer border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-lg px-4 py-2 shadow-sm hover:shadow-md transition duration-200" onClick={toggleOpen}>
         <span className="text-gray-700 dark:text-gray-300 font-medium">Filtres</span>
         <ChevronDown className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`} />
       </div>
@@ -14,24 +15,32 @@ const Dropdown = ({ isOpen, toggleOpen, categories, brands, colors }) => {
           <div className="mb-4">
             <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">Catégorie</h4>
             <div className="space-y-2">
-              {categories?.map((category, index) => (
-                <label key={index} className="flex items-center space-x-2 cursor-pointer">
-                  <input type="checkbox" className="form-checkbox text-primary focus:ring-purple-500" />
-                  <span className="text-gray-700 dark:text-gray-300">{category}</span>
-                </label>
-              ))}
+            {categories.length > 0 ? (
+                categories.map((category) => (
+                  <label key={category.categorie_id} className="flex items-center space-x-2 cursor-pointer">
+                    <input type="checkbox" className="form-checkbox text-primary focus:ring-purple-500" />
+                    <span className="text-gray-700 dark:text-gray-300">{category.titre}</span>
+                  </label>
+                ))
+              ) : (
+                <p className="text-gray-700 dark:text-gray-300">Aucune catégorie disponible.</p>
+              )}
             </div>
           </div>
 
           <div className="mb-4">
             <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">Marque</h4>
             <div className="space-y-2">
-              {brands?.map((brand, index) => (
-                <label key={index} className="flex items-center space-x-2 cursor-pointer">
-                  <input type="checkbox" className="form-checkbox text-primary focus:ring-purple-500" />
-                  <span className="text-gray-700 dark:text-gray-300">{brand}</span>
-                </label>
-              ))}
+              {brands.length > 0 ? (
+                brands.map((brand) => (
+                  <label key={brand.id} className="flex items-center space-x-2 cursor-pointer">
+                    <input type="checkbox" className="form-checkbox text-primary focus:ring-purple-500" />
+                    <span className="text-gray-700 dark:text-gray-300">{brand.nom}</span>
+                  </label>
+                ))
+              ) : (
+                <p className="text-gray-500 text-sm">Aucune marque disponible</p>
+              )}
             </div>
           </div>
 

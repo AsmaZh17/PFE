@@ -1,13 +1,28 @@
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import Dropdown from "./Dropdown";
 
 const Filtre = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [marques, setMarques] = useState([]);
+  
+  
+    useEffect(() => {
+      fetch("http://127.0.0.1:8000/api/categories") 
+        .then(response => response.json())
+        .then(data => setCategories(data))
+        .catch(error => console.error("Erreur lors du chargement des catégories :", error));
+    }, []);
 
-  const categories = ["Electronics", "Clothing", "Accessories"];
-  const brands = ["Nike", "Adidas", "Apple"];
+    useEffect(() => {
+      fetch("http://127.0.0.1:8000/api/marques") 
+        .then(response => response.json())
+        .then(data => setMarques(data))
+        .catch(error => console.error("Erreur lors du chargement des marques :", error));
+    }, []);
+
   const colors = {
     Red: "bg-red-500",
     Blue: "bg-blue-500",
@@ -22,7 +37,7 @@ const Filtre = () => {
           isOpen={isOpen}
           toggleOpen={() => setIsOpen(!isOpen)}
           categories={categories}
-          brands={brands}
+          brands={marques}
           colors={colors}
         />
       </div>
