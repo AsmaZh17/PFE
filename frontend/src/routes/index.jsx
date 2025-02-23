@@ -8,14 +8,20 @@ import ResetPassword from "@/pages/Authentification/ResetPassword";
 import Home from "@/pages/Client/Content/Home";
 import Shop from "@/pages/Client/Content/Shop";
 import Dashboard from "@/pages/Admin/Content/Dashboard/Dashboard";
-import Produits from "@/pages/Admin/Content/Product Management/Produits";
-import Categories from "@/pages/Admin/Content/Product Management/Categories";
-import SousCategories from "@/pages/Admin/Content/Product Management/SousCategories";
+import Produits from "@/pages/Admin/Content/Gestion des produits/Produits";
+import Categories from "@/pages/Admin/Content/Gestion des produits/Categories";
+import SousCategories from "@/pages/Admin/Content/Gestion des produits/SousCategories";
+import Marques from "../pages/Admin/Content/Gestion des produits/Marques";
 import { ProtectedAdminRoutes, ProtectedClientRoutes, ProtectedAuthRoutes } from "@/utils/ProtectedRoutes";
-import Marques from "../pages/Admin/Content/Product Management/Marques";
-import Clients from "../pages/Admin/Content/User Management/Clients";
-import Fournisseurs from "../pages/Admin/Content/User Management/Fournisseurs";
-import Livreurs from "../pages/Admin/Content/User Management/Livreurs";
+import Clients from "../pages/Admin/Content/Gestion des utilisateurs/Clients";
+import Fournisseurs from "../pages/Admin/Content/Gestion des utilisateurs/Fournisseurs";
+import Livreurs from "../pages/Admin/Content/Gestion des utilisateurs/Livreurs";
+import CommandeLivraison from "../pages/Admin/Content/Gestion des commandes/CommandeLivraison";
+import CommandeRetraitDrive from "../pages/Admin/Content/Gestion des commandes/CommandeRetraitDrive";
+import FactureFournisseurs from "../pages/Admin/Content/Gestion des factures/FactureFournisseurs";
+import FactureCommandes from "../pages/Admin/Content/Gestion des factures/FactureCommandes";
+import CodePromotions from "../pages/Admin/Content/Promotions et Offres/CodePromotions";
+import Promotions from "../pages/Admin/Content/Promotions et Offres/Promotions";
 
 
 const routes = [
@@ -62,13 +68,12 @@ const routes = [
           { path: "clients", element: <Clients /> },
           { path: "fournisseurs", element: <Fournisseurs /> },
           { path: "livreurs", element: <Livreurs /> },
-          { path: "commandes", element: <Dashboard /> },
-          { path: "livraison/categories", element: <Dashboard /> },
-          { path: "livraison/modes", element: <Dashboard /> },
-          { path: "promotions", element: <Dashboard /> },
-          { path: "promotion-flash", element: <Dashboard /> },
-          { path: "pos", element: <Dashboard /> },
-          { path: "taxes", element: <Dashboard /> },
+          { path: "commandesLivraison", element: <CommandeLivraison /> },
+          { path: "commandesRetraitDrive", element: <CommandeRetraitDrive /> },
+          { path: "facturesFournisseurs", element: <FactureFournisseurs /> },
+          { path: "facturesCommandes", element: <FactureCommandes /> },
+          { path: "promotions", element: <Promotions /> },
+          { path: "codePromotions", element: <CodePromotions /> },
           { path: "horaires", element: <Dashboard /> }
         ]
       }

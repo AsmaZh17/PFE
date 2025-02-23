@@ -23,7 +23,10 @@ const getProduits = async () => {
   const updateProduit = async (_id, formData) => {
     const res = await fetch(`/api/produits/${_id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      },
       body: JSON.stringify(formData),
     });
     return res.ok ? res.json() : Promise.reject(res.json());
@@ -32,6 +35,10 @@ const getProduits = async () => {
   const deleteProduit = async (_id) => {
     const res = await fetch(`/api/produits/${_id}`, {
       method: "DELETE",
+      headers: { 
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      },
     });
     return res.ok ? res.json() : Promise.reject(res.json());
   };

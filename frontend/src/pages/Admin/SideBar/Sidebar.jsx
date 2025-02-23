@@ -54,7 +54,7 @@ const Sidebar = ({ onClose, isDrawer, isHover, toggleSidebarHover }) => {
                     <div className="flex items-center">
                       {item.icon}
                       {!item.subItems ? (
-                        <Link to={item.path} className="ml-3 font-medium">
+                        <Link onClick={onClose} to={item.path} className="ml-3 font-medium">
                           {item.label}
                         </Link>
                       ) : (
@@ -76,7 +76,7 @@ const Sidebar = ({ onClose, isDrawer, isHover, toggleSidebarHover }) => {
                       <ul className="ml-2 -space-y-2 ">
                         {item.subItems.map((subItem, subIndex) => (
                           <li key={subIndex}>
-                            <Link
+                            <Link onClick={onClose}
                               to={subItem.path}
                               className={`block p-2 text-sm rounded-md 
                               ${isActive(subItem.path) ? "text-purpleLight font-semibold" : "text-black dark:text-gray-400"}`}

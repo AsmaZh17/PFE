@@ -27,21 +27,13 @@ const menuItems = [
   {
     title: "Gestion des commandes",
     items: [
-      { label: "Historique des commandes", icon: <FileText size={20} />, path: "/commandes" },
+      /*{ label: "Historique des commandes", icon: <FileText size={20} />, path: "/commandes" },*/
       {
         label: "Commandes",
         icon: <Package size={20} />,
         subItems: [
-          { label: "Livraison", path: "/commandes/livraison" },
-          { label: "Retrait Drive", path: "/commandes/drive" },
-        ],
-      },
-      {
-        label: "Livraison",
-        icon: <Truck size={20} />,
-        subItems: [
-          { label: "Catégorie d'expédition", path: "/livraison/categories" },
-          { label: "Modes d'expédition", path: "/livraison/modes" },
+          { label: "Livraison", path: "/commandesLivraison" },
+          { label: "Retrait Drive", path: "/commandesRetraitDrive" },
         ],
       },
     ],
@@ -49,13 +41,13 @@ const menuItems = [
   {
     title: "Gestion des factures",
     items: [
-      { label: "Détails Factures", icon: <FileText size={20} />, path: "/factures/details" },
+      /*{ label: "Détails Factures", icon: <FileText size={20} />, path: "/factures/details" },*/
       {
         label: "Factures",
         icon: <FileText size={20} />,
         subItems: [
-          { label: "Fournisseurs", path: "/factures/fournisseurs" },
-          { label: "Commandes", path: "/factures/commandes" },
+          { label: "Fournisseurs", path: "/facturesFournisseurs" },
+          { label: "Commandes", path: "/facturesCommandes" },
         ],
       },
     ],
@@ -63,7 +55,7 @@ const menuItems = [
   {
     title: "Promotions et Offres",
     items: [
-      { label: "Codes Promotions", icon: <Tag size={20} />, path: "/promotions/codes" },
+      { label: "Codes Promotions", icon: <Tag size={20} />, path: "/codePromotions" },
       { label: "Promotions", icon: <Percent size={20} />, path: "/promotions" },
     ],
   },

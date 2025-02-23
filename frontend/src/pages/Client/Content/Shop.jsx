@@ -5,20 +5,16 @@ import Card from "@/components/Products/Card";
 import "aos/dist/aos.css";
 import Filtre from "@/components/Products/Filtre";
 import FiltreHeader from "@/components/Products/FiltreHeader";
+import { getProduits } from "@/service/ProduitService";
 
 
 const Shop = () => {
-  const [gridCols, setGridCols] = useState(2);
+  const [gridCols, setGridCols] = useState(3);
   const [isGrid, setIsGrid] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
-  const [products, setProducts] = useState([]);
+  const [produits, setProduits] = useState([]);
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/produits") 
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.error("Erreur lors du chargement des produits :", error));
-  }, []);
+  useEffect(() => { (async () => setProduits(await getProduits()))(); }, []);
 
   const gridClasses = {
     2: "grid-cols-2",
@@ -26,7 +22,6 @@ const Shop = () => {
     4: "grid-cols-4",
     6: "grid-cols-6",
   };
-
 
   const toggleVisibility = () => {
     setIsVisible(window.scrollY > 200);
@@ -45,10 +40,10 @@ const Shop = () => {
 
   return (
     <div className="px-8 dark:bg-customDark">
-      <FiltreHeader onChange={setGridCols} onToggleView={setIsGrid} isGrid={isGrid} />
+      <FiltreHeader onChange={setGridCols} onToggleView={setIsGrid} isGrid={isGrid} gridCols={gridCols} />
       <Filtre />
-      <div className={`mt-10 ${isGrid ? `grid ${gridClasses[gridCols] || "grid-cols-2"} gap-6` : "flex flex-col gap-4"}`}>
-        {products.map((product) => (
+      <div className={`mt-10 ${isGrid ? `grid ${gridClasses[gridCols]} gap-6` : "flex flex-col gap-4"}`}>
+        {produits.map((product) => (
           isGrid ? (
             <Card key={product.id} product={product} />
           ) : (

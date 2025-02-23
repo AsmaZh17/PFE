@@ -8,8 +8,17 @@ const Card = ({ product }) => {
   return (
     <div className=" bg-white dark:bg-gray-800 rounded-md shadow-md flex flex-col items-center">
       <div className="relative w-full h-full">
-      <img src={`/produits/${product.image}`} alt={product.nom} className="w-full h-full object-cover rounded-md border border-gray-300 dark:border-borderDark"/>
+        <img src={`/produits/${product.image}`} alt={product.nom} className="w-full h-full object-cover rounded-t-xl"/>
       </div>
+      {/*
+      <div className="relative w-full h-[50vh] flex items-center justify-center overflow-hidden">
+        <img 
+          src={`/produits/${product.image}`} 
+          alt={product.nom} 
+          className="max-w-full max-h-full object-contain rounded-t-md border border-gray-300 dark:border-borderDark"
+        />
+      </div>
+      */}
       <div className="w-full p-4 text-center">
         <div
           className="flex justify-center mb-2"
