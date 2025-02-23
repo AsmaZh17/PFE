@@ -1,74 +1,77 @@
 import { useEffect, useState } from "react";
 import Header from "../Header";
-import { getCategories, getCategorie, createCategorie, updateCategorie, deleteCategorie } from "@/service/CategorieService";
+import { getCodePromotions, getCodePromotion, createCodePromotion, updateCodePromotion, deleteCodePromotion } from "@/service/CodePromotionService";
 import { Layers2Icon } from "lucide-react";
 import FilteredTable from "@/components/Tables/FilteredTable";
 
 const CodePromotions = () => {
-  const [formData, setFormData] = useState({categorie_id: "", title: "", image: "", rang: "" });
-  const [categories, setCategories] = useState([]);
+  const [formData, setFormData] = useState({code_promotion_id: "", code: "", reduction: "", dateExpiration: "", nbUtilisationMax: "" });
+  const [codePromotions, setCodePromotions] = useState([]);
 
   const columns = [
-    { label: "Titre", key: "titre", type: "text" },
-    { label: "Image", key: "image", type: "img" },
+    { label: "Code", key: "code", type: "text" },
+    { label: "Réduction (%)", key: "reduction", type: "text" },
+    { label: "Date d'expiration", key: "dateExpiration", type: "date" },
+    { label: "Nombre d'utilisations max", key: "nbUtilisationMax", type: "text" },
     { label: "Date de création", key: "created_at", type: "date" },
-    { label: "Rang", key: "rang", type: "progress" },
     { label: "Actions", key: "actions", type: "actions" }
   ];
+
   const fields = [
-    { label: "Titre", key: "titre", type: "text" },
-    { label: "Rang", key: "rang", type: "number" },
-    { label: "Image", key: "image", type: "image" }
+    { label: "Code", key: "code", type: "text" },
+    { label: "Réduction (%)", key: "reduction", type: "number" },
+    { label: "Date d'expiration", key: "dateExpiration", type: "date" },
+    { label: "Nombre d'utilisations maximal", key: "nbUtilisationMax", type: "number" }
   ];
 
-  useEffect(() => { (async () => setCategories(await getCategories()))()}, [categories]);
+  useEffect(() => { (async () => setCodePromotions(await getCodePromotions()))()}, [codePromotions]);
 
-  const handleCategorie = async (categorie_id) => {
+  const handleCodePromotion = async (code_promotion_id) => {
     try {
-      const categorie = await getCategorie(categorie_id);
-      setFormData(categorie);
+      const codePromotion = await getCodePromotion(code_promotion_id);
+      setFormData(codePromotion);
     } catch (error) {
-      console.error("Erreur lors de la récupération du categorie:", error);
-      alert('Une erreur est survenue lors de la récupération du categorie');
+      console.error("Erreur lors de la récupération du codePromotion:", error);
+      alert('Une erreur est survenue lors de la récupération du codePromotion');
     }
   };
   const handleCreate = async () => {
     try {
-      await createCategorie(formData);
-      setCategories((prevCategories) => prevCategories.filter(categorie => categorie.categorie_id !== formData.categorie_id));
-      alert(`Categorie ajouter avec succès`);
+      await createCodePromotion(formData);
+      setCodePromotions((prevCodePromotions) => prevCodePromotions.filter(codePromotion => codePromotion.code_promotion_id !== formData.code_promotion_id));
+      alert(`CodePromotion ajouter avec succès`);
     } catch (error) {
       console.error("Erreur d'ajout:", error);
-      alert('Une erreur est survenue lors de l\'ajout du categorie');
+      alert('Une erreur est survenue lors de l\'ajout du codePromotion');
     }
   }; 
   const handleEdit = async () => {
     try {      
-      await updateCategorie(formData.categorie_id, formData);
-      setCategories((prevCategories) => prevCategories.filter(categorie => categorie.categorie_id !== formData.categorie_id));
-      alert(`Categorie avec l'ID ${formData.categorie_id} modifié avec succès`);
+      await updateCodePromotion(formData.code_promotion_id, formData);
+      setCodePromotions((prevCodePromotions) => prevCodePromotions.filter(codePromotion => codePromotion.code_promotion_id !== formData.code_promotion_id));
+      alert(`CodePromotion avec l'ID ${formData.code_promotion_id} modifié avec succès`);
     } catch (error) {
       console.error("Erreur de modification:", error);
-      alert("Une erreur est survenue lors de la modification du categorie");
+      alert("Une erreur est survenue lors de la modification du codePromotion");
     }
   };
-  const handleDelete = async (categorie_id) => {
+  const handleDelete = async (code_promotion_id) => {
     try {
-      console.log(categorie_id);
+      console.log(code_promotion_id);
       
-      await deleteCategorie(categorie_id);
-      setCategories((prevCategories) => prevCategories.filter(categorie => categorie.categorie_id !== formData.categorie_id));
-      alert(`Categorie with id ${categorie_id} supprimé avec succès`);
+      await deleteCodePromotion(code_promotion_id);
+      setCodePromotions((prevCodePromotions) => prevCodePromotions.filter(codePromotion => codePromotion.code_promotion_id !== formData.code_promotion_id));
+      alert(`CodePromotion with id ${code_promotion_id} supprimé avec succès`);
     } catch (error) {
       console.error("Erreur de suppression:", error);
-      alert('Une erreur est survenue lors de la suppression du categorie');
+      alert('Une erreur est survenue lors de la suppression du codePromotion');
     }
   };
 
-  const formattedCategories = categories.map((item) => ({ ...item,
+  const formattedCodePromotions = codePromotions.map((item) => ({ ...item,
     actions: {
-      edit: () => handleCategorie(item.categorie_id),
-      delete: (categorie_id) => handleDelete(categorie_id)
+      edit: () => handleCodePromotion(item.code_promotion_id),
+      delete: (code_promotion_id) => handleDelete(code_promotion_id)
     }
   }));
 
@@ -76,8 +79,8 @@ const CodePromotions = () => {
 
   return (
     <>
-      <Header title="Categories" icon={Layers2Icon} parent="Gestion des produits" current="Categories" />
-      <FilteredTable formActions={formActions} label={"categories"} datas={formattedCategories} identifiant={"categorie_id"} />
+      <Header title="CodePromotions" icon={Layers2Icon} parent="Gestion des produits" current="CodePromotions" />
+      <FilteredTable formActions={formActions} label={"codePromotions"} datas={formattedCodePromotions} identifiant={"code_promotion_id"} />
     </>
   );
 };

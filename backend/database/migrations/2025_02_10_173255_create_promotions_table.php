@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('promotions', function (Blueprint $table) {
             $table->id('promotion_id');
             $table->string('nom');
-            $table->decimal('reduction', 5, 2);
+            $table->integer('reduction', 5);
             $table->date('dateDebut');
             $table->date('dateFin');
             $table->timestamps();

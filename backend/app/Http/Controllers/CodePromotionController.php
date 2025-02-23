@@ -6,6 +6,7 @@ use App\Models\CodePromotion;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Validation\Rule;
 
 class CodePromotionController extends Controller implements HasMiddleware
 {
@@ -58,7 +59,12 @@ class CodePromotionController extends Controller implements HasMiddleware
         $codePromotion = CodePromotion::findOrFail($id);
 
         $validatedData = $request->validate([
-            'code' => 'required|string|max:120|unique:code_promotions,code',
+            'code' => [
+                'required',
+                'string',
+                'max:120',
+                Rule::unique('code_promotions')->ignore($codePromotion->code_promotion_id, 'code_promotion_id'),
+            ],
             'reduction' => 'required|numeric|min:0|max:99.99',
             'dateExpiration' => 'required|date',
             'nbUtilisationMax' => 'required|integer|min:1'
