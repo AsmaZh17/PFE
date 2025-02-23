@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../Header";
 import { getClients, getClient, createClient, updateClient, deleteClient } from "@/service/ClientService";
-import { Layers2Icon } from "lucide-react";
+import { Users } from "lucide-react";
 import FilteredTable from "@/components/Tables/FilteredTable";
 
 const Clients = () => {
@@ -82,7 +82,7 @@ const Clients = () => {
 
   return (
     <>
-      <Header title="Clients" icon={Layers2Icon} parent="Gestion des produits" current="Clients" />
+      <Header title="Clients" icon={Users} parent="Gestion des utilisateurs" current="Clients" />
       <FilteredTable formActions={formActions} label={"clients"} datas={formattedClients} identifiant={"id"}/>
     </>
   );

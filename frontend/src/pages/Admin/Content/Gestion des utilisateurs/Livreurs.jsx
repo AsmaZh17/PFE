@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../Header";
 import { getLivreurs, getLivreur, createLivreur, updateLivreur, deleteLivreur } from "@/service/LivreurService";
-import { Layers2Icon } from "lucide-react";
+import { Truck } from "lucide-react";
 import FilteredTable from "@/components/Tables/FilteredTable";
 
 const Livreurs = () => {
@@ -80,7 +80,7 @@ const Livreurs = () => {
 
   return (
     <>
-      <Header title="Livreurs" icon={Layers2Icon} parent="Gestion des produits" current="Livreurs" />
+      <Header title="Livreurs" icon={Truck} parent="Gestion des utilisateurs" current="Livreurs" />
       <FilteredTable formActions={formActions} label={"livreurs"} datas={formattedLivreurs} identifiant={"id"}/>
     </>
   );

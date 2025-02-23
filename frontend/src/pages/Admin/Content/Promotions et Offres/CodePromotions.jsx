@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../Header";
 import { getCodePromotions, getCodePromotion, createCodePromotion, updateCodePromotion, deleteCodePromotion } from "@/service/CodePromotionService";
-import { Layers2Icon } from "lucide-react";
+import { Tag } from "lucide-react";
 import FilteredTable from "@/components/Tables/FilteredTable";
 
 const CodePromotions = () => {
@@ -79,7 +79,7 @@ const CodePromotions = () => {
 
   return (
     <>
-      <Header title="CodePromotions" icon={Layers2Icon} parent="Gestion des produits" current="CodePromotions" />
+      <Header title="Codes Promotions" icon={Tag} parent="Promotions et Offres" current="Codes Promotions" />
       <FilteredTable formActions={formActions} label={"codePromotions"} datas={formattedCodePromotions} identifiant={"code_promotion_id"} />
     </>
   );

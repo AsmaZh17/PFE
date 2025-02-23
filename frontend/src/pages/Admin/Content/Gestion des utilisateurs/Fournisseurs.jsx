@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../Header";
 import { getFournisseurs, getFournisseur, createFournisseur, updateFournisseur, deleteFournisseur } from "@/service/FournisseurService";
-import { Layers2Icon } from "lucide-react";
+import { Briefcase } from "lucide-react";
 import FilteredTable from "@/components/Tables/FilteredTable";
 
 const Fournisseurs = () => {
@@ -82,7 +82,7 @@ const Fournisseurs = () => {
 
   return (
     <>
-      <Header title="Fournisseurs" icon={Layers2Icon} parent="Gestion des produits" current="Fournisseurs" />
+      <Header title="Fournisseurs" icon={Briefcase} parent="Gestion des utilisateurs" current="Fournisseurs" />
       <FilteredTable formActions={formActions} label={"fournisseurs"} datas={formattedFournisseurs} identifiant={"id"} />
     </>
   );
