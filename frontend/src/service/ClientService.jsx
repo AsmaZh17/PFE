@@ -23,7 +23,10 @@ const createClient = async (formData) => {
 const updateClient = async (_id, formData) => {
   const res = await fetch(`/api/clients/${_id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`, 
+    },
     body: JSON.stringify(formData),
   });
   return res.ok ? res.json() : Promise.reject(res.json());
@@ -32,6 +35,10 @@ const updateClient = async (_id, formData) => {
 const deleteClient = async (_id) => {
   const res = await fetch(`/api/clients/${_id}`, {
     method: "DELETE",
+    headers: { 
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`, 
+    },
   });
   return res.ok ? res.json() : Promise.reject(res.json());
 };

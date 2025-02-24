@@ -1,4 +1,4 @@
-import { Home, Users, Truck, Tag, Briefcase, FileText, Percent, Bookmark, ShoppingBag, Clock, Package, Layers2Icon, Layers3Icon } from "lucide-react";
+import { Home, Users, Truck, Tag, Briefcase, FileText, Percent, Bookmark, ShoppingBag, Clock, Package, Layers2Icon, Layers3Icon, CalendarDaysIcon } from "lucide-react";
 
 const menuItems = [
   {
@@ -62,14 +62,8 @@ const menuItems = [
   {
     title: "Paramètres",
     items: [
-      {
-        label: "Horaires du Drive",
-        icon: <Clock size={20} />,
-        subItems: [
-          { label: "Horaires", path: "/horaires/drive" },
-          { label: "Jours fériés", path: "/horaires/jours-feries" },
-        ],
-      },
+      { label: "Horaires", icon: <Clock size={20} />, path: "/horaires" },
+      { label: "Jours fériés", icon: <CalendarDaysIcon size={20} />, path: "/joursFeries" }
     ],
   },
 ];

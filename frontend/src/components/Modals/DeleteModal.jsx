@@ -5,7 +5,8 @@ const DeleteModal = ({ isOpen, onClose, onConfirm, message, header }) => {
   if (!isOpen) return null;
 
   return (
-    <div className={`fixed z-50 w-full h-full inset-0 flex items-center justify-center bg-contentLight dark:bg-customDark ${header ? "bg-opacity-80 dark:bg-opacity-80" : "bg-opacity-10 dark:bg-opacity-10"}`}>
+    <div className={`fixed z-50 w-full h-full inset-0 flex items-center justify-center`}>
+      <div className={`fixed inset-0 bg-contentLight/75 dark:bg-customDark/75 transition-opacity ${header ? "" : ""}`} aria-hidden="true"></div>
       <div className="relative p-4 w-full max-w-md max-h-full">
         <div className="relative bg-customLight dark:bg-customDark rounded-md shadow-[0px_0px_6px_0px] shadow-gray-200 dark:shadow-borderGrayDark">
           <button
@@ -31,23 +32,25 @@ const DeleteModal = ({ isOpen, onClose, onConfirm, message, header }) => {
                 d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
               />
             </svg>
-            <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-200">
-              {message || "Are you sure you want to delete this item?"}
+            <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-200 break-words text-wrap max-w-xs md:max-w-sm mx-auto whitespace-pre-wrap">
+              {message || "Êtes-vous sûr de vouloir supprimer cet élément ?"}
             </h3>
-            <button
-              onClick={onConfirm}
-              type="button"
-              className="text-white bg-red-600 hover:bg-red-700 focus:ring-0 rounded-md px-5 py-2.5"
-            >
-              Yes, I&apos;m sure
-            </button>
-            <button
-              onClick={onClose}
-              type="button"
-              className="py-2.5 px-5 ms-3 text-gray-500 dark:text-gray-200 rounded-md border border-gray-500 dark:border-gray-200 focus:ring-0"
-            >
-              No, cancel
-            </button>
+            <div className="flex items-center rounded-b dark:border-gray-600 justify-center gap-3">
+              <button
+                type="button"
+                onClick={onClose}
+                className="border border-purpleLight text-purpleLight text-[14px] py-2 px-6 rounded-md"
+              >
+                Annuler
+              </button>
+              <button
+                type="button"
+                onClick={onConfirm}
+                className="bg-purpleLight dark:bg-purpleDark text-white dark:text-purpleLight text-[14px] py-2 px-6 rounded-md"
+              >
+                Valider
+              </button>
+            </div>
           </div>
         </div>
       </div>

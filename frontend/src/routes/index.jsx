@@ -22,6 +22,8 @@ import FactureFournisseurs from "../pages/Admin/Content/Gestion des factures/Fac
 import FactureCommandes from "../pages/Admin/Content/Gestion des factures/FactureCommandes";
 import CodePromotions from "../pages/Admin/Content/Promotions et Offres/CodePromotions";
 import Promotions from "../pages/Admin/Content/Promotions et Offres/Promotions";
+import Horaires from "../pages/Admin/Content/Paramètres/Horaires";
+import JoursFeries from "../pages/Admin/Content/Paramètres/joursFeries";
 
 
 const routes = [
@@ -74,7 +76,8 @@ const routes = [
           { path: "facturesCommandes", element: <FactureCommandes /> },
           { path: "promotions", element: <Promotions /> },
           { path: "codePromotions", element: <CodePromotions /> },
-          { path: "horaires", element: <Dashboard /> }
+          { path: "horaires", element: <Horaires /> },
+          { path: "joursFeries", element: <JoursFeries /> }
         ]
       }
     ]

@@ -4,6 +4,7 @@ import { getProduits, getProduit, createProduit, updateProduit, deleteProduit } 
 import { getSousCategories } from "@/service/SousCategorieService";
 import { getMarques } from "@/service/MarqueService";
 import { getFournisseurs } from "@/service/FournisseurService";
+import { getPromotions } from "@/service/PromotionService";
 import { Layers2Icon } from "lucide-react";
 import FilteredTable from "@/components/Tables/FilteredTable";
 
@@ -26,6 +27,11 @@ const Produits = () => {
     fournisseur_id: fournisseurs.map(fournisseur => ({ value: fournisseur.id, label: fournisseur.nom + ' ' + fournisseur.prenom }))
   };
 
+  const [promotions, setPromotions] = useState([]);
+  const dropdownPromotionsOptions = {    
+    promotion_id: promotions.map(promotion => ({ value: promotion.promotion_id, label: promotion.nom + ' - ' + promotion.reduction + '%' }))
+  };
+
   const columns = [
     { label: "Titre", key: "nom", type: "text" },
     { label: "Image", key: "image", type: "img" },
@@ -46,6 +52,7 @@ const Produits = () => {
     { label: "Sous Categorie", key: "sous_categorie_id", type: "dropdown", options: dropdownSousCategoriesOptions.sous_categorie_id },
     { label: "Marque", key: "marque_id", type: "dropdown", options: dropdownMarquesOptions.marque_id },
     { label: "Fournisseur", key: "fournisseur_id", type: "dropdown", options: dropdownFournisseursOptions.fournisseur_id },
+    { label: "Promotions", key: "promotion_id", type: "dropdown", options: dropdownPromotionsOptions.promotion_id },
     { label: "Description", key: "description", type: "textarea" },
   ];
 
@@ -56,6 +63,7 @@ const Produits = () => {
         setSousCategories(await getSousCategories());
         setMarques(await getMarques());
         setFournisseurs(await getFournisseurs());
+        setPromotions(await getPromotions());
       } catch (error) {
         console.error("Erreur lors de la récupération des données :", error);
       }

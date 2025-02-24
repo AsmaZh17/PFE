@@ -8,14 +8,15 @@ import ImageUpload from "@/components/ui/ImageUpload";
 import Dropdown from "@/components/ui/Dropdown";
 
 const FormModal = ({ onClose, formLabel, header, action, formData, setFormData, fields, onSubmit }) => {
-  const [activeDropdown, setActiveDropdown] = useState(null); // Stocke l'ID du dropdown ouvert
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   const toggleDropdown = (key) => {
-    setActiveDropdown((prevKey) => (prevKey === key ? null : key)); // Ferme les autres et toggle celui sélectionné
+    setActiveDropdown((prevKey) => (prevKey === key ? null : key));
   };
 
   return (
-    <div className={`fixed z-50 w-full h-full inset-0 flex items-center justify-center bg-contentLight dark:bg-customDark ${header ? "!bg-opacity-80 !dark:bg-opacity-80" : "!bg-opacity-10 !dark:bg-opacity-10"}`}>
+    <div className={`fixed z-50 w-full h-full inset-0 flex items-center justify-center`}>
+      <div className={`fixed inset-0 bg-contentLight/75 dark:bg-customDark/75 transition-opacity ${header ? "" : ""}`} aria-hidden="true"></div>
       <div className="relative p-4 w-full max-w-lg max-h-full">
         <div className="relative bg-customLight dark:bg-customDark rounded-md shadow-[0px_0px_6px_0px] shadow-gray-200 dark:shadow-borderGrayDark">
           <div className="flex items-center justify-between p-4 md:p-5 border-b dark:border-borderDark border-contentLight">
