@@ -18,7 +18,7 @@ const Dropdown = ({ isOpen, toggleOpen, categories, brands, colors , selectedCat
             {categories.length > 0 ? (
                 categories.map((category) => (
                   <label key={category.categorie_id} className="flex items-center space-x-2 cursor-pointer">
-                    <input type="checkbox" checked={selectedCategories.includes(category.categorie_id)} onChange={() => toggleCategory(category.categorie_id)} className="form-checkbox text-primary focus:ring-purple-500" />
+                    <input type="checkbox" checked={selectedCategories.includes(category.categorie_id)} onChange={() => toggleCategory(category.categorie_id)} className="form-checkbox text-primary focus:ring-purpleLight" />
                     <span className="text-gray-700 dark:text-gray-300">{category.titre}</span>
                   </label>
                 ))
@@ -34,7 +34,7 @@ const Dropdown = ({ isOpen, toggleOpen, categories, brands, colors , selectedCat
             {brands.length > 0 ? (
                 brands.map((brand) => (
                   <label key={brand.marque_id} className="flex items-center space-x-2 cursor-pointer">
-                    <input type="checkbox" checked={selectedBrands.includes(brand.marque_id)} onChange={() => toggleBrand(brand.marque_id)} className="form-checkbox text-primary focus:ring-purple-500" />
+                    <input type="checkbox" checked={selectedBrands.includes(brand.marque_id)} onChange={() => toggleBrand(brand.marque_id)} className="form-checkbox text-primary focus:ring-purpleLight" />
                     <span className="text-gray-700 dark:text-gray-300">{brand.nom}</span>
                   </label>
                 ))
@@ -52,7 +52,7 @@ const Dropdown = ({ isOpen, toggleOpen, categories, brands, colors , selectedCat
                   key={color.couleur_id}
                   className={`w-8 h-8 rounded-full cursor-pointer transition-all duration-200 border-2 ${
                     selectedColors.includes(color.couleur_id) 
-                      ? "border-purple-500 scale-110"  
+                      ? "bg-purpleLight scale-110"  
                       : "border-transparent"
                   }`}
                   style={{ backgroundColor: color.code_hex }}
@@ -72,7 +72,7 @@ const Dropdown = ({ isOpen, toggleOpen, categories, brands, colors , selectedCat
               max="1000" 
               value={maxPrice} 
               onChange={(e) => setMaxPrice(e.target.value)} 
-              className="w-full focus:ring-purple-500"
+              className="w-full focus:ring-purpleLight"
             />
             <p className="text-sm text-gray-600">Prix maximum: {maxPrice}€</p>
           </div>
@@ -81,7 +81,7 @@ const Dropdown = ({ isOpen, toggleOpen, categories, brands, colors , selectedCat
           <div className="mt-4">
             <button
               onClick={applyFilters} 
-              className="w-full px-4 py-2 bg-purple-500 text-white rounded-lg shadow hover:bg-purple-700 transition"
+              className="w-full px-4 py-2 bg-purpleLight text-white rounded-lg shadow hover:bg-purple-700 transition"
             >
               Appliquer
             </button>

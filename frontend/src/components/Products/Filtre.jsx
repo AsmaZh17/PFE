@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Search } from "lucide-react";
 import { useState , useEffect} from "react";
 import Dropdown from "./Dropdown";
@@ -95,7 +96,7 @@ const Filtre = ({ onApplyFilters }) => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={handleKeyPress} // Utilisez onKeyDown pour détecter la pression de la touche "Enter"
-          className="block w-full py-1.5 pr-5 pl-10 dark:bg-gray-900 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-lg placeholder-gray-400/70 focus:border-purple-500 focus:ring-2 focus:ring-purple-400 focus-visible:outline-none shadow-sm"
+          className="block w-full py-1.5 pr-5 pl-10 dark:bg-gray-900 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-lg placeholder-gray-400/70 focus:border-purpleLight focus:ring-2 focus:ring-purpleLight focus-visible:outline-none shadow-sm"
         />
       </div>
     </div>

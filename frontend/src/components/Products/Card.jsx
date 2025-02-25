@@ -41,7 +41,7 @@ const Card = ({ product }) => {
         <h2 className="text-lg font-semibold">{product.nom}</h2>
         <p className="text-gray-500 text-sm">{product.description}</p>
         <div className="mt-2">
-          <span className="text-lg font-bold text-purple-600">${product.prix}</span>
+          <span className="text-lg font-bold text-purpleLight">${product.prix}</span>
         </div>
       </div>
     </div>

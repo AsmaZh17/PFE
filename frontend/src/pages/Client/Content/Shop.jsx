@@ -101,9 +101,9 @@ const Shop = () => {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-16 right-4 bg-purple-500 text-white p-4 rounded-full shadow-lg hover:bg-purple-700 transition-all transform hover:scale-110 z-10" 
+          className="fixed bottom-16 right-4 bg-purpleLight text-white p-4 rounded-full shadow-lg hover:bg-purpleLight transition-all transform hover:scale-110 z-10" 
         >
-          <FaArrowUp className="w-6 h-6" />
+          <FaArrowUp />
         </button>
       )}
 
