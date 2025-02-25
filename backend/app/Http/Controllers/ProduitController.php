@@ -21,9 +21,44 @@ class ProduitController extends Controller implements HasMiddleware
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Produit::all();
+
+        $query = Produit::query();
+
+        if ($request->has('categories')) { 
+            $categories = explode(',', $request->categories);
+            $query->whereHas('sousCategorie', function ($q) use ($categories) {
+                $q->whereIn('categorie_id', $categories);
+            });
+        }
+
+        if ($request->has('marques')) {
+            $marques = explode(',', $request->marques);
+            $query->whereIn('marque_id', $marques);
+        }
+
+        if ($request->has('couleurs') && !empty($request->couleurs)) {
+            $couleurs = explode(',', $request->couleurs);
+            $query->whereHas('couleurs', function ($q) use ($couleurs) {
+                $q->whereIn('produit_couleur.couleur_id', $couleurs); 
+            });
+        }
+        
+
+        if ($request->has('prix_max') && !empty($request->prix_max)) {
+            $prix_max = $request->prix_max;
+            $query->where('prix', '<=', $prix_max);
+        }
+    
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where('nom', 'LIKE', "%$search%"); 
+        }
+
+        $produits = $query->with('couleurs')->get();
+
+        return response()->json($produits);
     }
 
     /**
@@ -39,6 +74,8 @@ class ProduitController extends Controller implements HasMiddleware
                 'required',
                 Rule::exists('users', 'id')->where('role', 'fournisseur')
             ],
+            'couleurs' => 'array', 
+            'couleurs.*' => 'exists:couleurs,id',
             'nom' => 'required|string|max:255',
             'status' => [Rule::in(StatusProduitEnum::values())],
             'description' => 'required|string|max:255',
@@ -47,6 +84,10 @@ class ProduitController extends Controller implements HasMiddleware
         ]);
         
         $produit = Produit::create($validatedData);
+
+        if ($request->has('couleurs')) {
+            $produit->couleurs()->attach($request->couleurs); 
+        }
 
         return response()->json($produit, 200);
     }
@@ -75,6 +116,8 @@ class ProduitController extends Controller implements HasMiddleware
                 'required',
                 Rule::exists('users', 'id')->where('role', 'fournisseur')
             ],
+            'couleurs' => 'array', 
+            'couleurs.*' => 'exists:couleurs,id', 
             'nom' => 'required|string|max:255',
             'status' => [Rule::in(StatusProduitEnum::values())],
             'description' => 'required|string|max:255',
@@ -83,6 +126,10 @@ class ProduitController extends Controller implements HasMiddleware
         ]);
         
         $produit->update($validatedData);
+
+        if ($request->has('couleurs')) {
+            $produit->couleurs()->sync($request->couleurs); 
+        }
 
         return response()->json($produit, 200);
     }

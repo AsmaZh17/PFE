@@ -13,10 +13,39 @@ const Shop = () => {
   const [isGrid, setIsGrid] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const [produits, setProduits] = useState([]);
+  const [filters, setFilters] = useState({ category: [], brand: [] , color: [] , price: []});
 
-  useEffect(() => { (async () => setProduits(await getProduits()))(); }, []);
+  useEffect(() => {
+    console.log("Filtres appliqués :", filters); 
 
-  const gridClasses = {
+    const fetchProduits = async () => {
+      let url = "http://localhost:8000/api/produits";
+      const queryParams = new URLSearchParams();
+
+      if (filters.category.length > 0) queryParams.append("categories", filters.category.join(","));
+      if (filters.brand.length > 0) queryParams.append("marques", filters.brand.join(","));
+      if (filters.color.length > 0) queryParams.append("couleurs", filters.color.join(","));
+      if (filters.search) queryParams.append("search", filters.search);
+      if (filters.price) queryParams.append("prix_max", filters.price);
+
+      if (queryParams.toString()) url += `?${queryParams.toString()}`;
+
+      console.log("URL finale :", url);
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log("Produits reçus :", data);
+        setProduits(data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des produits :", error);
+      }
+    };
+
+    fetchProduits();
+  }, [filters]);
+
+  const gridClasses = { 
     2: "grid-cols-2",
     3: "grid-cols-3",
     4: "grid-cols-4",
@@ -40,8 +69,8 @@ const Shop = () => {
 
   return (
     <div className="px-8 dark:bg-customDark">
-      <FiltreHeader onChange={setGridCols} onToggleView={setIsGrid} isGrid={isGrid} gridCols={gridCols} />
-      <Filtre />
+      <FiltreHeader onChange={setGridCols} onToggleView={setIsGrid} isGrid={isGrid} gridCols={gridCols} produits={produits} setProduits={setProduits} />
+      <Filtre onApplyFilters={setFilters}/>
       <div className={`mt-10 ${isGrid ? `grid ${gridClasses[gridCols]} gap-6` : "flex flex-col gap-4"}`}>
         {produits.map((product) => (
           isGrid ? (

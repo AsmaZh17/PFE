@@ -19,6 +19,7 @@ use App\Http\Controllers\PeriodeHoraireController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SousCategorieController;
+use App\Http\Controllers\CouleurController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -50,5 +51,6 @@ Route::apiResource('admins', AdminController::class);
 Route::apiResource('clients', ClientController::class);
 Route::apiResource('fournisseurs', FournisseurController::class);
 Route::apiResource('livreurs', LivreurController::class);
+Route::apiResource('couleurs', CouleurController::class);
 
 require __DIR__.'/auth.php';

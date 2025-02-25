@@ -19,6 +19,7 @@ class Produit extends Model
         'sous_categorie_id',
         'promotion_id',
         'fournisseur_id',
+        'couleur_id',
         'nom',
         'status',
         'description',
@@ -50,6 +51,10 @@ class Produit extends Model
         return $this->belongsToMany(Panier::class, 'panier_produit', 'produit_id', 'panier_id')
                 ->withPivot('quantite')
                 ->withTimestamps();
+    }
+
+    public function couleurs(){
+        return $this->belongsToMany(Couleur::class, 'produit_couleur', 'produit_id', 'couleur_id');
     }
 
 }
