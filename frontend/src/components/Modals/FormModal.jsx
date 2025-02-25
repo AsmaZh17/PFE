@@ -70,6 +70,28 @@ const FormModal = ({ onClose, formLabel, header, action, formData, setFormData, 
                     toggleOpen={() => toggleDropdown(key)} // Change l'état du dropdown
                   />
                 }
+                {type === "checkbox" && options &&
+                  <div className="flex w-full gap-2">
+                    {options.map((item, index) => (
+                      <div key={index} className="mt-1 w-8 h-8 rounded-full" style={{ backgroundColor: item.label }} >
+                      </div>
+                    ))}
+                  </div>
+                }
+
+                
+                {/* <Dropdown
+                    label={label}
+                    name={key}
+                    options={options}
+                    selectedValue={formData[key] || ""}
+                    onSelect={(selected) => { 
+                      setFormData({ ...formData, [key]: selected.value });
+                      setActiveDropdown(null); // Fermer après sélection
+                    }}
+                    isOpen={activeDropdown === key} // Ouvre seulement si c'est le dropdown actif
+                    toggleOpen={() => toggleDropdown(key)} // Change l'état du dropdown
+                  /> */}
               </div>
             ))}
           </div>

@@ -21,7 +21,7 @@ const Produits = () => {
   const dropdownMarquesOptions = marques.map(marque => ({ value: marque.marque_id, label: marque.nom }));
   const dropdownFournisseursOptions = fournisseurs.map(fournisseur => ({ value: fournisseur.id, label: fournisseur.nom + ' ' + fournisseur.prenom }));
   const dropdownPromotionsOptions = promotions.map(promotion => ({ value: promotion.promotion_id, label: promotion.nom + ' - ' + promotion.reduction + '%' }));
-  const dropdownCouleursOptions = couleurs.map(couleur => ({ value: couleur.couleur_id, label: couleur.nom }));
+  const dropdownCouleursOptions = couleurs.map(couleur => ({ value: couleur.couleur_id, label: couleur.code_hex }));
   
   const [formData, setFormData] = useState({
     nom: "",
@@ -35,20 +35,6 @@ const Produits = () => {
     couleur_id: []
   });
 
-  const handleCheckboxChange = (couleurId) => {
-    setFormData((prevFormData) => {
-      const nouvellesCouleurs = prevFormData.couleur_id.includes(couleurId)
-        ? prevFormData.couleur_id.length > 1 // Empêche d'avoir une liste vide
-          ? prevFormData.couleur_id.filter((id) => id !== couleurId)
-          : prevFormData.couleur_id // Garde au moins une couleur cochée
-        : [...prevFormData.couleur_id, couleurId];
-  
-      return { ...prevFormData, couleur_id: nouvellesCouleurs };
-    });
-  };
-
-
-
   const columns = [
     { label: "Titre", key: "nom", type: "text" },
     { label: "Image", key: "image", type: "img" },
@@ -59,8 +45,6 @@ const Produits = () => {
     { label: "Status", key: "status", type: "text" },
     { label: "Actions", key: "actions", type: "actions" }
   ];
-  
-  
 
   const fields = [
     { label: "Titre", key: "nom", type: "text" },
@@ -70,13 +54,7 @@ const Produits = () => {
     { label: "Marque", key: "marque_id", type: "dropdown", options: dropdownMarquesOptions },
     { label: "Fournisseur", key: "fournisseur_id", type: "dropdown", options: dropdownFournisseursOptions },
     { label: "Promotions", key: "promotion_id", type: "dropdown", options: dropdownPromotionsOptions },
-    { 
-      label: "Couleurs", 
-      key: "couleur_id", 
-      type: "checkbox", 
-      options: dropdownCouleursOptions, 
-      onChange: handleCheckboxChange 
-    }, 
+    { label: "Couleurs", key: "couleur_id", type: "checkbox", options: dropdownCouleursOptions }, 
     { label: "Description", key: "description", type: "textarea" },
   ];
 

@@ -5,7 +5,6 @@ import Card from "@/components/Products/Card";
 import "aos/dist/aos.css";
 import Filtre from "@/components/Products/Filtre";
 import FiltreHeader from "@/components/Products/FiltreHeader";
-import { getProduits } from "@/service/ProduitService";
 
 
 const Shop = () => {
