@@ -78,20 +78,6 @@ const FormModal = ({ onClose, formLabel, header, action, formData, setFormData, 
                     ))}
                   </div>
                 }
-
-                
-                {/* <Dropdown
-                    label={label}
-                    name={key}
-                    options={options}
-                    selectedValue={formData[key] || ""}
-                    onSelect={(selected) => { 
-                      setFormData({ ...formData, [key]: selected.value });
-                      setActiveDropdown(null); // Fermer après sélection
-                    }}
-                    isOpen={activeDropdown === key} // Ouvre seulement si c'est le dropdown actif
-                    toggleOpen={() => toggleDropdown(key)} // Change l'état du dropdown
-                  /> */}
               </div>
             ))}
           </div>
