@@ -15,7 +15,6 @@ return new class extends Migration
             $table->foreignId('panier_id')->constrained('paniers', 'panier_id')->onDelete('cascade');
             $table->foreignId('produit_id')->constrained('produits', 'produit_id')->onDelete('cascade');
             $table->integer('quantite')->default(1);
-            $table->timestamps();
             $table->primary(['panier_id', 'produit_id']);
         });
     }

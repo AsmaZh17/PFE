@@ -12,7 +12,8 @@ class Horaire extends Model
     use HasFactory;
 
     protected $primaryKey = 'horaire_id';
-
+    public $timestamps = false;
+    
     protected $fillable = [
         'jour',
         'ouvert',
@@ -24,7 +25,7 @@ class Horaire extends Model
 
     public function retraitDrive()
     {
-        return $this->belongsTo(RetraitDrive::class, 'horaire_id');
+        return $this->belongsTo(CommandeRetraitDrive::class, 'horaire_id');
     }
 
     public function periodesHoraires()

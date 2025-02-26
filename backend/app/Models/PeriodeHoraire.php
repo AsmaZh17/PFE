@@ -11,7 +11,8 @@ class PeriodeHoraire extends Model
     use HasFactory;
 
     protected $primaryKey = 'periode_horaire_id';
-
+    public $timestamps = false;
+    
     protected $fillable = [
         'heure_debut',
         'heure_fin',

@@ -10,9 +10,8 @@ class Couleur extends Model
     use HasFactory;
 
     protected $primaryKey = 'couleur_id';
-
-
     protected $fillable = ['nom', 'code_hex'];
+    public $timestamps = false;
 
     public function produits()
     {

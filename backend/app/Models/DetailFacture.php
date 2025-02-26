@@ -21,8 +21,13 @@ class DetailFacture extends Model
         'totalLigneTTC',
     ];
 
-    public function facture()
+    public function factureCommande()
     {
-        return $this->belongsTo(Facture::class, 'facture_id');
+        return $this->belongsTo(FactureCommande::class, 'facture_id');
+    }
+
+    public function factureFournisseur()
+    {
+        return $this->belongsTo(FactureFournisseur::class, 'facture_id');
     }
 }

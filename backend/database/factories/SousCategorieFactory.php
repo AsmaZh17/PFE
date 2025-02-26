@@ -2,22 +2,20 @@
 
 namespace Database\Factories;
 
+use App\Models\SousCategorie;
+use App\Models\Categorie;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SousCategorie>
- */
 class SousCategorieFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = SousCategorie::class;
+
+    public function definition()
     {
         return [
-            //
+            'categorie_id' => Categorie::factory(), // Utilise une catégorie existante ou crée une nouvelle avec la factory Categorie
+            'titre' => $this->faker->word() . ' Sous-Categorie', // Nom aléatoire de la sous-catégorie
+            'image' => $this->faker->imageUrl(640, 480, 'products'), // URL d'image aléatoire
         ];
     }
 }

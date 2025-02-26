@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Horaire;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class HoraireSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Horaire::factory(7)->create();
     }
 }

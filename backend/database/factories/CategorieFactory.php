@@ -4,20 +4,16 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Categorie>
- */
 class CategorieFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = \App\Models\Categorie::class;
+
     public function definition(): array
     {
         return [
-            //
+            'titre' => $this->faker->word(),
+            'image' => $this->faker->imageUrl(),
+            'rang' => $this->faker->numberBetween(1, 100)
         ];
     }
 }

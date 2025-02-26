@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CodePromotion;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class CodePromotionSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        CodePromotion::factory(20)->create();
     }
 }

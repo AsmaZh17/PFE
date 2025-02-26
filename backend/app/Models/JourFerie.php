@@ -11,14 +11,16 @@ class JourFerie extends Model
     use HasFactory;
 
     protected $primaryKey = 'jour_ferie_id';
+    public $timestamps = false;
 
     protected $fillable = [
-        'nom',
-        'date',
+        'title',
+        'start',
+        'end',
     ];
 
     public function retraitDrive()
     {
-        return $this->belongsTo(RetraitDrive::class, 'jour_ferie_id');
+        return $this->belongsTo(CommandeRetraitDrive::class, 'jour_ferie_id');
     }
 }

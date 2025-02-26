@@ -13,7 +13,8 @@ class Panier extends Model
 
     protected $table = 'paniers';
     protected $primaryKey = 'panier_id';
-
+    public $timestamps = false;
+    
     protected $fillable = [
         'client_id',
     ];

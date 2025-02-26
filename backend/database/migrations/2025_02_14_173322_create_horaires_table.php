@@ -16,7 +16,6 @@ return new class extends Migration
             $table->id('horaire_id');
             $table->enum('jour', JourEnum::values())->unique();
             $table->boolean('ouvert');
-            $table->timestamps();
         });
     }
 

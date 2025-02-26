@@ -2,22 +2,23 @@
 
 namespace Database\Factories;
 
+use App\Models\Marque;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Marque>
- */
 class MarqueFactory extends Factory
 {
+    protected $model = Marque::class;
+
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            //
+            'nom' => $this->faker->company(), // Génère un nom aléatoire d'entreprise
+            'image' => $this->faker->imageUrl(), // Génère une URL d'image aléatoire
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Panier;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class PanierSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Panier::factory(20)->create();
     }
 }

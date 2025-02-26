@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('totalLigneHT', 10, 2);
             $table->decimal('tvaLigne', 10, 2);
             $table->decimal('totalLigneTTC', 10, 2);
+            $table->foreignId('facture_id')->constrained('factures', 'facture_id')->onDelete('cascade')->unique();
             $table->timestamps();
         });
     }

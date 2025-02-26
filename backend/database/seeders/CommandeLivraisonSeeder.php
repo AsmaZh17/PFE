@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CommandeLivraison;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class CommandeLivraisonSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        CommandeLivraison::factory(20)->create();
     }
 }

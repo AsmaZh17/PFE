@@ -2,22 +2,35 @@
 
 namespace Database\Factories;
 
+use App\Models\PeriodeHoraire;
+use App\Models\Horaire;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PeriodeHoraire>
- */
 class PeriodeHoraireFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = PeriodeHoraire::class;
+
+    public function definition()
     {
         return [
-            //
+            'heure_debut' => $this->faker->time('H:i', '08:00'),  // Heure de début entre 08:00 et 09:00
+            'heure_fin' => $this->faker->time('H:i', '17:00'),  // Heure de fin entre 09:00 et 17:00
         ];
+    }
+
+    /**
+     * Lier des horaires à la période horaire.
+     *
+     * @param  int  $count
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function withHoraires($count = 3)
+    {
+        return $this->afterCreating(function (PeriodeHoraire $periodeHoraire) use ($count) {
+            $horaires = Horaire::inRandomOrder()->limit($count)->get();
+            foreach ($horaires as $horaire) {
+                $periodeHoraire->horaires()->attach($horaire->horaire_id);
+            }
+        });
     }
 }

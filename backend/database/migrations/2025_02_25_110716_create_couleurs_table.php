@@ -15,7 +15,6 @@ return new class extends Migration
             $table->bigIncrements('couleur_id');
             $table->string('nom');
             $table->string('code_hex')->nullable();
-            $table->timestamps();
         });
     }
 

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('paniers', function (Blueprint $table) {
             $table->id('panier_id');
             $table->foreignId('client_id')->constrained('users', 'id')->onDelete('cascade')->unique();
-            $table->timestamps();
         });
     }
 

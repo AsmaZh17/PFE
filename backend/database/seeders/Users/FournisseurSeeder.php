@@ -1,7 +1,9 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Users;
 
+use App\Models\Users\User;
+use Database\Factories\Users\FournisseurFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +14,6 @@ class FournisseurSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        FournisseurFactory::new()->count(5)->create();
     }
 }

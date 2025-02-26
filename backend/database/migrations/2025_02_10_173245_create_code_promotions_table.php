@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('code_promotions', function (Blueprint $table) {
             $table->id('code_promotion_id');
             $table->string('code', 120)->unique();
-            $table->integer('reduction', 2);
+            $table->integer('reduction');
             $table->date('dateExpiration'); 
+            $table->integer('nbUtilisation');
             $table->integer('nbUtilisationMax');
             $table->timestamps();
         });

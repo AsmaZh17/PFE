@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Users;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Factories\Users\LivreurFactory;
 use Illuminate\Database\Seeder;
 
 class LivreurSeeder extends Seeder
@@ -12,6 +12,6 @@ class LivreurSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        LivreurFactory::new()->count(5)->create();
     }
 }
