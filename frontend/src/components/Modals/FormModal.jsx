@@ -6,6 +6,10 @@ import Textarea from "@/components/ui/Textarea";
 import Label from "@/components/ui/Label";
 import ImageUpload from "@/components/ui/ImageUpload";
 import Dropdown from "@/components/ui/Dropdown";
+import { Plus } from "lucide-react";
+import { ColorPicker, useColor } from "react-color-palette";
+import "react-color-palette/css";
+import Colors from "../ColorPicker/ColorPicker";
 
 const FormModal = ({ onClose, formLabel, header, action, formData, setFormData, fields, onSubmit }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -13,6 +17,14 @@ const FormModal = ({ onClose, formLabel, header, action, formData, setFormData, 
   const toggleDropdown = (key) => {
     setActiveDropdown((prevKey) => (prevKey === key ? null : key));
   };
+
+  const [showPalette, setShowPalette] = useState(false);
+
+  const togglePalette = () => {
+    setShowPalette(!showPalette)
+  };
+
+  const [color, setColor] = useColor("#561ecb");
 
   return (
     <div className={`fixed z-50 w-full h-full inset-0 flex items-center justify-center`}>
@@ -26,7 +38,7 @@ const FormModal = ({ onClose, formLabel, header, action, formData, setFormData, 
             </button>
           </div>
           <div className="p-4 md:p-5 space-y-4 max-h-[70vh] overflow-y-auto scrollbar">
-            {fields.map(({ label, key, type, options }) => (
+            {fields.map(({ label, key, type, options, form, setForm, handleCreate }) => (
               <div key={key} className="mb-4 flex flex-col">
                 <Label label={label} />
                 {(type === "text" || type === "number" || type === "email" || type === "date") && 
@@ -64,20 +76,34 @@ const FormModal = ({ onClose, formLabel, header, action, formData, setFormData, 
                     selectedValue={formData[key] || ""}
                     onSelect={(selected) => { 
                       setFormData({ ...formData, [key]: selected.value });
-                      setActiveDropdown(null); // Fermer après sélection
+                      setActiveDropdown(null);
                     }}
-                    isOpen={activeDropdown === key} // Ouvre seulement si c'est le dropdown actif
-                    toggleOpen={() => toggleDropdown(key)} // Change l'état du dropdown
+                    isOpen={activeDropdown === key}
+                    toggleOpen={() => toggleDropdown(key)} 
                   />
                 }
-                {type === "checkbox" && options &&
-                  <div className="flex w-full gap-2">
-                    {options.map((item, index) => (
-                      <div key={index} className="mt-1 w-8 h-8 rounded-full" style={{ backgroundColor: item.label }} >
+                {type === "colors" && options && (
+                  <div className="flex w-full items-center">
+                    <div className="flex gap-2 overflow-y-auto scrollbar flex-grow">
+                      <Colors options={options} formData={formData} setFormData={setFormData} />
+                    </div>
+                    <div onClick={togglePalette} className="w-8 h-8 rounded-full border-2 border-purpleLight shrink-0 ml-2 flex items-center justify-center">
+                      <Plus size={17} className="text-purpleLight font-bold" strokeWidth={3} />
+                    </div>
+                    {showPalette && (
+                      <div className="absolute top-12 right-0 p-2 rounded shadow-lg z-50 bg-white">
+                        <div className="max-h-60 overflow-y-auto">
+                          <ColorPicker color={color} onChange={(newColor) => {setColor(newColor);setForm({ ...form, code_hex: newColor.hex });}} />
+                        </div>
+                        <Input type="text" name="Nom" placeholder={`Nom de la couleur`} value={form.nom || ""} onChange={(e) => setForm({ ...form, "nom": e.target.value })} required />
+                        <div className="flex gap-2 justify-end mt-2">
+                          <button onClick={togglePalette} className="px-4 py-1 border border-purpleLight text-purpleLight rounded">Annuler</button>
+                          <button onClick={() => {handleCreate();togglePalette();}} className="px-4 py-1 bg-purpleLight text-white rounded">Ajouter</button>
+                        </div>
                       </div>
-                    ))}
+                    )}
                   </div>
-                }
+                )}
               </div>
             ))}
           </div>
@@ -105,5 +131,3 @@ const FormModal = ({ onClose, formLabel, header, action, formData, setFormData, 
 };
 
 export default FormModal;
-
-//zedt fazet scroll bch ajouter tebdach las9a 3la modal

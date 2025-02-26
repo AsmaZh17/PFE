@@ -74,8 +74,10 @@ class ProduitController extends Controller implements HasMiddleware
                 'required',
                 Rule::exists('users', 'id')->where('role', 'fournisseur')
             ],
-            'couleurs' => 'array', 
-            'couleurs.*' => 'exists:couleurs,id',
+            'couleurs' => 'required|array',
+            'couleurs.*.couleur_id' => [
+                Rule::exists('couleurs', 'couleur_id')
+            ],
             'nom' => 'required|string|max:255',
             'status' => [Rule::in(StatusProduitEnum::values())],
             'description' => 'required|string|max:255',
@@ -86,7 +88,8 @@ class ProduitController extends Controller implements HasMiddleware
         $produit = Produit::create($validatedData);
 
         if ($request->has('couleurs')) {
-            $produit->couleurs()->attach($request->couleurs); 
+            $couleurs = collect($request->couleurs)->pluck('couleur_id')->toArray();
+            $produit->couleurs()->sync($couleurs);
         }
 
         return response()->json($produit, 200);
@@ -97,9 +100,10 @@ class ProduitController extends Controller implements HasMiddleware
      */
     public function show($id)
     {
-        $produit = Produit::findOrFail($id);
+        $produit = Produit::with('couleurs')->findOrFail($id); 
         return response()->json($produit);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -116,8 +120,10 @@ class ProduitController extends Controller implements HasMiddleware
                 'required',
                 Rule::exists('users', 'id')->where('role', 'fournisseur')
             ],
-            'couleurs' => 'array', 
-            'couleurs.*' => 'exists:couleurs,id', 
+            'couleurs' => 'required|array',
+            'couleurs.*.couleur_id' => [
+                Rule::exists('couleurs', 'couleur_id')
+            ],
             'nom' => 'required|string|max:255',
             'status' => [Rule::in(StatusProduitEnum::values())],
             'description' => 'required|string|max:255',
@@ -125,13 +131,15 @@ class ProduitController extends Controller implements HasMiddleware
             'image' => 'required|string|max:255',
         ]);
         
+        
         $produit->update($validatedData);
 
         if ($request->has('couleurs')) {
-            $produit->couleurs()->sync($request->couleurs); 
+            $couleurs = collect($request->couleurs)->pluck('couleur_id')->toArray();
+            $produit->couleurs()->sync($couleurs);
         }
-
-        return response()->json($produit, 200);
+    
+        return response()->json($produit->load('couleurs'), 200);
     }
 
     /**

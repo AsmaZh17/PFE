@@ -81,7 +81,7 @@ const Dropdown = ({ isOpen, toggleOpen, categories, brands, colors , selectedCat
           <div className="mt-4">
             <button
               onClick={applyFilters} 
-              className="w-full px-4 py-2 bg-purpleLight text-white rounded-lg shadow hover:bg-purple-700 transition"
+              className="w-full px-4 py-2 bg-purpleLight text-white rounded-lg shadow hover:bg-purpleLight transition"
             >
               Appliquer
             </button>

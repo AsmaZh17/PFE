@@ -38,10 +38,15 @@ const Card = ({ product }) => {
             </span>
           ))}
         </div>
+        {console.log(product)
+        }
         <h2 className="text-lg font-semibold">{product.nom}</h2>
         <p className="text-gray-500 text-sm">{product.description}</p>
-        <div className="mt-2">
+        <div className="flex mt-2 gap-3">
           <span className="text-lg font-bold text-purpleLight">${product.prix}</span>
+          <span className="text-lg font-bold text-gray-300">
+            <del>${product.prix}</del>
+          </span>
         </div>
       </div>
     </div>

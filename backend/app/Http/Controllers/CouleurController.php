@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Couleur;
-use App\Http\Requests\StoreCouleurRequest;
-use App\Http\Requests\UpdateCouleurRequest;
+use Illuminate\Http\Request;
 
 class CouleurController extends Controller
 {
@@ -23,7 +22,7 @@ class CouleurController extends Controller
     {
         $validatedData = $request->validate([
             'nom' => 'required|string|max:255',
-            'code_hexa' => 'string|max:255',
+            'code_hex' => 'string|max:255',
         ]);
         
         $couleur = Couleur::create($validatedData);
@@ -49,7 +48,7 @@ class CouleurController extends Controller
 
         $validatedData = $request->validate([
             'nom' => 'required|string|max:255',
-            'code_hexa' => 'string|max:255',
+            'code_hex' => 'string|max:255',
         ]);
         
         $couleur->update($validatedData);

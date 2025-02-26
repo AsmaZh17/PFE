@@ -7,7 +7,7 @@ const DeleteModal = ({ isOpen, onClose, onConfirm, message, header }) => {
   return (
     <div className={`fixed z-50 w-full h-full inset-0 flex items-center justify-center`}>
       <div className={`fixed inset-0 bg-contentLight/75 dark:bg-customDark/75 transition-opacity ${header ? "" : ""}`} aria-hidden="true"></div>
-      <div className="relative p-4 w-full max-w-md max-h-full">
+        <div className="relative p-4 w-full max-w-md max-h-full">
         <div className="relative bg-customLight dark:bg-customDark rounded-md shadow-[0px_0px_6px_0px] shadow-gray-200 dark:shadow-borderGrayDark">
           <button
             onClick={onClose}

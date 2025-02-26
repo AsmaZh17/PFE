@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('horaire_periode_horaire', function (Blueprint $table) {
             $table->foreignId('horaire_id')->constrained('horaires', 'horaire_id')->onDelete('cascade');
             $table->foreignId('periode_horaire_id')->constrained('periode_horaires', 'periode_horaire_id')->onDelete('cascade');
-            $table->timestamps();
+            $table->primary(['horaire_id', 'periode_horaire_id']);
         });
     }
 

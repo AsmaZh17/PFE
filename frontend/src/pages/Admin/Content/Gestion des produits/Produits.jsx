@@ -5,7 +5,7 @@ import { getSousCategories } from "@/service/SousCategorieService";
 import { getMarques } from "@/service/MarqueService";
 import { getFournisseurs } from "@/service/FournisseurService";
 import { getPromotions } from "@/service/PromotionService";
-import { getCouleurs } from "@/service/CouleurService";
+import { getCouleurs, createCouleur } from "@/service/CouleurService";
 import { Layers2Icon } from "lucide-react";
 import FilteredTable from "@/components/Tables/FilteredTable";
 
@@ -21,7 +21,6 @@ const Produits = () => {
   const dropdownMarquesOptions = marques.map(marque => ({ value: marque.marque_id, label: marque.nom }));
   const dropdownFournisseursOptions = fournisseurs.map(fournisseur => ({ value: fournisseur.id, label: fournisseur.nom + ' ' + fournisseur.prenom }));
   const dropdownPromotionsOptions = promotions.map(promotion => ({ value: promotion.promotion_id, label: promotion.nom + ' - ' + promotion.reduction + '%' }));
-  const dropdownCouleursOptions = couleurs.map(couleur => ({ value: couleur.couleur_id, label: couleur.code_hex }));
   
   const [formData, setFormData] = useState({
     nom: "",
@@ -32,9 +31,24 @@ const Produits = () => {
     sous_categorie_id: "",
     marque_id: "",
     fournisseur_id: "",
-    couleur_id: []
+    couleurs: []
   });
 
+  const [formColor, setFormColor] = useState({nom: "", code_hex: ""});
+
+  
+  const handleCreateCouleur = async () => {
+    try {      
+      const newCouleur = await createCouleur(formColor);
+  
+      setCouleurs((prevCouleurs) => [...prevCouleurs, newCouleur]);
+      alert(`Couleur ajouté avec succès`);
+    } catch (error) {
+      console.error("Erreur d'ajout:", error);
+      alert('Une erreur est survenue lors de l\'ajout du couleur');
+    }
+  };
+  
   const columns = [
     { label: "Titre", key: "nom", type: "text" },
     { label: "Image", key: "image", type: "img" },
@@ -54,20 +68,16 @@ const Produits = () => {
     { label: "Marque", key: "marque_id", type: "dropdown", options: dropdownMarquesOptions },
     { label: "Fournisseur", key: "fournisseur_id", type: "dropdown", options: dropdownFournisseursOptions },
     { label: "Promotions", key: "promotion_id", type: "dropdown", options: dropdownPromotionsOptions },
-    { label: "Couleurs", key: "couleur_id", type: "checkbox", options: dropdownCouleursOptions }, 
+    { label: "Couleurs", key: "couleurs", type: "colors", options: couleurs, form: formColor, setForm: setFormColor, handleCreate: handleCreateCouleur }, 
     { label: "Description", key: "description", type: "textarea" },
   ];
 
-    
-
   useEffect(() => { 
     (async () => {
-      const data = await getProduits();
-      console.log("Produits récupérés :", data); 
-      setProduits(data); 
+      setProduits(await getProduits()); 
     })(); 
   }, []);
-  
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -86,21 +96,18 @@ const Produits = () => {
   const handleProduit = async (produit_id) => {
     try {
       const produit = await getProduit(produit_id);
+      console.log(produit);
+      
       setFormData(produit);
     } catch (error) {
       console.error("Erreur lors de la récupération du produit:", error);
       alert('Une erreur est survenue lors de la récupération du produit');
     }
   };
+
   const handleCreate = async () => {
-    try {
-      const produitData = { 
-        ...formData, 
-        couleur_id: formData.couleur_id.map(c => c.value)  // S'assurer d'envoyer uniquement les IDs
-      };
-      
-      const newProduit = await createProduit(produitData);
-  
+    try {      
+      const newProduit = await createProduit(formData);
       setProduits((prevProduits) => [...prevProduits, newProduit]);
       alert(`Produit ajouté avec succès`);
     } catch (error) {
@@ -131,33 +138,18 @@ const Produits = () => {
       alert('Une erreur est survenue lors de la suppression du produit');
     }
   };
-
   
-
-
-
-  useEffect(() => {
-    if (couleurs.length > 0 && (!formData.couleur_id || formData.couleur_id.length === 0)) {
-      setFormData((prev) => ({ ...prev, couleur_id: [couleurs[0].couleur_id] }));
-    }
-  }, [couleurs]);
-  
-  
-
   const formattedProduits = produits.map((item) => ({
     ...item,
     sous_categorie: sousCategories.find(s => s.sous_categorie_id === item.sous_categorie_id)?.titre || "Non défini",
     marque: marques.find(m => m.marque_id === item.marque_id)?.nom || "Non défini",
     couleurs: item.couleurs && Array.isArray(item.couleurs) ? 
-              item.couleurs.map(couleur => couleur.nom).join(", ") : "Aucune couleur", // Vérifie si l'attribut existe
+              item.couleurs.map(couleur => couleur.nom).join(", ") : "Aucune couleur", 
     actions: {
       edit: () => handleProduit(item.produit_id),
       delete: (produit_id) => handleDelete(produit_id),
     }
   }));
-  
-  
-  
 
   const formActions = {formData, setFormData, fields, handleCreate, handleEdit, columns};
 

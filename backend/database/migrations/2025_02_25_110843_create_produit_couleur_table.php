@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('produit_couleur', function (Blueprint $table) {
-            $table->bigIncrements('id'); // Ajoute un ID auto-incrémenté pour éviter les erreurs potentielles
-        
-            $table->unsignedBigInteger('produit_id');
-            $table->unsignedBigInteger('couleur_id');
-        
-            $table->foreign('produit_id')->references('produit_id')->on('produits')->onDelete('cascade');
-            $table->foreign('couleur_id')->references('couleur_id')->on('couleurs')->onDelete('cascade');
-        
-            $table->timestamps();
+        Schema::create('produit_couleur', function (Blueprint $table) {       
+            $table->foreignId('produit_id')->constrained('produits', 'produit_id')->onDelete('cascade');
+            $table->foreignId('couleur_id')->constrained('couleurs', 'couleur_id')->onDelete('cascade');
+            $table->integer('quantite');
+            $table->primary(['produit_id', 'couleur_id']);
         });
         
     }
