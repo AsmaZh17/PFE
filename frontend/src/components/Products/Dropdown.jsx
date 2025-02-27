@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {  ChevronDown} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 const Dropdown = ({ isOpen, toggleOpen, categories, brands, colors , selectedCategories, toggleCategory, selectedBrands, toggleBrand , selectedColors, toggleColor , applyFilters , maxPrice, setMaxPrice}) => {
   
@@ -11,7 +11,7 @@ const Dropdown = ({ isOpen, toggleOpen, categories, brands, colors , selectedCat
         <ChevronDown className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`} />
       </div>
       {isOpen && (
-        <div className="absolute bg-white dark:bg-gray-800 p-4 mt-2 shadow-lg rounded-lg w-64 z-20 top-full left-0 border border-gray-200 dark:border-gray-700">
+        <div className="absolute bg-white dark:bg-gray-800 p-4 mt-1 shadow-lg rounded-lg w-64 z-20 top-full left-0 border border-gray-200 dark:border-gray-700 max-h-120 overflow-x-auto scrollbar">
           <div className="mb-4">
             <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">Catégorie</h4>
             <div className="space-y-2">

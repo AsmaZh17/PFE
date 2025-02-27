@@ -1,20 +1,20 @@
 /* eslint-disable react/prop-types */
 import { StarIcon } from "lucide-react";
 import { useState } from "react";
-const Card = ({ product }) => {
+const Card = ({ produit }) => {
   const [ratingHover, setRatingHover] = useState(0);
-  const [selectedRating, setSelectedRating] = useState(product.rating);
+  const [selectedRating, setSelectedRating] = useState(produit.rating);
 
   return (
     <div className=" bg-white dark:bg-gray-800 rounded-md shadow-md flex flex-col items-center">
       <div className="relative w-full h-full">
-        <img src={`/produits/${product.image}`} alt={product.nom} className="w-full h-full object-cover rounded-t-xl"/>
+        <img src={`/produits/${produit.image}`} alt={produit.nom} className="w-full h-full object-cover rounded-t-xl"/>
       </div>
       {/*
       <div className="relative w-full h-[50vh] flex items-center justify-center overflow-hidden">
         <img 
-          src={`/produits/${product.image}`} 
-          alt={product.nom} 
+          src={`/produits/${produit.image}`} 
+          alt={produit.nom} 
           className="max-w-full max-h-full object-contain rounded-t-md border border-gray-300 dark:border-borderDark"
         />
       </div>
@@ -38,15 +38,16 @@ const Card = ({ product }) => {
             </span>
           ))}
         </div>
-        {console.log(product)
-        }
-        <h2 className="text-lg font-semibold">{product.nom}</h2>
-        <p className="text-gray-500 text-sm">{product.description}</p>
+        {console.log(produit)}
+        <h2 className="text-lg font-semibold">{produit.nom}</h2>
+        <p className="text-gray-500 text-sm">{produit.description}</p>
+        <p className="text-gray-500 text-sm">{produit.sous_categorie}</p>
         <div className="flex mt-2 gap-3">
-          <span className="text-lg font-bold text-purpleLight">${product.prix}</span>
-          <span className="text-lg font-bold text-gray-300">
-            <del>${product.prix}</del>
-          </span>
+          <span className="text-lg font-bold text-purpleLight">${produit.prix_apres_promo}</span>
+          {produit.promotion_id ? 
+            <span className="text-lg font-bold text-gray-300">
+              <del>${produit.prix}</del>
+            </span> : ''}
         </div>
       </div>
     </div>
