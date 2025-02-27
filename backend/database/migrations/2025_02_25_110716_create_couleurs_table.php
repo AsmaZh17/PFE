@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('couleurs', function (Blueprint $table) {
-            $table->bigIncrements('couleur_id');
+            $table->id('couleur_id');
             $table->string('nom');
             $table->string('code_hex')->nullable();
         });
