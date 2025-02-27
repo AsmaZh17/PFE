@@ -13,6 +13,6 @@ class PanierSeeder extends Seeder
      */
     public function run(): void
     {
-        Panier::factory(20)->create();
+        Panier::factory(10)->withProduits(3)->create();
     }
 }

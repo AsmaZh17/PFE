@@ -28,9 +28,11 @@ class PanierFactory extends Factory
     {
         return $this->afterCreating(function (Panier $panier) use ($count) {
             $produits = Produit::inRandomOrder()->limit($count)->get();
-            foreach ($produits as $produit) {
-                $panier->produits()->attach($produit->produit_id, ['quantite' => $this->faker->numberBetween(1, 5)]);
-            }
+
+            $panier->produits()->attach(
+                $produits->pluck('produit_id')->toArray(),
+                ['quantite' => rand(1, 5)]
+            );
         });
     }
 }

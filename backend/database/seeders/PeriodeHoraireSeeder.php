@@ -13,6 +13,6 @@ class PeriodeHoraireSeeder extends Seeder
      */
     public function run(): void
     {
-        PeriodeHoraire::factory(20)->create();
+        PeriodeHoraire::factory(5)->withHoraires()->create();
     }
 }

@@ -28,9 +28,9 @@ class PeriodeHoraireFactory extends Factory
     {
         return $this->afterCreating(function (PeriodeHoraire $periodeHoraire) use ($count) {
             $horaires = Horaire::inRandomOrder()->limit($count)->get();
-            foreach ($horaires as $horaire) {
-                $periodeHoraire->horaires()->attach($horaire->horaire_id);
-            }
+
+            $periodeHoraire->horaires()->attach($horaires->pluck('horaire_id')); // Utilisation correcte de la clé
         });
     }
+
 }

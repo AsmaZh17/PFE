@@ -8,7 +8,6 @@ use App\Models\SousCategorie;
 use App\Models\Promotion;
 use App\Models\Couleur;
 use App\Enums\StatusProduitEnum;
-use App\Models\Users\User;
 use Database\Factories\Users\FournisseurFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,27 +23,25 @@ class ProduitFactory extends Factory
             'promotion_id' => Promotion::factory(),
             'fournisseur_id' => FournisseurFactory::new()->create()->id,
             'nom' => $this->faker->word(),
-            'status' => $this->faker->randomElement(StatusProduitEnum::values()),  // Valeur aléatoire parmi les statuts définis dans l'enum
+            'status' => $this->faker->randomElement(StatusProduitEnum::values()),
             'description' => $this->faker->sentence(),
-            'prix' => $this->faker->randomFloat(2, 10, 1000),  // Prix entre 10 et 1000
-            'image' => $this->faker->imageUrl(),  // URL d'image générée aléatoirement
+            'prix' => $this->faker->randomFloat(2, 10, 1000),
+            'image' => $this->faker->imageUrl(),
         ];
     }
 
-    /**
-     * Génère un tableau de couleurs associées au produit.
-     *
-     * @return array
-     */
-    private function generateCouleurs()
+    public function configure()
     {
-        $couleurs = [];
-        $count = rand(1, 3);  // Nombre de couleurs associées (1 à 3)
-        
-        for ($i = 0; $i < $count; $i++) {
-            $couleurs[] = Couleur::inRandomOrder()->first()->couleur_id;  // Choisit des couleurs au hasard parmi celles existantes
-        }
+        return $this->afterCreating(function (Produit $produit) {
+            $couleurs = Couleur::inRandomOrder()->limit(rand(1, 3))->get();
+            
+            $couleursToAttach = $couleurs->mapWithKeys(function ($couleur) {
+                return [
+                    $couleur->couleur_id => ['quantite' => rand(1, 20)]
+                ];
+            });
 
-        return $couleurs;
+            $produit->couleurs()->attach($couleursToAttach);
+        });
     }
 }
